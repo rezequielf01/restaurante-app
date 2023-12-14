@@ -1,0 +1,388 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Domine', serif;
+}
+:root {
+    --color-pricipal: rgb(252, 98, 60);
+    --color-letras: #f1f1f1;
+    --trans-02: all .2s ease-in-out;
+    --trans-03: all .3s ease-in-out;
+  }
+
+.body{
+    background: #f1f1f1;
+}
+
+  /* PRELOADER */
+#preloader{
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1500;
+    top: 0;
+    overflow-y: hidden;
+    opacity: 1;
+    transition: var(--trans-03);
+}
+.preloader__img{
+    width: 100px;
+    animation-name: animacion-rotacion;
+    animation-timing-function: ease;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+@keyframes animacion-rotacion {
+    0%{
+        transform: rotateZ(0);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+/* LOGIN */
+.login-container{
+    width: 80%;
+    height: 95vh;
+    margin-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.login-wrapp{
+    width: 100%;
+    height: 50vh;
+}
+.container-img{
+    width: 50%;
+    height: 100%;
+}
+.login-img{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(to left, transparent,white) ,url(https://img.freepik.com/fotos-premium/mujer-pidiendo-comida-linea-telefono-movil_746318-1107.jpg) no-repeat center / cover;
+}
+
+/* REGISTER */
+.register-img{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* ADMIN PANEL */
+.cart{
+    position: relative;
+    color: white;
+}
+.carrito__icon{
+    font-size: 1.2rem;
+}
+.card__count{
+    color: var(--color-pricipal);
+    left: 3px;
+    bottom: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: .9rem;
+    z-index: 200;
+    font-weight: bolder;
+}
+.checkout-card__h2{
+    font-size: 1.5rem;
+}
+#card-body{
+    min-height: 500px;
+}
+.checkout-container{
+    width: 90%;
+    margin: 130px auto;
+    padding: 15px;
+}
+.checkout-subcontainer{
+    min-height: 600px;
+}
+.checkout-items{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.checkout-items-list{
+    max-height: 500px;
+    min-height: 500px;
+    overflow: auto;
+    padding: 20px;
+}
+.checkout-items-list p{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+.checkout-ticket{
+    width: 25%;
+}
+.card-home__admin{
+    background: red;
+}
+/* .card__count{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+} */
+
+/* TABLE ICON */
+.table-container{
+    width: 100%;
+}
+.table-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: -50px;
+    left: 45%;
+    border: solid 1px silver;
+    padding: 10px;
+}
+.card-table-container{
+    margin-top: 150px;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3;
+}
+/* CREAR PRODUCTO */
+
+
+
+/* FOOTER */
+.footer{
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-letras);
+    background: black;
+}
+
+/* HERADER */
+.header{
+    width: 100%;
+    height: 10vh;
+    background: linear-gradient(to right, black, #0c0c0c);
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--color-pricipal);
+    box-shadow: 0 0 5px black;
+}
+.header__logo{
+    width: 200px;
+    height: 80px;
+    padding: 12px;
+}
+.header__logo-img{
+    width: 100%;
+    height: 100%;
+}
+
+.contenedor-principal{
+    width: 80%;
+    margin: 10vh auto;
+}
+.login-card{
+    height: 100%;
+    width: 50%;
+}
+
+/* NAV-MOBILE */
+.nav-mobile{
+    display: none;
+}
+.header-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+/* HERO-COTAINER */
+.hero-container{
+    width: 100%;
+    height: 85vh;
+    background: linear-gradient(to top, black, rgba(0, 0, 0, 0.5)) ,url(https://www.raicescocinacasera.com.ar/site/wp-content/uploads/2013/12/home-1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-letras);
+    margin-top: 10vh;
+}
+.box-column-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.hero__h1{
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    font-family: 'Satisfy', cursive;
+    line-height: 50px;
+    text-align: center;
+}
+.hero__h2{
+    font-size: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+.hero__ubicacion{
+    color: var(--color-letras);
+    text-decoration: none;
+    width: 80%;
+    text-align: center;
+}
+.hero__ubicacion-icono{
+    color: var(--color-pricipal);
+}
+.hero-btns{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    align-items: center;
+}
+.hero__btn{
+    width: 350px;
+    height: 45px;
+    background: var(--color-pricipal);
+    border: none;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: var(--trans-02);
+}
+.hero__btn:hover{
+    background: rgb(255, 112, 77);
+    transform: scale(1.02);
+}
+
+/* ALERTAS */
+.alert-agregar{
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* FOOD SECTION */
+.foods-section{
+    width: 95%;
+    height: auto;
+    background: white;
+    border-radius: 5px;
+}
+.food-carousel{
+    width: 100%;
+}
+.food-list{
+    width: 100%;
+    height: auto;
+}
+.food-wrapp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.food-card{
+    max-width: 300px;
+    min-height: 350px;
+    max-height: 350px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    transition: var(--trans-02);
+    border-radius: 5px;
+    gap: 5px;
+}
+.food-card:hover{
+    transform: scale(1.02);
+}
+.food__precio{
+    text-align: center;
+    width: 70px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 10px;
+    border-radius: 0 0 0 5px;
+}
+.food__img{
+    width: 100%;
+    height: 50%;
+}
+.food-title{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.food__h2{
+    font-size: 1.2rem;
+    margin: 0;
+}
+.food-descripcion{
+    max-width: 300px;
+    height: 50%;
+    border-radius: 5px;
+}
+.food__p{
+    margin: 0;
+}

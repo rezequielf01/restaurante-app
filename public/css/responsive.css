@@ -1,0 +1,315 @@
+
+
+/* // Medium devices (tablets, 768px and up) */
+
+@media (max-width: 1800px) {
+    .food-card{
+        max-width: 250px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+    /* ADMIN PANEL*/
+    .card-table-container{
+        margin-top: 75px;
+    }
+
+    
+}
+@media (max-width: 1281px) {
+    .food-card{
+        max-width: 220px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+    .contenedor-principal{
+        width: 100%;
+        padding: 0;
+    }
+    .login-container{
+        width: 75%;
+        margin: 0 auto;
+    }
+    .checkout-items{
+        width: 75%;
+    }
+    
+}
+/* // Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+    .login-container{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .food-section{
+        width: 100%;
+    }
+    .food-section{
+        width: 100%;
+    }
+    .checkout-items{
+        width: 100%;
+    }
+    .checkout-ticket{
+        width: 100%;
+    }
+    
+}
+
+        /* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    /* ALERTAS */
+    .alert-agregar,
+    .alert-carrito-restar{
+        width: 100%;
+        text-align: center;
+        padding: 0 5px;
+    }
+
+    /* HOME */
+    .hero-container{
+        margin-top: 0;
+        height: 82vh;
+    }
+
+    /* LOGIN */
+    .login-container{
+        width: 100%;
+        height: 80vh;
+        padding: 15px;
+    }
+    .login-wrapp{
+        height: 100%;
+        flex-direction: column;
+    }
+    .login-card{
+        width: 100%;
+        height: 100%;
+    }
+    .login-card-img{
+        padding: 12px;
+    }
+    .login-img{
+        columns: black;
+        font-weight: bold;
+        display: flex;
+        text-shadow: 0 0 5px white;
+        background: url(https://img.freepik.com/fotos-premium/mujer-pidiendo-comida-linea-telefono-movil_746318-1107.jpg) no-repeat center / cover;
+    }
+    .register-img{
+        display: none;
+    }
+    /* FOOD SECTION */
+    .foods-section{
+        width: 80%;
+        border-radius: 5px;
+        margin: 25px auto;
+        text-align: center;
+    }
+    .food-wrapp{
+        padding: 0;
+        gap: 0;
+    }
+    .food-card{
+        max-width: 250px;
+    }
+    /* HEADER */
+    .header{
+        height: 100px;
+        position: relative;
+    }
+    .header__link{
+        width: 100px;
+        height: 80px;
+    }
+    .header__horario{
+        font-size: .9rem;
+    }
+    .header-nav{
+        display: none;
+    }
+
+    /* MENU - CONTENEDOR */
+    .menu-hero{
+        width: 100%;
+        height: 50vh;
+    }
+    .menu-nav{
+        height: 80px;
+    }
+    .menu-nav__icon{
+        width: 45px;
+    }
+    .menu-section{
+        width: 100%;
+        padding: 0;
+        row-gap: 0;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    
+    /* TOP SCROLL BTN */
+    .top-scroll{
+        z-index: 1200;
+        right: 15px;
+    }
+
+    /* NAV */
+    .subnav{
+        margin: 0 10px;
+    }
+    .subnav__button1,
+    .subnav__button2{
+        display: none;
+    }
+    .subnav__button3{
+        display: block;
+    }
+    .nav__ul{
+        justify-content: flex-start;
+        gap: 20px;
+        width: 100%;
+        padding: 10px;
+    }
+    .header-nav{
+        display: none;
+    }
+
+    /* NAV-MOBILE */
+    .nav-mobile{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background: black;
+        z-index: 1000;
+    }
+    .nm-icons{
+        font-size: 1.2rem;
+    }
+    .nm-mobile__span{
+        font-size: .9rem;
+        margin-top: 5px;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .contenedor-principal{
+        margin-top: 0;
+    }
+
+    /* MENU */
+    .menu-section-title{
+        justify-content: center;
+        text-transform: uppercase;
+    }
+
+    /* CARDS */
+    .card-wrapp{
+        width: 300px;
+        height: 230px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    /* CHECKOUT */
+    .checkout-container{
+        width: 90%;
+        margin: 50px auto;
+        padding: 5px;
+    }
+    .checkout-subcontainer{
+        min-height: auto;
+    }
+    .checkout-items-list{
+        max-height: 400px;
+        min-height: 100px;
+        overflow: auto;
+        padding: 0;
+    }
+    .checkout-items-list p{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+    }
+    .checkout-card__h2{
+        font-size: 1.2rem;
+    }
+    .checkout-ticket{
+        width: 95%;
+        margin: 20px 0;
+        border: none;
+    }
+
+    .footer{
+        height: 50px;
+    }
+}
+@media (max-width: 426px) {
+    .checkout-container{
+        width: 100%;
+        margin: 0 auto;
+    }
+    .checkout-items{
+        flex-direction: column-reverse;
+    }
+    .checkout-ticket{
+        width: 90%;
+    }
+    .card-info{
+        font-size: .95rem;
+    }
+    .checkout-card__h2{
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .login-form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .food-card{
+        max-width: 230px;
+    }
+}
+@media (max-width: 376px) {
+    .checkout-container{
+        width: 100%;
+        padding: 0px;
+    }
+    .checkout-card__h2{
+        font-size: .95rem;
+        font-weight: bold;
+    }
+    .checkout-ticket{
+        width: 90%;
+        margin-bottom: 35px;
+    }
+    .card-info{
+        font-size: .8rem;
+    }
+    .login-form{
+        width: 80%;
+    }
+    .hero__btn{
+        width: 275px;
+    }
+    .food-card{
+        max-width: 230px;
+    }
+}
+@media (max-width: 321px) {
+    .checkout-ticket{
+        width: 95%;
+        border: solid 0px transparent;
+    }
+}
