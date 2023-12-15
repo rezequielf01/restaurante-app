@@ -84,8 +84,8 @@
                         <textarea name="pedido" id="" rows="10" hidden
                             style="min-height: 150px; max-height: 150px; border:none; overflow:auto;">
                             @foreach (Cart::content() as $producto)
-                        {{ $producto->name }} (x{{ $producto->qty }}),
-                        @endforeach
+                            {{ $producto->name }} (x{{ $producto->qty }}) -
+                            @endforeach
                         </textarea>
                         <label style="font-weight: bold" name="total">Total:
                             <input type="text" style="border:none; font-weight: bold" name="total"

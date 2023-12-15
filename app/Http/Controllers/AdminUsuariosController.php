@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,4 +12,5 @@ class AdminUsuariosController extends Controller
         $usuarios = db::select('SELECT * FROM users');
         return view("admin.usuarios", compact("usuarios"));
     }
+
 }

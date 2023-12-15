@@ -53,7 +53,6 @@ Route::get('admin/productos/hamburgesas', [AdminHamburgesasController::class, 's
 Route::get('admin/productos/bebidas', [AdminBebidasController::class, 'show'])->middleware("can:admin.productos.bebidas")->name('admin.productos.bebidas');
 Route::get('admin/usuarios-registrados', [AdminUsuariosController::class, 'show'])->middleware("can:admin.usuarios")->name('admin.usuarios');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

@@ -8,17 +8,11 @@
 @stop
 
 @section('content_header')
-    
+    <h2>Lista de clientes registrados</h2>
 @stop
 
 @section('content')
-<div class="container w-75 h-100 d-flex justify-content-center align-items-center">
-    <div class="container bg-light shadow-lg p-3 mb-5 bg-body rounded p-3" style="position: relative; margin-top: 150px;" >
-    
-        <div class="table-icon shadow-lg p-3">
-            <img style="width: 100%" src="{{ asset('/images/usuarios.png') }}" alt="">
-        </div>
-    
+
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -43,9 +37,6 @@
                 @endforeach
             </tbody>
         </table>
-    
-    </div>
-</div>
 
 @stop
 

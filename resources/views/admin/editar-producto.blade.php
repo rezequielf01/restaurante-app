@@ -19,7 +19,8 @@
     </div>
 @endif
 
-<div class="container w-50 h-100 p-5 d-flex justify-content-center align-items-center">
+<div class="container w-50 h-100 p-5 d-flex flex-column justify-content-center align-items-center">
+    <h3 class="bg-dark text-center p-2 m-0 w-100">Editar producto #{{$producto->nombre}}</h3>
     <div class="w-100 h-100 m-auto shadow-lg p-3 bg-light rounded">
         <div class="row justify-content-center m-0">
             <div class="col mt-3 p-3">

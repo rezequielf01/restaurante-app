@@ -9,33 +9,27 @@
 @stop
 
 @section('content_header')
-
+    <h2>Lista de hamburguesas</h2>
 @stop
 
 @section('content')
 
-<div class="table-container container h-100 d-flex justify-content-center flex-column align-items-center">
     @if(session('success'))
     <div class="alert alert-success alert-block">
         <strong >{{session('success')}}</strong>
     </div>
     @endif
-<div class="card-table-container container bg-light shadow-lg mb-5 bg-body rounded p-3" style="border-radius: 5px; position: relative;" >
-
-    <div class="table-icon shadow-lg">
-        <img style="width: 100%" src="{{ asset('/images/hamburguesa.png') }}" alt="">
-    </div>
     {{-- <a href="{{route('admin.crear.producto')}}" class="crear-producto-btn btn-danger btn mb-3" type="submit">Crear producto</a> --}}
     
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th style="min-width: 35px; max-width: 35px;">ID</th>
                     <th>Nombre</th>
                     <th>Descripcion</th>
                     <th>Precio</th>
                     <th>Imagen</th>
-                    <th>Accion</th>
+                    <th style="max-width: 120px;">Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,14 +42,12 @@
                         <td><img src="/restaurante-app/public/productos/{{$hamburgesa->imagen}}" width="70px" height="50px"></td>
                         <td>
                             <a href="{{$hamburgesa->id}}/edit" class="btn btn-primary">Editar</a></div>
-                            <a href="{{$hamburgesa->id}}/delete" class="btn btn-danger">Eliminar</a></div>
+                            <a href="{{$hamburgesa->id}}/delete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-</div>
-</div>
 
 @stop
 

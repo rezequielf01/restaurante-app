@@ -128,9 +128,15 @@
         <section class="foods-section">
 
             @if (session('success'))
-                <div class="alert-agregar alert alert-success alert-block">
-                    <strong>{{ session('success') }}</strong>
-                </div>
+                <script>
+                    Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your work has been saved",
+  showConfirmButton: false,
+  timer: 1500
+});
+                </script>
             @endif
 
             <div class="food-list">
@@ -145,8 +151,8 @@
                                 <div style="position: relative"
                                     class="card-body p-0 d-flex flex-column shadow-lg justify-content-center gap-2 food-card">
                                     <span class="food__precio bg-danger text-light">${{ $hamburgesa->precio }}</span>
-                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="" class="food__img h-50">
-                                    <div class="container w-100 h-75">
+                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="" class="food__img">
+                                    <div class="container food-descripcion">
                                         <h2 class="food__h2">{{ $hamburgesa->nombre }}</h2>
                                         <p class="mb-0 w-100 text-left">{{ $hamburgesa->descripcion }}</p>
                                     </div>
@@ -164,7 +170,7 @@
                                                 </div>
                                             </form>
                                         @else
-                                            <div class="card-footer w-100 d-flex justify-content-center">
+                                            <div class="card-footer w-100 h-25 d-flex justify-content-center">
                                                 <button class="btn btn-danger w-75">
                                                     <a href="{{ route('login') }}"
                                                         style="text-decoration:none; display:block; color:white;"
@@ -189,6 +195,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/js/jquery.js') }}"></script>
     <script src="{{ asset('/js/slick.js') }}"></script>
     <script src="{{ asset('/js/slick.min.js') }}"></script>

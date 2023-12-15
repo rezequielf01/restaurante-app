@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'Raices restaurante',
-    'title_prefix' => '',
+    'title' => '',
+    'title_prefix' => 'Tú restaurante |',
     'title_postfix' => '',
 
     /*
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Raices</b> restaurante',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Tú</b> restaurante',
+    'logo_img' => 'images/preloader.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Tú restaurante',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,11 +109,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'images/preloader.png',
+            'alt' => 'Tú restaurante img',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 80,
+            'height' => 80,
         ],
     ],
 
@@ -129,7 +129,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
+    'usermenu_enabled' => false,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
@@ -153,7 +153,7 @@ return [
     'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_dark_mode' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-danger elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-dark navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -337,7 +337,7 @@ return [
             ],
         ],
         [
-            'text'        => 'Usuarios registrados',
+            'text'        => 'Clientes registrados',
             'route'         => 'admin.usuarios',
             'icon'        => 'fa fa-users',
         ],
@@ -477,12 +477,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],
