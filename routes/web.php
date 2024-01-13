@@ -31,6 +31,7 @@ Route::get('menu', [MenuController::class, 'index'])->name('menu');
 Route::get('usuario/perfil', [UserController::class, 'index'])->name('usuario.perfil');
 // Route::get('usuario/pedidos', [UserController::class, 'index'])->name('usuario.pedidos');
 
+Route::post('carrito/buy', [CarritoController::class, 'buy'])->name('carrito.buy');
 Route::post('carrito/add', [CarritoController::class, 'add'])->name('carrito.add');
 Route::get('carrito/checkout', [CarritoController::class, 'checkout'])->name('carrito.checkout');
 Route::get('carrito/clear', [CarritoController::class, 'clear'])->name('carrito.clear');

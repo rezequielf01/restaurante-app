@@ -13,7 +13,7 @@
         <a href="{{ route('carrito.checkout') }}"
             class="cart d-flex flex-column justify-content-center align-items-center text-decoration-none text-danger">
             <div class="m-0 p-0">
-                <i class="carrito__icon fa fa-shopping-cart text-danger" style="color:rgb(252, 98, 60);"
+                <i class="carrito__icon fa fa-shopping-cart"
                     aria-hidden="true"></i>
                 <span class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </div>
@@ -34,26 +34,27 @@
                 </span>
             </button>
             <ul class="dropdown-menu m-0 p-0 border-1">
-                <div class="card d-flex flex-column p-3 bg-light shadow-lg border-0 align-items-center justify-content-center">
+                <div
+                    class="card d-flex flex-column p-3 bg-light shadow-lg border-0 align-items-center justify-content-center">
                     @auth
                         @php
                             $userName = auth()->user()->name;
                             $userDireccion = auth()->user()->direccion;
                         @endphp
                         <div class="card-title d-flex align-items-center justify-content-center gap-2">
-                            <i class="fa fa-user text-danger" aria-hidden="true"></i>
+                            <i class="fa fa-user" style="color: var(--color-principal)" aria-hidden="true"></i>
                             {{ ucfirst($userName) }}
                         </div>
                         <div class="card-body d-flex flex-column">
                             <div class="d-flex align-items-center justify-content-center gap-2">
-                                <i class="fa fa-map-marker text-danger" aria-hidden="true"></i>
+                                <i class="fa fa-map-marker" style="color: var(--color-principal);" aria-hidden="true"></i>
                                 {{ ucfirst($userDireccion) }}
                             </div>
                         </div>
                         <div class="card-footer">
                             <a class="text-black" style="text-decoration: none;" href="javascript:void"
                                 onclick="$('#logout-form').submit();">
-                                <i class="fa fa-sign-out text-danger" aria-hidden="true"></i>
+                                <i class="fa fa-sign-out" style="color: var(--color-principal);" aria-hidden="true"></i>
                                 Cerrar sesion
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -68,9 +69,10 @@
 
                         </li>
                         <p>o</p>
-                        <li >
+                        <li>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" style="color: white; background:#0c0c0c; display:block; text-decoration:none"
+                                <a href="{{ route('register') }}"
+                                    style="color: white; background:#0c0c0c; display:block; text-decoration:none"
                                     class="ml-4 p-2 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Registrarse</a>
                             @endif
                         </li>
@@ -123,64 +125,185 @@
             </button>
         </div>
 
-
+        <div class="categories">
+            <a href="#burguer" class="categories-box">
+                <img class="categories-box__img" src="images/hamburguesa.png" alt="">
+                <span class="categories-box__p">Burguer</span>
+            </a>
+            <a href="#pizza" class="categories-box">
+                <img class="categories-box__img" src="images/pizza.png" alt="">
+                <span class="categories-box__p">Pizza</span>
+            </a>
+            <a href="#bebidas" class="categories-box">
+                <img class="categories-box__img" src="images/bebidas.png" alt="">
+                <span class="categories-box__p">Bebidas</span>
+            </a>
+        </div>
 
         <section class="foods-section">
 
             @if (session('success'))
                 <script>
                     Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 1500
-});
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 </script>
             @endif
 
-            <div class="food-list">
+            <div class="food-list" id="burguer">
 
-                <h2 class="food-list__h2">Hamburgesas</h2>
+                <div class="food-list-title">
+                    <div class="shadow-lg" style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
+                        <img class="food-list__icon" src="images/hamburguesa.png" alt="">
+                    </div>
+                    <h2 class="food-list__h2">Hamburguesas</h2>
+                </div>
 
                 <div class="food-carousel">
 
                     @foreach ($hamburgesas as $hamburgesa)
-                        <div class="card-wrapp food-wrapp p-3 shadow-none">
-                            <div class="card" style="border:none">
-                                <div style="position: relative"
-                                    class="card-body p-0 d-flex flex-column shadow-lg justify-content-center gap-2 food-card">
-                                    <span class="food__precio bg-danger text-light">${{ $hamburgesa->precio }}</span>
-                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="" class="food__img">
-                                    <div class="container food-descripcion">
-                                        <h2 class="food__h2">{{ $hamburgesa->nombre }}</h2>
-                                        <p class="mb-0 w-100 text-left">{{ $hamburgesa->descripcion }}</p>
-                                    </div>
-                                    <div class="card-footer" style="border: none">
-                                        @auth
-                                            <form action="{{ route('carrito.add') }}" id="formAdd" method="post"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" name="id" id="id"
-                                                    value="{{ $hamburgesa->id }}">
-                                                <div class="d-flex justify-content-center">
-                                                    <button type="submit" name="submitForm" id="submitForm"
-                                                        class="btn btn-danger text-white w-75"><i class="fa fa-cart-plus"
-                                                            aria-hidden="true"></i> Agregar</button>
-                                                </div>
-                                            </form>
-                                        @else
-                                            <div class="card-footer w-100 h-25 d-flex justify-content-center">
-                                                <button class="btn btn-danger w-75">
-                                                    <a href="{{ route('login') }}"
-                                                        style="text-decoration:none; display:block; color:white;"
-                                                        class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
-                                                            class="fa fa-cart-plus" aria-hidden="true"></i> Agregar</a>
+                        <div class="food-wrapp p-3 shadow-none">
+                            <div class="food-card">
+                                <div class="food-img">
+                                    <span class="food__precio">
+                                        ${{ $hamburgesa->precio }}
+                                    </span>
+                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="{{ $hamburgesa->nombre }}" class="food__img">
+                                </div>
+                                <div class="food-description">
+                                    <h2 class="food-description__h2">{{ $hamburgesa->nombre }}</h2>
+                                    <p class="food-description__p mb-0 w-100 text-left">{{ $hamburgesa->descripcion }}</p>
+                                </div>
+                                <div class="food-btns">
+                                    @auth
+                                        {{-- COMPRAR --}}
+                                        <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" id="id"
+                                                value="{{ $hamburgesa->id }}">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="submit" name="submitForm" id="submitForm"
+                                                    class="food-btns__btn btn" style="background: var(--color-principal)"><p class="food-btns__p">Comprar</p>
                                                 </button>
                                             </div>
-                                        @endauth
-                                    </div>
+                                        </form>
 
+                                        {{-- AGREGAR AL CARRITO --}}
+                                        <form action="{{ route('carrito.add') }}" id="formAdd" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" id="id"
+                                                value="{{ $hamburgesa->id }}">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="submit" name="submitForm" id="submitForm"
+                                                    class="food-btns__btn btn" style="background: #0c0c0c;"><i class="fa fa-cart-plus food-btns__icon"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        @else
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn food-btns__btn" style="background: var(--color-principal);">
+                                                <a href="{{ route('login') }}"
+                                                    style="text-decoration:none; display:block; color:white;"
+                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><p class="food-btns__p">Comprar</p></a>
+                                            </button>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn food-btns__btn" style="background: #0c0c0c">
+                                                <a href="{{ route('login') }}"
+                                                    style="text-decoration:none; display:block;"
+                                                    class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
+                                                        class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
+                                            </button>
+                                        </div>
+                                    @endauth
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+
+            <div class="food-list" id="bebidas">
+
+                <div class="food-list-title">
+                    <div class="shadow-lg" style="background: var(--color-principal); padding: 5px; border-radius: 50%;">
+                        <img class="food-list__icon" src="images/bebidas.png" alt="">
+                    </div>
+                    <h2 class="food-list__h2">Bebidas</h2>
+                </div>
+
+                <div class="food-carousel">
+
+                    @foreach ($bebidas as $bebida)
+                        <div class="food-wrapp p-3 shadow-none">
+                            <div class="food-card">
+                                <div class="food-img">
+                                    <span class="food__precio">
+                                        ${{ $bebida->precio }}
+                                    </span>
+                                    <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}" class="food__img">
+                                </div>
+                                <div class="food-description">
+                                    <h2 class="food-description__h2">{{ $bebida->nombre }}</h2>
+                                    <p class="food-description__p mb-0 w-100 text-left">{{ $bebida->descripcion }}</p>
+                                </div>
+                                <div class="food-btns">
+                                    @auth
+                                        {{-- COMPRAR --}}
+                                        <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" id="id"
+                                                value="{{ $bebida->id }}">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="submit" name="submitForm" id="submitForm"
+                                                    class="food-btns__btn btn" style="background: var(--color-principal)"><p class="food-btns__p">Comprar</p>
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        {{-- AGREGAR AL CARRITO --}}
+                                        <form action="{{ route('carrito.add') }}" id="formAdd" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" id="id"
+                                                value="{{ $bebida->id }}">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="submit" name="submitForm" id="submitForm"
+                                                    class="food-btns__btn btn" style="background: #0c0c0c;"><i class="fa fa-cart-plus food-btns__icon"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        @else
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn food-btns__btn" style="background: var(--color-principal);">
+                                                <a href="{{ route('login') }}"
+                                                    style="text-decoration:none; display:block; color:white;"
+                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><p class="food-btns__p">Comprar</p></a>
+                                            </button>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn food-btns__btn" style="background: #0c0c0c">
+                                                <a href="{{ route('login') }}"
+                                                    style="text-decoration:none; display:block;"
+                                                    class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
+                                                        class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
+                                            </button>
+                                        </div>
+                                    @endauth
                                 </div>
                             </div>
                         </div>

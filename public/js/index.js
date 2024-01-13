@@ -27,6 +27,23 @@ function wifiAlert() {
       });
 }
 
+// CATEGORIES NAV FIX
+$(window).scroll(function() {
+  let categoriesNav = $(".categories");
+  let foodContainer = $(".foods-section");
+  var scrollTop = $(window).scrollTop();
+  if ( scrollTop > 500 && screen.width >= 1920) { 
+    $(categoriesNav).css({ "background-color": "#0c0c0c",
+    "position": "fixed", "top": "10vh", "left": "0", "transition": "var(--trans-02)", "z-index": "100"});
+    $(foodContainer).css({ "margin-top": "60px",});
+  }
+  else {
+    $(categoriesNav).css({ "background-color": "white",
+    "position": "static", "top": "10vh", "left": "0",});
+    $(foodContainer).css({ "margin-top": "25px",});
+  }
+});
+
 // CAROUSEL SLICK SLIDER
 $('.food-carousel').slick({
     dots: true,

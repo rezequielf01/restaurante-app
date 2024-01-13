@@ -3,9 +3,10 @@
     margin: 0;
     padding: 0;
     font-family: 'Domine', serif;
+    scroll-behavior: smooth;
 }
 :root {
-    --color-pricipal: rgb(252, 98, 60);
+    --color-principal: rgb(252, 98, 60);
     --color-letras: #f1f1f1;
     --trans-02: all .2s ease-in-out;
     --trans-03: all .3s ease-in-out;
@@ -99,7 +100,7 @@
     font-size: 1.2rem;
 }
 .card__count{
-    color: var(--color-pricipal);
+    color: var(--color-principal);
     left: 3px;
     bottom: 8px;
     width: 20px;
@@ -207,7 +208,7 @@
     z-index: 1000;
     align-items: center;
     justify-content: space-around;
-    color: var(--color-pricipal);
+    color: var(--color-principal);
     box-shadow: 0 0 5px black;
 }
 .header__logo{
@@ -223,6 +224,7 @@
 .contenedor-principal{
     width: 80%;
     margin: 10vh auto;
+    background: white;
 }
 .login-card{
     height: 100%;
@@ -256,6 +258,33 @@
     color: var(--color-letras);
     margin-top: 10vh;
 }
+.categories{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    padding: 10px;
+}
+.categories-box{
+    text-decoration: none;
+    background: var(--color-principal);
+    padding: 5px;
+    border-radius: 5px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: black;
+}
+.categories-box__img{
+    width: 25px;
+}
+.categories-box__p{
+    text-decoration: none;
+}
+
 .box-column-flex{
     display: flex;
     align-items: center;
@@ -283,7 +312,7 @@
     text-align: center;
 }
 .hero__ubicacion-icono{
-    color: var(--color-pricipal);
+    color: var(--color-principal);
 }
 .hero-btns{
     display: flex;
@@ -294,10 +323,13 @@
     height: auto;
     align-items: center;
 }
+.hero-btns__icon{
+    width: 30px;
+}
 .hero__btn{
     width: 350px;
     height: 45px;
-    background: var(--color-pricipal);
+    background: var(--color-principal);
     border: none;
     font-size: 1.5rem;
     text-align: center;
@@ -327,11 +359,16 @@
 
 
 /* FOOD SECTION */
+#burguer, #bebidas{
+    scroll-margin-top: 18vh;
+}
+
 .foods-section{
-    width: 95%;
+    width: 100%;
     height: auto;
     background: white;
     border-radius: 5px;
+    margin-top: 25px;
 }
 .food-carousel{
     width: 100%;
@@ -340,6 +377,18 @@
     width: 100%;
     height: auto;
 }
+.food-list-title{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+.food-list__icon{
+    width: 30px;
+}
+.food-list__h2{
+    margin: 0;
+}
 .food-wrapp{
     display: flex;
     align-items: center;
@@ -347,49 +396,66 @@
     gap: 10px;
 }
 .food-card{
-    max-width: 300px;
-    min-height: 350px;
-    max-height: 350px;
-    display: flex;
-    flex-direction: column;
+    width: 300px;
+    height: 320px;
+    background: white;
     margin: 0 auto;
-    transition: var(--trans-02);
-    border-radius: 5px;
-    gap: 5px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
 }
-.food-card:hover{
-    transform: scale(1.02);
-}
-.food__precio{
-    text-align: center;
-    width: 70px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 5px 10px;
-    border-radius: 0 0 0 5px;
+.food-img{
+    width: 100%;
+    height: 55%;
+    padding: 10px;
+    position: relative;
 }
 .food__img{
     width: 100%;
-    max-height: 200px;
+    height: 100%;
 }
-.food-title{
-    width: 90%;
+.food__precio{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    font-weight: bold;
+    width: 80px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    background: var(--color-principal);
+    border-radius: 0 0 0 10px;
 }
-.food__h2{
+.food-description{
+    max-width: 100%;
+    height: 25%;
+    padding-left: 10px;
+}
+.food-description__h2{
     font-size: 1.2rem;
+    font-weight: bold;
     margin: 0;
 }
-.food-descripcion{
+.food-btns{
     width: 100%;
-    max-width: 300px;
-    height: 50%;
-    border-radius: 5px;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
-
-.food__p{
+.food-btns__p{
     margin: 0;
+    color: black;
+    transition: var(--trans-02);
 }
+.food-btns__btn:hover .food-btns__p{
+    color: white; 
+}
+.food-btns__icon{
+    color: white;
+    transition: var(--trans-02);
+}
+.food-btns__btn:hover .food-btns__icon{
+    color: var(--color-principal); 
+    transform: rotate(-20deg);
+}  

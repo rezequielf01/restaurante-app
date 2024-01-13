@@ -13,6 +13,22 @@ use function Laravel\Prompts\alert;
 
 class CarritoController extends Controller
 {
+    public function buy(Request $request){
+        $producto = Productos::find($request->id);
+        if (!empty($producto)) {
+            
+            Cart::add(
+                $producto->id,
+                $producto->nombre,
+                1,
+                $producto->precio,
+                ["imagen"=>$producto->imagen],
+            );
+            return redirect()->route('carrito.checkout');
+        
+        }
+    }
+
     public function add(Request $request){
         $producto = Productos::find($request->id);
         if (!empty($producto)) {
