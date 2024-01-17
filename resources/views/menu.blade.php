@@ -8,6 +8,10 @@
 @endsection
 
 @section('contenido')
+    
+    <a href="#" class="float-btn-wsp">
+        <i class="fa fa-whatsapp float-btn-wsp__icon"></i>
+    </a>
 
     <nav class="nav-mobile text-danger">
         <a href="{{ route('carrito.checkout') }}"

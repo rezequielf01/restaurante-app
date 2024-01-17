@@ -9,7 +9,7 @@ class MenuController extends Controller
 {
     public function index(){
         $hamburgesas = db::select('SELECT * FROM productos WHERE categoria = "hamburgesa"');
-        $bebidas = db::select('SELECT * FROM productos WHERE categoria = "bebida"');
+        $bebidas = db::select('SELECT * FROM productos WHERE categoria = "bebida" AND stock >= 1');
         return view("menu", compact("hamburgesas","bebidas"));
     }
 }

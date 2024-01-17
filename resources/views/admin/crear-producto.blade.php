@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Precio</label>
-                                <input type="number" name="precio" class="form-control border-1 shadow-lg" required value="{{old("precio")}}">
+                                <input type="text" inputmode="decimal" name="precio" class="form-control border-1 shadow-lg" required>
                                 @if ($errors->has("precio"))
                                     <span class="text-danger">{{$errors->first("precio")}}</span>
                                 @endif
@@ -59,6 +59,13 @@
                                 {{-- @if ($errors->has("categoria"))
                                     <span class="text-danger">{{$errors->first("categoria")}}</span>
                                 @endif --}}
+                            </div>
+                            <div class="form-group">
+                                <label>Stock</label>
+                                <input type="number" name="stock" class="form-control border-1 shadow-lg" value="{{old("stock")}}">
+                                @if ($errors->has("stock"))
+                                    <span class="text-danger">{{$errors->first("stock")}}</span>
+                                @endif
                             </div>
                             <div class="form-group d-flex align-items-center gap-3">
                                 <label>Imagen</label>

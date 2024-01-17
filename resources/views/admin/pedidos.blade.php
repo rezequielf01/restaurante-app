@@ -9,7 +9,19 @@
 @stop
 
 @section('content_header')
-    <h2>Lista de pedidos pendientes</h2>
+    <div class="admin-header">
+        <div class="admin-nav-header">
+            <a href="{{route("admin.home")}}" class="admin-nav-header__a" title="Ir al inicio"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>
+            <p style="font-weight: bolder; margin:0 5px"> / </p>
+            <a href="{{route("admin.pedidos.entregados")}}" class="admin-nav-header__a admin-nav-header__a-active">Pedidos pendientes</a>
+        </div>
+        <div class="admin-title-header">
+            <h2 class="admin-title-header__h2">Pedidos pendientes</h2>
+            <span class="admin-title-header__span">
+                <img class="admin-title-header__img" src="../images/pedidos.png" alt="Pedido png">
+            </span>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -23,34 +35,44 @@
             <table id="example" class="table bd-danger table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Telefono</th>
-                        <th>Direccion</th>
+                        <th >Pedido Nro</th>
+                        <th >Cliente</th>
+                        <th >Telefono</th>
+                        <th >Direccion</th>
                         <th class="text-center">Pedido</th>
-                        <th>Forma de pago</th>
-                        <th>Envio</th>
-                        <th>Total</th>
-                        <th>Fecha y hora</th>
-                        <th>Accion</th>
+                        <th >Forma de pago</th>
+                        <th >Envio</th>
+                        <th >Total</th>
+                        <th >Fecha y hora</th>
+                        <th >Accion</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pedidos as $pedido)
-                        <tr>
-                            <td style="width: 120px">{{ $pedido->cliente }}</td>
-                            <td>{{ $pedido->telefono }}</td>
-                            <td>{{ $pedido->direccion }}</td>
-                            <td class="d-flex align-items-center justify-content-center"><button type="btn" class="btn btn-dark" onclick="asd();"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
-                            <td>{{ $pedido->metodo_de_pago }}</td>
-                            <td><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td>
-                            <td>{{ $pedido->total }}</td>
-                            <td>{{ $pedido->create_time }}</td>
-                            <td>
-                                <a href="pedidos/{{ $pedido->id }}/delete" class="btn btn-success">Entregado</a>
+                        <tr style="background: none; max-height: 50px">
+                            <td style="width: 10%">{{ $pedido->id }}</td>
+                            <td style="width: 10%">{{ $pedido->cliente }}</td>
+                            <td style="width: 10%">{{ $pedido->telefono }}</td>
+                            <td style="width: 10%">{{ $pedido->direccion }}</td>
+                            <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center"><button type="btn" title="Ver pedido" class="btn btn-dark" onclick="verPedido();"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            <td style="width: 10%">{{ $pedido->metodo_de_pago }}</td>
+                            <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td>
+                            <td style="width: 10%">{{ $pedido->total }}</td>
+                            <td style="width: 10%">{{ $pedido->create_time }}</td>
+                            <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center gap-3">
+                                <a href="pedidos/{{ $pedido->id }}/entregado" title="Entregado" style="color: rgb(80, 248, 80); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </a>
+                                <a href="pedidos/{{ $pedido->id }}/cancelado" title="Cancelado" style="color: rgb(255, 15, 15); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                </a>
+                                <a href="pedido/{{$pedido->id}}" title="Imprimir factura" style="color: rgb(15, 107, 255); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                         <script>
-                            function asd() {
+                            function verPedido() {
                                 return Swal.fire({
                                 title: 'Detalles del pedido' ,
                                 html: `
@@ -71,7 +93,7 @@
 
 @section('js')
 
-
+    <script src="https://kit.fontawesome.com/18e24e909e.js" crossorigin="anonymous"></script>       
     <script>
         $('#example').dataTable({
             responsive: true,

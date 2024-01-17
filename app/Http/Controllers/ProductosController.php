@@ -22,6 +22,7 @@ class ProductosController extends Controller
             'precio'=>'nullable',
             'imagen'=>'nullable|mimes:jpeg,jpg,png',
             'categoria'=>'nullable',
+            'stock'=>'nullable',
         ]);
 
 
@@ -35,6 +36,7 @@ class ProductosController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
         $producto->categoria = $request->categoria;
+        $producto->stock = $request->stock;
 
         $producto->save();
         return back()->withSuccess('PRODUCTO AGREGADO EXITOSAMENTE!');
@@ -55,6 +57,7 @@ class ProductosController extends Controller
             'precio'=>'required',
             'imagen'=>'nullable|mimes:jpeg,jpg,png',
             'categoria'=>'required',
+            'stock'=>'nullable',
         ]);
         
         $producto = Productos::where("id",$id)->first();
@@ -70,6 +73,7 @@ class ProductosController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
         $producto->categoria = $request->categoria;
+        $producto->stock = $request->stock;
 
         $producto->save();
         return back()->withSuccess('PRODUCTO ACTUALIZADO EXITOSAMENTE!');

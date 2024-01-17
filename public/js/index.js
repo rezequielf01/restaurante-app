@@ -31,11 +31,13 @@ function wifiAlert() {
 $(window).scroll(function() {
   let categoriesNav = $(".categories");
   let foodContainer = $(".foods-section");
+  let wspBtn = $(".float-btn-wsp");
   var scrollTop = $(window).scrollTop();
   if ( scrollTop > 500 && screen.width >= 1920) { 
     $(categoriesNav).css({ "background-color": "#0c0c0c",
     "position": "fixed", "top": "10vh", "left": "0", "transition": "var(--trans-02)", "z-index": "100"});
     $(foodContainer).css({ "margin-top": "60px",});
+    $(wspBtn).css({ "opacity": 1,});
   }
   else {
     $(categoriesNav).css({ "background-color": "white",

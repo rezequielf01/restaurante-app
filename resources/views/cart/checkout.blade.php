@@ -28,9 +28,9 @@
                                     </div>
                                     <div class="card-info w-50">
                                         <h2 class="checkout-card__h2">{{ $producto->name }}</h2>
-                                        <span><b>Precio unitario: </b>{{ number_format($producto->price, 2) }}</span><br>
+                                        <span><b>Precio unitario: </b>{{ number_format($producto->price) }}</span><br>
                                         <span><b>Precio final:
-                                            </b>{{ number_format($producto->qty * $producto->price, 2) }}</span><br>
+                                            </b>{{ number_format($producto->qty * $producto->price) }}</span><br>
                                         <span><b>Cantidad: </b>{{ $producto->qty }}</span>
                                     </div>
                                     <form class="d-flex w-25 justify-content-center"
@@ -84,12 +84,11 @@
                         <textarea name="pedido" id="" rows="10" hidden
                             style="min-height: 150px; max-height: 150px; border:none; overflow:auto;">
                             @foreach (Cart::content() as $producto)
-                            {{ $producto->name }} (x{{ $producto->qty }}) -
+                            {{$producto->qty}}            {{$producto->name}}             ${{$producto->price}}
                             @endforeach
                         </textarea>
                         <label style="font-weight: bold" name="total">Total:
-                            <input type="text" style="border:none; font-weight: bold" name="total"
-                            value="${{ Cart::total() }}">
+                            <input type="text" inputmode="decimal" name="total" value="{{Cart::Total()}}">
                         </label>
                     </div>
                     <div style="position: relative; z-index: 50; top: 0;"
