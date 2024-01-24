@@ -17,10 +17,10 @@ class ProductosController extends Controller
     public function store(request $request){
 
         $request->validate([
-            'nombre'=>'nullable',
+            'nombre'=>'required',
             'descripcion'=>'nullable',
-            'precio'=>'nullable',
-            'imagen'=>'nullable|mimes:jpeg,jpg,png',
+            'precio'=>'required',
+            'imagen'=>'required|mimes:jpeg,jpg,png',
             'categoria'=>'nullable',
             'stock'=>'nullable',
         ]);

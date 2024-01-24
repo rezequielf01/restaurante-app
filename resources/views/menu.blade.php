@@ -174,7 +174,9 @@
                             <div class="food-card">
                                 <div class="food-img">
                                     <span class="food__precio">
-                                        ${{ $hamburgesa->precio }}
+                                        @php
+                                         echo "$".number_format($hamburgesa->precio,0,'.',',');   
+                                        @endphp
                                     </span>
                                     <img src="productos/{{ $hamburgesa->imagen }}" alt="{{ $hamburgesa->nombre }}" class="food__img">
                                 </div>
@@ -253,7 +255,9 @@
                             <div class="food-card">
                                 <div class="food-img">
                                     <span class="food__precio">
-                                        ${{ $bebida->precio }}
+                                        @php
+                                         echo "$".number_format($bebida->precio,0,'.',',');   
+                                        @endphp
                                     </span>
                                     <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}" class="food__img">
                                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Productos;
 use App\Models\Pedidos;
+use App\Models\OrderItem;
 use App\Models\PedidosUsuario;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -67,28 +68,48 @@ class CarritoController extends Controller
     public function sendOrder(request $request){
 
         $request->validate([
-            'cliente'=>'required',
-            'telefono'=>'required',
-            'direccion'=>'required',
-            'pedido'=>'required',
-            'metodo_de_pago'=>'required',
-            'envio'=>'required',
-            'total'=>'required',
+            'cliente_id'=>'required',
+            // 'telefono'=>'required',
+            'direccion'=>'nullable',
+            // 'pedido'=>'required',
+            // 'metodo_de_pago'=>'required',
+            // 'envio'=>'required',
+            // 'total'=>'required',
         ]);
 
         //UPLOAD PRODUCT
-        $pedido = new Pedidos();
-        $pedido->cliente = $request->cliente;
-        $pedido->telefono = $request->telefono;
-        $pedido->direccion = $request->direccion;
-        $pedido->pedido = $request->pedido;
-        $pedido->metodo_de_pago = $request->metodo_de_pago;
-        $pedido->envio = $request->envio;
-        $pedido->total = $request->total;
-        $pedido->save();
+        
+        $clienteID = $request->cliente_id;
+        // $totalPrice = Cart::Total();
 
+        $pedido = new Pedidos();
+        if($request->direccion != ""){
+            $pedido->direccion = $request->direccion;
+        }
+        else{
+            $pedido->direccion = auth()->user()->direccion;
+        }
+        $pedido->cliente_id = $request->cliente_id;
+        $totalCarrito = Cart::total();
+        $pedido->total = $totalCarrito;
+
+        if ($pedido->save()) {
+            $pedidoID = $pedido->id;
+
+            foreach (Cart::content() as $item) {
+                OrderItem::create([
+                    'pedido_id' => $pedidoID,
+                    'producto_id' => $item->id,
+                    'nombre' => $item->name,
+                    'cantidad' => $item->qty,
+                    'precio' => $item->price,
+                ]);
+            }
+            
+        }
         Cart::destroy();
         return back()->withSuccess('¡Su pedido a sido enviado!');
+
         
     }
 

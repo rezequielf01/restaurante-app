@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminHamburgesasController;
 use App\Http\Controllers\AdminBebidasController;
 use App\Http\Controllers\AdminUsuariosController;
 use App\Http\Controllers\FpdfController;
+use App\Http\Controllers\FpdfDeliveredController;
 use App\Http\Controllers\ProductosController;
 use Illuminate\Routing\RouteGroup;
 
@@ -51,7 +52,8 @@ Route::get('admin/pedidos-entregados', [AdminPedidosController::class, 'ordersDe
 Route::get('admin/pedidos/{id}/entregado', [AdminPedidosController::class, 'orderMoved'])->name('admin.pedido.entregado');
 Route::get('admin/pedidos/{id}/cancelado', [AdminPedidosController::class, 'destroy'])->name('admin.pedido.cancelado');
 
-Route::get('admin/pedido/{id}', [AdminPedidosController::class, 'ticket'])->name('admin.fpdf');
+Route::get('admin/ticket/{orderId}', [FpdfController::class, 'index'])->name('admin.fpdf');
+Route::get('admin/ticket/nro/{orderId}', [FpdfDeliveredController::class, 'index'])->name('admin.fpdf.delivered');
 
 Route::get('admin/crear-producto', [ProductosController::class, 'create'])->middleware("can:admin.crear.producto")->name('admin.crear.producto');
 Route::post('admin/producto/store', [ProductosController::class, 'store'])->middleware("can:admin.producto.store")->name('admin.producto.store');

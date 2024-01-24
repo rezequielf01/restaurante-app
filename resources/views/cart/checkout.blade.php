@@ -63,15 +63,23 @@
             </div>
             <div class="checkout-ticket card d-flex align-items-center justify-content-center shadow-lg p-3 bg-white rounded">
                 <h4 class="text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Dellates de la compra</h4>
-                <form class="d-flex flex-column gap-3 align-items-left" style="position: relative; z-index:10;"
+                <form class="d-flex flex-column gap-2 mt-5 mb-5 align-items-left" style="position: relative; z-index:10;"
                     method="POST" action="{{ route('carrito.enviar.pedido') }}">
-                    <div style="width:100%; height:100%; background:transparent; position: absolute; z-index:20"></div>
                     @csrf
                     <label>Cliente:
-                        <input type="text" name="cliente" placeholder="abc" value="{{ auth()->user()->name }}"
-                            style="border:none">
+                        <input type="text" name="cliente_id" placeholder="abc" value="{{ auth()->user()->id }}"
+                            style="border:none; display: none">@php
+                                echo ucfirst(auth()->user()->name);
+                            @endphp
                     </label>
-                    <label>Telefono:
+
+                    <label class="d-flex align-items-center justify-content-start gap-2">Dirección:
+                        <input type="text" disabled id="direccion" style="width: 50%; border: none; padding: 2px 5px; border-radius: 3px" name="direccion" placeholder="{{ auth()->user()->direccion }}">
+                        <div class="bg-danger shadow-lg" style="border-radius: 2px; cursor: pointer;" title="Editar dirección" onclick="editDireccion()">
+                            <i class="p-2 fa fa-pencil" aria-hidden="true"></i>
+                        </div>
+                    </label>
+                    {{-- <label>Telefono:
                         <input type="text" name="telefono" placeholder="abc" value="{{ auth()->user()->telefono }}"
                             style="border:none">
                     </label>
@@ -79,6 +87,7 @@
                         <input type="text" name="direccion" placeholder="abc" value="{{ auth()->user()->direccion }}"
                             style="border:none">
                     </label>
+
                     <div class="d-flex flex-column">
                         <label hidden>Pedido:</label>
                         <textarea name="pedido" id="" rows="10" hidden
@@ -86,14 +95,16 @@
                             @foreach (Cart::content() as $producto)
                             {{$producto->qty}}            {{$producto->name}}             ${{$producto->price}}
                             @endforeach
-                        </textarea>
-                        <label style="font-weight: bold" name="total">Total:
-                            <input type="text" inputmode="decimal" name="total" value="{{Cart::Total()}}">
-                        </label>
-                    </div>
+                        </textarea> --}}
+                        {{-- <label style="font-weight: bold" name="total">Total:
+                            <input type="text" style="border: none; font-weidth: bold" inputmode="decimal" name="total" value="{{Cart::Total()}}">
+                        </label> --}}
+                    {{-- </div> --}}
+                    
+                    <p>Total: <span style="font-weight: bold">${{Cart::Total()}}</span></p>
                     <div style="position: relative; z-index: 50; top: 0;"
-                        class="w-100 gap-2 d-flex flex-column justify-content-center">
-                        <label>Forma de pago:
+                        class="w-100 mt-5 gap-2 d-flex flex-column justify-content-center">
+                        {{-- <label>Forma de pago:
                             <select name="metodo_de_pago" style="border: solid px #f1f1f1;" id="">
                                 <option value="Efectivo">Efectivo</option>
                                 <option value="Transferencia">Transferencia</option>
@@ -103,7 +114,7 @@
                         <label for="envio"><input type="checkbox" id="" name="envio" value="delivery a domicilio"> <i class="fa fa-motorcycle" aria-hidden="true"></i> Delivery</label>
                         @if ($errors->has("envio"))
                             <span class="text-danger">{{$errors->first("envio")}}</span>
-                        @endif
+                        @endif --}}
                         @if ( Cart::total() > 0)
                         <button class="btn btn-danger" type="submit">Enviar pedido</button>
                         @else
@@ -117,5 +128,13 @@
 @endsection
 
 @section('js')
+    <script>
+        function editDireccion(){
+            var direccionInput = document.getElementById('direccion');
+            direccionInput.disabled = false;
+            direccionInput.focus();
+        } 
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stop

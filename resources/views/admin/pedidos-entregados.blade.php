@@ -32,58 +32,60 @@
             </div>
         @endif
 
-            <table id="example" class="table bd-danger table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th >PedidoEntregado Nro</th>
-                        <th >Cliente</th>
-                        <th >Telefono</th>
-                        <th >Direccion</th>
-                        <th class="text-center">PedidoEntregado</th>
-                        <th >Forma de pago</th>
-                        <th >Envio</th>
-                        <th >Total</th>
-                        <th >Fecha y hora</th>
+        <table id="example" class="table bd-danger table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th >Pedido Nro</th>
+                    <th >Cliente</th>
+                    <th >Telefono</th>
+                    <th >Direccion</th>
+                    {{-- <th >Envio</th> --}}
+                    <th >Total</th>
+                    <th >Fecha y hora</th>
+                    <th >Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($pedidos_clientes as $pedido)
+                    <tr style="background: none; max-height: 50px">
+                        <td style="width: 10%">{{ $pedido->id }}</td>
+                        <td style="width: 10%">{{ $pedido->name }}</td>
+                        <td style="width: 10%">{{ $pedido->telefono }}</td>
+                        <td style="width: 10%">{{ $pedido->direccion }}</td>
+                        {{-- <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center"><button type="btn" title="Ver pedido" class="btn btn-dark" onclick="verPedido();"><i class="fa fa-eye" aria-hidden="true"></i></button></td> --}}
+                        {{-- <td style="width: 10%">{{ $pedido->metodo_de_pago }}</td> --}}
+                        {{-- <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td> --}}
+                        <td style="width: 10%">{{ $pedido->total }}</td>
+                        <td style="width: 10%">{{ $pedido->create_time }}</td>
+                        <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center gap-3">
+                            <a href="ticket/nro/{{$pedido->id}}" target="_blank" title="Imprimir factura" style="color: rgb(15, 107, 255); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pedidosEntregados as $pedidoEntregado)
-                        <tr style="background: none; max-height: 50px">
-                            <td style="width: 10%">{{ $pedidoEntregado->id }}</td>
-                            <td style="width: 10%">{{ $pedidoEntregado->cliente }}</td>
-                            <td style="width: 10%">{{ $pedidoEntregado->telefono }}</td>
-                            <td style="width: 10%">{{ $pedidoEntregado->direccion }}</td>
-                            <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center"><button type="btn" title="Ver pedidoEntregado" class="btn btn-dark" onclick="verPedidoEntregado();"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
-                            <td style="width: 10%">{{ $pedidoEntregado->metodo_de_pago }}</td>
-                            <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedidoEntregado->envio }}</span></td>
-                            <td style="width: 10%">{{ $pedidoEntregado->total }}</td>
-                            <td style="width: 10%">{{ $pedidoEntregado->create_time }}</td>
-                        </tr>
-                        <script>
-                            function verPedidoEntregado() {
-                                return Swal.fire({
-                                title: 'Detalles del pedidoEntregado' ,
-                                html: `
-                                    <b>Direccion de envio: </b>{{$pedidoEntregado->direccion}}<br></br>
-                                    <b>Metodo de pago: </b> {{$pedidoEntregado->metodo_de_pago}}<br></br>
-                                    <b>Envío: </b> {{$pedidoEntregado->envio}}<br></br>
-                                    <b>Total a pagar: </b> {{$pedidoEntregado->total}}<br></br>
-                                    <b>PedidoEntregado: </b> {{$pedidoEntregado->pedido}}
-                                    <b>{{$pedidoEntregado->pedido}}
-                                `,
-                                });
-                            }
-                        </script>
-                    @endforeach
-                </tbody>
-            </table>
+                    {{-- <script>
+                        function verPedido() {
+                            return Swal.fire({
+                            title: 'Detalles del pedido' ,
+                            html: `
+                                <b>Direccion de envio: </b>{{$pedido->direccion}}<br></br>
+                                <b>Metodo de pago: </b> {{$pedido->metodo_de_pago}}<br></br>
+                                <b>Envío: </b> {{$pedido->envio}}<br></br>
+                                <b>Total a pagar: </b> {{$pedido->total}}<br></br>
+                                <b>Pedido: </b> {{$pedido->pedido}}
+                            `,
+                            });
+                        }
+                    </script> --}}
+                @endforeach
+            </tbody>
+        </table>
             
 
 @stop
 
 @section('js')
-
-
+    <script src="https://kit.fontawesome.com/18e24e909e.js" crossorigin="anonymous"></script>       
     <script>
         $('#example').dataTable({
             responsive: true,

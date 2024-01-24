@@ -99,15 +99,9 @@
                     <div class="d-flex align-items-center justify-content-around">
                         <div style="color: #f1f1f1" class="inner">
                             <h3>
-                                1
-                                {{-- @php
-                                $ingresosPorPedidos = 0;
-                                @endphp
-                                @foreach ($ingresos as $ingreso)
-                                @php
-                                $ingresosPorPedidos+=$ingreso->total;
-                                @endphp
-                                @endforeach --}}
+                            
+                                {{$ingresosMensuales}}                            
+
                             </h3>
                             <p>Ingresos mensuales</p>
                         </div>

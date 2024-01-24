@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Precio</label>
-                                <input type="text" inputmode="decimal" name="precio" class="form-control border-1 shadow-lg" required>
+                                <input type="text" name="precio" class="form-control border-1 shadow-lg" required>
                                 @if ($errors->has("precio"))
                                     <span class="text-danger">{{$errors->first("precio")}}</span>
                                 @endif
@@ -53,7 +53,7 @@
                             <div class="form-group d-flex align-items-center gap-2">
                                 <label>Categoria</label>
                                 <select name="categoria" id="">
-                                    <option value="hamburgesa">Hamburgesa</option>
+                                    <option value="hamburgesa">Hamburguesa</option>
                                     <option value="bebida">Bebida</option>
                                 </select>
                                 {{-- @if ($errors->has("categoria"))

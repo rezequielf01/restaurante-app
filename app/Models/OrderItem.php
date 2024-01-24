@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedidos extends Model
+class OrderItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'cliente_id',
+        'pedido_id',
+        'producto_id',
+        'nombre',
+        'cantidad',
+        'precio',
         // 'telefono',
-        'direccion',
+        // 'direccion',
         // 'pedido',
         // 'metodo_de_pago',
         // 'retiro',
-        'total',
         ];
-
-    const CREATED_AT = 'create_time';
-    const UPDATED_AT = 'update_time';
 
 }

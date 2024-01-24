@@ -50,13 +50,13 @@
                     </div>
                     <div class="form group">
                         <label>Categoria</label>
-                        <select name="categoria" id="" value="{{old("precio",$producto->categoria)}}>
+                        <select name="categoria" id="" value="{{old("categoria",$producto->categoria)}}">
                             <option value="hamburgesa">Hamburgesa</option>
                             <option value="bebida">Bebida</option>
                         </select>
-                        {{-- @if ($errors->has("categoria"))
+                        @if ($errors->has("categoria"))
                             <span class="text-danger">{{$errors->first("categoria")}}</span>
-                        @endif --}}
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Stock</label>

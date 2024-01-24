@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use App\Models\Pedidos;
-use App\Models\Productos;
-use App\Models\OrderItem;
+use App\Models\ProductosEntregados;
+use App\Models\OrderItemsDelivered;
 use App\Models\PedidosEntregados;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 
-class FpdfController extends Controller
+class FpdfDeliveredController extends Controller
 {
     protected $fpdf;
 
@@ -21,17 +21,17 @@ class FpdfController extends Controller
 
         // Obtener el pedido para el usuario con el ID especificado
         $cajero = auth()->user()->name;
-        $detalle_pedido = OrderItem::select('nombre', 'cantidad', 'precio')
+        $detalle_pedido = OrderItemsDelivered::select('nombre', 'cantidad', 'precio')
         ->where('pedido_id', $orderId)
         ->get();
-        $pedido = OrderItem::where('pedido_id', $orderId)->first();
-        $fecha = OrderItem::where('pedido_id', $orderId)->value("created_at");
-        $total = Pedidos::where('id', $orderId)->value("total");
+        $pedido = OrderItemsDelivered::where('pedido_id', $orderId)->first();
+        $fecha = OrderItemsDelivered::where('pedido_id', $orderId)->value("created_at");
+        $total = PedidosEntregados::where('id', $orderId)->value("total");
         
         // Verificar si se encontró el pedido
         if ($pedido) {
             // Obtener el valor de la columna deseada, por ejemplo, 'detalle'
-            $nro_pedido = OrderItem::where('pedido_id', $orderId)->value("pedido_id");
+            $nro_pedido = OrderItemsDelivered::where('pedido_id', $orderId)->value("pedido_id");
             // $cantidad_pedido = OrderItem::where('id', $orderId)->value("cantidad");
             // $total_producto = Pedidos::where('id', $orderId)->value("total");
             // $nombre_producto = OrderItem::where('id', $orderId)->value("nombre");

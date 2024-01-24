@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string("cliente");
-            $table->text("telefono",10)->nullable();
-            $table->string("direccion",100);
-            $table->text("pedido");
-            $table->string("metodo_de_pago");
-            $table->string("envio");
-            $table->string("total");
+            $table->unsignedBigInteger('cliente_id');
+            $table->string('direccion');
+            $table->string('total');
+            
+            $table->foreign('cliente_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('no action');
+
             $table->timestamp('create_time')->nullable();
             $table->timestamp('update_time')->nullable();
         });

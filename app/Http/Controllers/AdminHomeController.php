@@ -20,8 +20,10 @@ class AdminHomeController extends Controller
         $comidas = count($comidasSQL);
         $bebidasSQL = DB::select("SELECT * FROM productos WHERE categoria = 'bebida'");
         $bebidas = count($bebidasSQL);
-        $ingresos = db::select("SELECT total FROM pedidos_entregados");
+
+        $ingresosMensuales = PedidosEntregados::whereMonth('create_time', now()->month)->sum('total');;
+        
         return view("admin.home", compact("usuariosRegistrados","productosRegistrados",
-        "pedidosPendientes","pedidosEntregados","comidas","bebidas","ingresos"));
+        "pedidosPendientes","pedidosEntregados","comidas","bebidas","ingresosMensuales"));
     }
 }

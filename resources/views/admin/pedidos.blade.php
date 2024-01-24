@@ -39,24 +39,22 @@
                         <th >Cliente</th>
                         <th >Telefono</th>
                         <th >Direccion</th>
-                        <th class="text-center">Pedido</th>
-                        <th >Forma de pago</th>
-                        <th >Envio</th>
+                        {{-- <th >Envio</th> --}}
                         <th >Total</th>
                         <th >Fecha y hora</th>
                         <th >Accion</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pedidos as $pedido)
+                    @foreach ($pedidos_clientes as $pedido)
                         <tr style="background: none; max-height: 50px">
                             <td style="width: 10%">{{ $pedido->id }}</td>
-                            <td style="width: 10%">{{ $pedido->cliente }}</td>
+                            <td style="width: 10%">{{ $pedido->name }}</td>
                             <td style="width: 10%">{{ $pedido->telefono }}</td>
                             <td style="width: 10%">{{ $pedido->direccion }}</td>
-                            <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center"><button type="btn" title="Ver pedido" class="btn btn-dark" onclick="verPedido();"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
-                            <td style="width: 10%">{{ $pedido->metodo_de_pago }}</td>
-                            <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td>
+                            {{-- <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center"><button type="btn" title="Ver pedido" class="btn btn-dark" onclick="verPedido();"><i class="fa fa-eye" aria-hidden="true"></i></button></td> --}}
+                            {{-- <td style="width: 10%">{{ $pedido->metodo_de_pago }}</td> --}}
+                            {{-- <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td> --}}
                             <td style="width: 10%">{{ $pedido->total }}</td>
                             <td style="width: 10%">{{ $pedido->create_time }}</td>
                             <td style="margin: 0 auto" class="d-flex align-items-center justify-content-center gap-3">
@@ -66,12 +64,12 @@
                                 <a href="pedidos/{{ $pedido->id }}/cancelado" title="Cancelado" style="color: rgb(255, 15, 15); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
                                     <i class="fa fa-ban" aria-hidden="true"></i>
                                 </a>
-                                <a href="pedido/{{$pedido->id}}" title="Imprimir factura" style="color: rgb(15, 107, 255); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
+                                <a href="ticket/{{$pedido->id}}" target="_blank" title="Imprimir factura" style="color: rgb(15, 107, 255); background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); border: solid 1px rgba(0, 0, 0, 0.2)" class="btn">
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 </a>
                             </td>
                         </tr>
-                        <script>
+                        {{-- <script>
                             function verPedido() {
                                 return Swal.fire({
                                 title: 'Detalles del pedido' ,
@@ -84,7 +82,7 @@
                                 `,
                                 });
                             }
-                        </script>
+                        </script> --}}
                     @endforeach
                 </tbody>
             </table>
