@@ -8,7 +8,7 @@
 @endsection
 
 @section('contenido')
-    
+
     <a href="#" class="float-btn-wsp">
         <i class="fa fa-whatsapp float-btn-wsp__icon"></i>
     </a>
@@ -17,9 +17,8 @@
         <a href="{{ route('carrito.checkout') }}"
             class="cart d-flex flex-column justify-content-center align-items-center text-decoration-none text-danger">
             <div class="m-0 p-0">
-                <i class="carrito__icon fa fa-shopping-cart"
-                    aria-hidden="true"></i>
-                <span class="card__count" style="color:white;">{{ Cart::count() }}</span>
+                <i class="carrito__icon fa fa-shopping-cart" aria-hidden="true"></i>
+                <span id="cantidadCarrito" class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </div>
             <span class="nm-mobile__span m-0">Carrito</span>
         </a>
@@ -170,15 +169,17 @@
                 <div class="food-carousel">
 
                     @foreach ($hamburgesas as $hamburgesa)
-                        <div class="food-wrapp p-3 shadow-none">
+                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $hamburgesa->id }}"
+                            data-nombre="{{ $hamburgesa->nombre }}" data-precio="{{ $hamburgesa->precio }}">
                             <div class="food-card">
                                 <div class="food-img">
                                     <span class="food__precio">
                                         @php
-                                         echo "$".number_format($hamburgesa->precio,0,'.',',');   
+                                            echo "$" . number_format($hamburgesa->precio, 0, '.', ',');
                                         @endphp
                                     </span>
-                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="{{ $hamburgesa->nombre }}" class="food__img">
+                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="{{ $hamburgesa->nombre }}"
+                                        class="food__img">
                                 </div>
                                 <div class="food-description">
                                     <h2 class="food-description__h2">{{ $hamburgesa->nombre }}</h2>
@@ -190,42 +191,34 @@
                                         <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="id" id="id"
+                                            <input type="hidden" name="id" id="idProducto"
                                                 value="{{ $hamburgesa->id }}">
                                             <div class="d-flex justify-content-center">
                                                 <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: var(--color-principal)"><p class="food-btns__p">Comprar</p>
+                                                    class="food-btns__btn btn" style="background: var(--color-principal)">
+                                                    <p class="food-btns__p">Comprar</p>
                                                 </button>
                                             </div>
                                         </form>
 
-                                        {{-- AGREGAR AL CARRITO --}}
-                                        <form action="{{ route('carrito.add') }}" id="formAdd" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="id" id="id"
-                                                value="{{ $hamburgesa->id }}">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: #0c0c0c;"><i class="fa fa-cart-plus food-btns__icon"
-                                                        aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-
-                                        @else
+                                        <button type="button" name="submitForm" id="submitForm"
+                                            class="agregar-carrito food-btns__btn btn" style="background: #0c0c0c;">
+                                            <i class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i>
+                                        </button>
+                                    @else
                                         <div class="d-flex justify-content-center">
                                             <button class="btn food-btns__btn" style="background: var(--color-principal);">
                                                 <a href="{{ route('login') }}"
                                                     style="text-decoration:none; display:block; color:white;"
-                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><p class="food-btns__p">Comprar</p></a>
+                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                    <p class="food-btns__p">Comprar</p>
+                                                </a>
                                             </button>
                                         </div>
 
                                         <div class="d-flex justify-content-center">
                                             <button class="btn food-btns__btn" style="background: #0c0c0c">
-                                                <a href="{{ route('login') }}"
-                                                    style="text-decoration:none; display:block;"
+                                                <a href="{{ route('login') }}" style="text-decoration:none; display:block;"
                                                     class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
                                                         class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
                                             </button>
@@ -235,31 +228,32 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
 
-            <div class="food-list" id="bebidas">
+            <div class="food-list" id="burguer">
 
                 <div class="food-list-title">
-                    <div class="shadow-lg" style="background: var(--color-principal); padding: 5px; border-radius: 50%;">
-                        <img class="food-list__icon" src="images/bebidas.png" alt="">
+                    <div class="shadow-lg" style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
+                        <img class="food-list__icon" src="images/hamburguesa.png" alt="">
                     </div>
-                    <h2 class="food-list__h2">Bebidas</h2>
+                    <h2 class="food-list__h2">Hamburguesas</h2>
                 </div>
 
                 <div class="food-carousel">
 
                     @foreach ($bebidas as $bebida)
-                        <div class="food-wrapp p-3 shadow-none">
+                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $bebida->id }}"
+                            data-nombre="{{ $bebida->nombre }}" data-precio="{{ $bebida->precio }}">
                             <div class="food-card">
                                 <div class="food-img">
                                     <span class="food__precio">
                                         @php
-                                         echo "$".number_format($bebida->precio,0,'.',',');   
+                                            echo "$" . number_format($bebida->precio, 0, '.', ',');
                                         @endphp
                                     </span>
-                                    <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}" class="food__img">
+                                    <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}"
+                                        class="food__img">
                                 </div>
                                 <div class="food-description">
                                     <h2 class="food-description__h2">{{ $bebida->nombre }}</h2>
@@ -271,42 +265,34 @@
                                         <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="id" id="id"
+                                            <input type="hidden" name="id" id="idProducto"
                                                 value="{{ $bebida->id }}">
                                             <div class="d-flex justify-content-center">
                                                 <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: var(--color-principal)"><p class="food-btns__p">Comprar</p>
+                                                    class="food-btns__btn btn" style="background: var(--color-principal)">
+                                                    <p class="food-btns__p">Comprar</p>
                                                 </button>
                                             </div>
                                         </form>
 
-                                        {{-- AGREGAR AL CARRITO --}}
-                                        <form action="{{ route('carrito.add') }}" id="formAdd" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="id" id="id"
-                                                value="{{ $bebida->id }}">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: #0c0c0c;"><i class="fa fa-cart-plus food-btns__icon"
-                                                        aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-
-                                        @else
+                                        <button type="button" name="submitForm" id="submitForm"
+                                            class="agregar-carrito food-btns__btn btn" style="background: #0c0c0c;">
+                                            <i class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i>
+                                        </button>
+                                    @else
                                         <div class="d-flex justify-content-center">
                                             <button class="btn food-btns__btn" style="background: var(--color-principal);">
                                                 <a href="{{ route('login') }}"
                                                     style="text-decoration:none; display:block; color:white;"
-                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><p class="food-btns__p">Comprar</p></a>
+                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                    <p class="food-btns__p">Comprar</p>
+                                                </a>
                                             </button>
                                         </div>
 
                                         <div class="d-flex justify-content-center">
                                             <button class="btn food-btns__btn" style="background: #0c0c0c">
-                                                <a href="{{ route('login') }}"
-                                                    style="text-decoration:none; display:block;"
+                                                <a href="{{ route('login') }}" style="text-decoration:none; display:block;"
                                                     class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
                                                         class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
                                             </button>
@@ -316,18 +302,84 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
+            
 
         </section>
     </div>
 
+    <div class="alerta" id="alerta"></div>
+
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        $(document).ready(function() {
+
+            // MOSTRAR ALERTAS
+            function mostrarAlerta() {
+                // Obtener el elemento de la alerta
+                var alerta = document.getElementById('alerta');
+
+                // Configurar el contenido de la alerta
+                alerta.innerHTML =
+                    '<div id="alertAddItem"><i class="fa fa-check-circle-o" aria-hidden="true"></i>' +
+                    '<p>Producto agregado</p>'
+                '</div>';
+
+                // Mostrar la alerta
+                $("#alerta").css({
+                    "border-radius": "5px",
+                    "z-index": "1000",
+                    "transition": "all 0.3s easy",
+                });
+                alerta.style.display = "flex";
+                alerta.style.background = "var(--color-principal)";
+                alerta.style.position = 'fixed'
+                alerta.style.top = '100px';
+                alerta.style.right = '5px';
+                alerta.style.width = '225px';
+                alerta.style.height = '80px';
+                alerta.style.opacity = '1';
+
+                // Configurar un temporizador para ocultar la alerta después de 3000 milisegundos (3 segundos)
+                setTimeout(function() {
+                    alerta.style.right = '-250px';
+                    alerta.style.opacity = '0';
+                }, 2000);
+            }
+
+            $('.agregar-carrito').click(function() {
+                var id = $(this).closest('.item').data('id');
+                var nombre = $(this).closest('.item').data('nombre');
+                var precio = $(this).closest('.item').data('precio');
+
+                $.ajax({
+                    url: '{{ route('carrito.add') }}',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        nombre: nombre,
+                        precio: precio,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(respuesta) {
+                        document.getElementById('cantidadCarrito').innerHTML = respuesta
+                            .cantidad;
+                        mostrarAlerta();
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
     <script src="{{ asset('/js/jquery.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/js/slick.js') }}"></script>
     <script src="{{ asset('/js/slick.min.js') }}"></script>
 @endsection

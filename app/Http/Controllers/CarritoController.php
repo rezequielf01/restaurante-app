@@ -14,6 +14,7 @@ use function Laravel\Prompts\alert;
 
 class CarritoController extends Controller
 {
+
     public function buy(Request $request){
         $producto = Productos::find($request->id);
         if (!empty($producto)) {
@@ -35,14 +36,16 @@ class CarritoController extends Controller
         if (!empty($producto)) {
             
             Cart::add(
-                $producto->id,
-                $producto->nombre,
+                $request->id,
+                $request->nombre,
                 1,
-                $producto->precio,
+                $request->precio,
                 ["imagen"=>$producto->imagen],
             );
-            return back()->withSuccess($producto->nombre.' se agregó al carrito');
-        
+
+            $cantidadCarrito = Cart::count();
+            // return back()->withSuccess($producto->nombre.' se agregó al carrito');
+            return response()->json(['cantidad' => $cantidadCarrito]);
         }
     }
 

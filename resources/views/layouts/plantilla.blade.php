@@ -49,7 +49,7 @@
 
             <a href="{{ route('carrito.checkout') }}" class="cart m-2" style="text-decoration: none">
                 <i class="carrito__icon fa fa-shopping-cart" style="color: var(--color-principal)" aria-hidden="true"></i>
-                <span class="card__count" style="color:white;">{{ Cart::count() }}</span>
+                <span id="cantidadCarrito" data-id="{{ Cart::count() }}" class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </a>
 
             <button class="btn dropdown-toggle d-flex flex-row align-items-center"
