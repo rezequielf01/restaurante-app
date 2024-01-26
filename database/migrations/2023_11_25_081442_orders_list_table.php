@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('cliente_id');
             $table->string('direccion');
+            $table->string('envio');
             $table->string('total');
             
             $table->foreign('cliente_id')

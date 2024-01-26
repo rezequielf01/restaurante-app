@@ -76,7 +76,7 @@ class CarritoController extends Controller
             'direccion'=>'nullable',
             // 'pedido'=>'required',
             // 'metodo_de_pago'=>'required',
-            // 'envio'=>'required',
+            'envio'=>'required',
             // 'total'=>'required',
         ]);
 
@@ -93,6 +93,7 @@ class CarritoController extends Controller
             $pedido->direccion = auth()->user()->direccion;
         }
         $pedido->cliente_id = $request->cliente_id;
+        $pedido->envio = $request->envio;
         $totalCarrito = Cart::total();
         $pedido->total = $totalCarrito;
 

@@ -15,7 +15,7 @@ class PedidosEntregados extends Model
         'direccion',
         // 'pedido',
         // 'metodo_de_pago',
-        // 'retiro',
+        'envio',
         'total',
         ];
 

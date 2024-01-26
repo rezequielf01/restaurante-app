@@ -18,7 +18,7 @@ class AdminPedidosController extends Controller
         $pedidos = db::select('SELECT * FROM pedidos');
         $pedidos_clientes = DB::table('users')
         ->join('pedidos', 'pedidos.cliente_id', '=', 'users.id')
-        ->select('users.name', 'pedidos.direccion', 'users.telefono','pedidos.id','pedidos.total','pedidos.create_time')
+        ->select('users.name', 'pedidos.direccion', 'users.telefono','pedidos.id','pedidos.envio','pedidos.total','pedidos.create_time')
         ->get();
 
         return view("admin.pedidos", compact("pedidos","pedidos_clientes"));
@@ -47,7 +47,7 @@ class AdminPedidosController extends Controller
         $pedidos_entregados = db::select("SELECT * FROM pedidos_entregados");
         $pedidos_clientes = DB::table('users')
         ->join('pedidos_entregados', 'pedidos_entregados.cliente_id', '=', 'users.id')
-        ->select('users.name', 'pedidos_entregados.direccion', 'users.telefono','pedidos_entregados.id','pedidos_entregados.total','pedidos_entregados.create_time')
+        ->select('users.name', 'pedidos_entregados.direccion', 'users.telefono','pedidos_entregados.id','pedidos_entregados.envio','pedidos_entregados.total','pedidos_entregados.create_time')
         ->get();
 
         return view("admin.pedidos-entregados", compact("pedidos_entregados","pedidos_clientes"));

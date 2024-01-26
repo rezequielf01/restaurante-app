@@ -21,6 +21,7 @@ return new class extends Migration
                 ->onUpdate('no action');
 
             $table->string("direccion");
+            $table->string("envio");
             $table->string("total");
             $table->timestamp('create_time')->nullable();
             $table->timestamp('update_time')->nullable();
