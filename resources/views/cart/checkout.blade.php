@@ -22,7 +22,7 @@
 
                         @foreach (Cart::content() as $producto)
                             <div id="producto-{{ $producto->rowId }}" class="card w-100 shadow-lg mb-3 bg-white rounded item"
-                                style="height: 150px; border:none" data-id="{{ $producto->rowId }}">
+                                style="height: 150px; border:none" data-id="{{ $producto->rowId }}" data-cantidad="{{ $producto->qty }}" data-precio="{{ $producto->price }}">
                                 <div
                                     class="card-body d-flex flex-row w-100 align-items-center justify-content-center justify-content-sm-around">
                                     <div class="card-img w-25">
@@ -32,9 +32,11 @@
                                     <div class="card-info w-50" style="margin-left: 5px">
                                         <h2 style="user-select: none;" class="checkout-card__h2">{{ $producto->name }}</h2>
                                         <span style="user-select: none;"><b>Precio unitario:
-                                            </b>{{ number_format($producto->price) }}</span><br>
-                                        <span style="user-select: none;"><b>Precio final:
-                                            </b>{{ number_format($producto->qty * $producto->price) }}</span>
+                                            </b>${{ number_format($producto->price) }}</span><br>
+                                        <b style="user-select: none;">
+                                            Precio final:
+                                            <span id="precioFinal-{{ $producto->rowId }}" style="font-weight: 200">${{ number_format($producto->qty * $producto->price) }}</span> 
+                                        </b>
                                     </div>
                                     <form class="d-flex w-25 justify-content-center"
                                         action="{{ route('carrito.delete.item', $producto->rowId) }}" method="post">
@@ -126,7 +128,7 @@
                             <span class="text-danger">{{$errors->first("envio")}}</span>
                         @endif --}}
                         @if (Cart::total() > 0)
-                            <button class="btn" style="background: var(--color-principal); color: white;"
+                            <button class="btn" id="enviarPedidoBtn" style="background: var(--color-principal); color: white;"
                                 type="submit">Enviar pedido</button>
                         @else
                             <button class="btn" style="background: var(--color-principal); border: none;" disabled
@@ -157,6 +159,7 @@
                         successCallback(respuesta);
                         // Después de recibir la respuesta, obtén el nuevo total
                         obtenerNuevoTotal();
+                        
                     },
                 });
             }
@@ -178,8 +181,10 @@
 
             $('.sumar-item').click(function() {
                 let id = $(this).closest('.item').data('id');
+          
                 funcionesCarrito('incrementar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
+                    $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
                 });
 
             });
@@ -188,6 +193,7 @@
                 let id = $(this).closest('.item').data('id');
                 funcionesCarrito('restar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
+                    $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
                 });
             });
 
@@ -205,6 +211,9 @@
                     success: function(respuesta) {
                         $('#producto-' + id).remove();
                         $('#valor-total').text("$" + respuesta.total);
+                        if(respuesta.total == 0){
+                            $('#enviarPedidoBtn').attr('disabled', 'disabled');
+                        }
                     },
                 });
             });
