@@ -145,7 +145,7 @@ class CarritoController extends Controller
     {
         Cart::remove($request->id);
         $total = Cart::total();
-        return response()->json(['total' => $total,]);
+        return response()->json(['total' => $total]);
     }
 
     public function obtenerTotal()
