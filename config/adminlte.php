@@ -320,6 +320,11 @@ return [
             'icon'        => 'fa fa-calendar-check-o',
         ],
         [
+            'text'        => 'Crear categoria',
+            'route'         => 'admin.crear.categoria',
+            'icon'        => 'fa fa-plus',
+        ],
+        [
             'text'        => 'Crear producto',
             'route'         => 'admin.crear.producto',
             'icon'        => 'fa fa-plus',

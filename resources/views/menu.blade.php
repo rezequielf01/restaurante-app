@@ -129,18 +129,12 @@
         </div>
 
         <div class="categories">
-            <a href="#burguer" class="categories-box">
-                <img class="categories-box__img" src="images/hamburguesa.png" alt="">
-                <span class="categories-box__p">Burguer</span>
-            </a>
-            <a href="#pizza" class="categories-box">
-                <img class="categories-box__img" src="images/pizza.png" alt="">
-                <span class="categories-box__p">Pizza</span>
-            </a>
-            <a href="#bebidas" class="categories-box">
-                <img class="categories-box__img" src="images/bebidas.png" alt="">
-                <span class="categories-box__p">Bebidas</span>
-            </a>
+            @foreach ($categorias as $categoria)
+                <a href="#{{$categoria->nombre}}" class="categories-box">
+                    <img class="categories-box__img" src="productos/{{ $categoria->icono }}" alt="">
+                    <span class="categories-box__p">{{$categoria->nombre}}</span>
+                </a>
+            @endforeach
         </div>
 
         <section class="foods-section">
@@ -168,22 +162,23 @@
 
                 <div class="food-carousel">
 
-                    @foreach ($hamburgesas as $hamburgesa)
-                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $hamburgesa->id }}"
-                            data-nombre="{{ $hamburgesa->nombre }}" data-precio="{{ $hamburgesa->precio }}">
+                    @foreach ($hamburguesas as $hamburguesa)
+                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $hamburguesa->id }}"
+                            data-nombre="{{ $hamburguesa->nombre }}" data-precio="{{ $hamburguesa->precio }}">
                             <div class="food-card">
                                 <div class="food-img">
                                     <span class="food__precio">
                                         @php
-                                            echo "$" . number_format($hamburgesa->precio, 0, '.', ',');
+                                            echo "$" . number_format($hamburguesa->precio, 0, '.', ',');
                                         @endphp
                                     </span>
-                                    <img src="productos/{{ $hamburgesa->imagen }}" alt="{{ $hamburgesa->nombre }}"
+                                    <img src="productos/{{ $hamburguesa->imagen }}" alt="{{ $hamburguesa->nombre }}"
                                         class="food__img">
                                 </div>
                                 <div class="food-description">
-                                    <h2 class="food-description__h2">{{ $hamburgesa->nombre }}</h2>
-                                    <p class="food-description__p mb-0 w-100 text-left">{{ $hamburgesa->descripcion }}</p>
+                                    <h2 class="food-description__h2">{{ $hamburguesa->nombre }}</h2>
+                                    <p class="food-description__p mb-0 w-100 text-left">{{ $hamburguesa->descripcion }}
+                                    </p>
                                 </div>
                                 <div class="food-btns">
                                     @auth
@@ -192,7 +187,7 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="id" id="idProducto"
-                                                value="{{ $hamburgesa->id }}">
+                                                value="{{ $hamburguesa->id }}">
                                             <div class="d-flex justify-content-center">
                                                 <button type="submit" name="submitForm" id="submitForm"
                                                     class="food-btns__btn btn" style="background: var(--color-principal)">
@@ -303,7 +298,7 @@
                     @endforeach
                 </div>
             </div>
-            
+
 
         </section>
     </div>

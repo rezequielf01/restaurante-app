@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Productos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,11 +11,30 @@ use Nette\Utils\Html;
 
 class ProductosController extends Controller
 {
-    public function create(){
-        return view("admin.crear-producto");
+    public function crearProducto(){
+        $categorias = Categorias::all();
+        return view("admin.crear-producto",compact("categorias"));
+    }
+    public function crearCategoria(){
+        return view("admin.crear-categoria");
     }
 
-    public function store(request $request){
+    public function subirCategoria(Request $request){
+
+        //UPLOAD PRODUCT
+        $icono = time().'.'.$request->icono->extension();
+        $request->icono->move(public_path('productos'),$icono);
+
+        $categoria = new Categorias();
+        $categoria->nombre = ucfirst($request->categoria);
+        $categoria->icono = $icono;
+
+        $categoria->save();
+        return back()->withSuccess('CATEGORIA AGREGADO EXITOSAMENTE!');
+        
+    }
+
+    public function subirProducto(request $request){
 
         $request->validate([
             'nombre'=>'required',

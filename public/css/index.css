@@ -397,7 +397,8 @@
     background: var(--color-principal);
     padding: 5px;
     border-radius: 5px;
-    width: 120px;
+    min-width: 150px;
+    max-width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
