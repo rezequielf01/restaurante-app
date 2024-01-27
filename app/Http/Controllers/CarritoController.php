@@ -144,12 +144,12 @@ class CarritoController extends Controller
     public function deleteItem(Request $request)
     {
         Cart::remove($request->id);
-        return response()->json(['mensaje' => 'Producto eliminado del carrito con éxito',]);
+        $total = Cart::total();
+        return response()->json(['total' => $total,]);
     }
 
     public function obtenerTotal()
     {
-
         $total = Cart::total();
 
         return response()->json(['total' => $total]);

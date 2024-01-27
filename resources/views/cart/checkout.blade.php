@@ -58,7 +58,7 @@
                                             </button>
 
                                         </div>
-                                        <button type="button" name="btn"
+                                        <button id="eliminar-item" type="button" name="btn"
                                             style="background: var(--color-principal); color: white;"
                                             class="btn eliminar-item">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -145,39 +145,53 @@
     <script>
         $(document).ready(function() {
 
-            $('.sumar-item').click(function() {
-                let id = $(this).closest('.item').data('id');
-                var botonIncrementar = $('#sumar-btn');
-                var botonDecrementar = $('#restar-btn');
+            function funcionesCarrito(url, type , id, successCallback) {
                 $.ajax({
-                    url: 'incrementar/' + id,
-                    type: 'GET',
+                    url: url + id,
+                    type: type,
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(respuesta) {
-                        $('#cantidad-' + id).text(respuesta.qty);
+                        successCallback(respuesta);
+                        // Después de recibir la respuesta, obtén el nuevo total
+                        obtenerNuevoTotal();
                     },
                 });
+            }
+
+            // Función para obtener y actualizar el total del carrito
+            function obtenerNuevoTotal() {
+                $.ajax({
+                    url: '{{ route('carrito.total') }}',
+                    type: 'GET',
+                    success: function(response) {
+                        // Actualiza la interfaz con el nuevo total
+                        $('#valor-total').text("$" + response.total);
+                    },
+                    error: function(error) {
+                        console.error('Error al obtener el total del carrito:', error);
+                    }
+                });
+            }
+
+            $('.sumar-item').click(function() {
+                let id = $(this).closest('.item').data('id');
+                funcionesCarrito('incrementar/', "GET" , id, function(respuesta) {
+                    $('#cantidad-' + id).text(respuesta.qty);
+                });
+
             });
 
             $('.restar-item').click(function() {
                 let id = $(this).closest('.item').data('id');
-                var botonIncrementar = $('#sumar-btn');
-                var botonDecrementar = $('#restar-btn');
-                $.ajax({
-                    url: 'restar/' + id,
-                    type: 'GET',
-                    data: {
-                        id: id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(respuesta) {
-                        $('#cantidad-' + id).text(respuesta.qty);
-                    },
+                funcionesCarrito('restar/', "GET" , id, function(respuesta) {
+                    $('#cantidad-' + id).text(respuesta.qty);
                 });
             });
+
+
 
             $('.eliminar-item').click(function() {
                 let id = $(this).closest('.item').data('id');
@@ -190,24 +204,25 @@
                     },
                     success: function(respuesta) {
                         $('#producto-' + id).remove();
+                        $('#valor-total').text("$" + respuesta.total);
                     },
                 });
             });
 
-            $('.sumar-item, .restar-item').on('click', function() {
-               
-                $.ajax({
-                    url: '{{route('carrito.total')}}',
-                    method: 'GET',
-                    success: function(response) {
-                        // Actualiza la interfaz con el nuevo total
-                        $('#valor-total').text(response.nuevoTotal);
-                    },
-                    error: function(error) {
-                        console.error('Error en la llamada AJAX:', error);
-                    }
-                });
-            });
+            // $('.sumar-item, .restar-item').on('click', function() {
+
+            //     $.ajax({
+            //         url: '{{ route('carrito.total') }}',
+            //         method: 'GET',
+            //         success: function(response) {
+            //             // Actualiza la interfaz con el nuevo total
+            //             $('#valor-total').text(response.nuevoTotal);
+            //         },
+            //         error: function(error) {
+            //             console.error('Error en la llamada AJAX:', error);
+            //         }
+            //     });
+            // });
 
         });
     </script>
