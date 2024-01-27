@@ -43,6 +43,7 @@ Route::get('carrito/clear', [CarritoController::class, 'clear'])->name('carrito.
 Route::get('carrito/incrementar/{id}', [CarritoController::class, 'incrementarCantidad']);
 Route::get('carrito/restar/{id}', [CarritoController::class, 'restarCantidad']);
 Route::post('carrito/delete-item', [CarritoController::class, 'deleteItem'])->name('carrito.delete.item');
+Route::get('carrito/obtener-total', [CarritoController::class, 'obtenerTotal'])->name('carrito.total');
 Route::post('carrito/enviar-pedido', [CarritoController::class, 'sendOrder'])->name('carrito.enviar.pedido');
 
 // PAGINAS

@@ -15,32 +15,33 @@ use function Laravel\Prompts\alert;
 class CarritoController extends Controller
 {
 
-    public function buy(Request $request){
+    public function buy(Request $request)
+    {
         $producto = Productos::find($request->id);
         if (!empty($producto)) {
-            
+
             Cart::add(
                 $producto->id,
                 $producto->nombre,
                 1,
                 $producto->precio,
-                ["imagen"=>$producto->imagen],
+                ["imagen" => $producto->imagen],
             );
             return redirect()->route('carrito.checkout');
-        
         }
     }
 
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         $producto = Productos::find($request->id);
         if (!empty($producto)) {
-            
+
             Cart::add(
                 $request->id,
                 $request->nombre,
                 1,
                 $request->precio,
-                ["imagen"=>$producto->imagen],
+                ["imagen" => $producto->imagen],
             );
 
             $cantidadCarrito = Cart::count();
@@ -49,47 +50,43 @@ class CarritoController extends Controller
         }
     }
 
-    public function checkout(){
-        if(auth()->user() == null) {
+    public function checkout()
+    {
+        if (auth()->user() == null) {
             return view("auth.login");
-        }
-        else {
+        } else {
             return view("cart.checkout");
         }
     }
 
-    public function deleteItem(Request $request){
-        Cart::remove($request->rowId);  
-        return back()->withDanger('Producto eliminado!');
-    }
-
-    public function clear(){
+    public function clear()
+    {
         Cart::destroy();
         return back()->withSuccess('Carrito vaciado!');
     }
 
-    public function sendOrder(request $request){
+    public function sendOrder(request $request)
+    {
 
         $request->validate([
-            'cliente_id'=>'required',
+            'cliente_id' => 'required',
             // 'telefono'=>'required',
-            'direccion'=>'nullable',
+            'direccion' => 'nullable',
             // 'pedido'=>'required',
             // 'metodo_de_pago'=>'required',
-            'envio'=>'required',
+            'envio' => 'required',
             // 'total'=>'required',
         ]);
 
         //UPLOAD PRODUCT
-        
+
         $clienteID = $request->cliente_id;
         // $totalPrice = Cart::Total();
 
         $pedido = new Pedidos();
-        if($request->direccion != ""){
+        if ($request->direccion != "") {
             $pedido->direccion = $request->direccion;
-        }
-        else{
+        } else {
             $pedido->direccion = auth()->user()->direccion;
         }
         $pedido->cliente_id = $request->cliente_id;
@@ -109,24 +106,52 @@ class CarritoController extends Controller
                     'precio' => $item->price,
                 ]);
             }
-            
         }
         Cart::destroy();
         return back()->withSuccess('¡Su pedido a sido enviado!');
-
-        
     }
 
-    public function incrementarCantidad(Request $request){
+    public function incrementarCantidad(Request $request)
+    {
+
         $item = Cart::content()->where("rowId", $request->id)->first();
-        Cart::update($request->id,["qty"=>$item->qty+1]);
-        return back()->withSuccess($item->name.' (+)');
+        Cart::update($request->id, [
+            'qty' => $item->qty + 1,
+        ]);
+
+        $nuevaCantidad = Cart::get($request->id)->qty;
+
+        return response()->json(['qty' => $nuevaCantidad]);
+
+        // return back()->withSuccess($item->name.' (+)');
     }
 
-    public function restarCantidad(Request $request){
+    public function restarCantidad(Request $request)
+    {
         $item = Cart::content()->where("rowId", $request->id)->first();
-        Cart::update($request->id,["qty"=>$item->qty-1]);
-        return back()->withDanger($item->name.' (-)');
+
+        if ($item->qty >= 2) {
+            Cart::update($request->id, [
+                "qty" => $item->qty - 1
+            ]);
+        }
+
+        $nuevaCantidad = Cart::get($request->id)->qty;
+
+        return response()->json(['qty' => $nuevaCantidad]);
     }
 
+    public function deleteItem(Request $request)
+    {
+        Cart::remove($request->id);
+        return response()->json(['mensaje' => 'Producto eliminado del carrito con éxito',]);
+    }
+
+    public function obtenerTotal()
+    {
+
+        $total = Cart::total();
+
+        return response()->json(['total' => $total]);
+    }
 }

@@ -21,33 +21,48 @@
                     @if (Cart::count())
 
                         @foreach (Cart::content() as $producto)
-                            <div class="card w-100 shadow-lg mb-3 bg-white rounded" style="height: 150px; border:none">
+                            <div id="producto-{{ $producto->rowId }}" class="card w-100 shadow-lg mb-3 bg-white rounded item"
+                                style="height: 150px; border:none" data-id="{{ $producto->rowId }}">
                                 <div
                                     class="card-body d-flex flex-row w-100 align-items-center justify-content-center justify-content-sm-around">
                                     <div class="card-img w-25">
                                         <img src="/restaurante-app/public/productos/{{ $producto->options->imagen }}"
                                             width="100%" height="100px" alt="">
                                     </div>
-                                    <div class="card-info w-50">
-                                        <h2 class="checkout-card__h2">{{ $producto->name }}</h2>
-                                        <span><b>Precio unitario: </b>{{ number_format($producto->price) }}</span><br>
-                                        <span><b>Precio final:
-                                            </b>{{ number_format($producto->qty * $producto->price) }}</span><br>
-                                        <span><b>Cantidad: </b>{{ $producto->qty }}</span>
+                                    <div class="card-info w-50" style="margin-left: 5px">
+                                        <h2 style="user-select: none;" class="checkout-card__h2">{{ $producto->name }}</h2>
+                                        <span style="user-select: none;"><b>Precio unitario:
+                                            </b>{{ number_format($producto->price) }}</span><br>
+                                        <span style="user-select: none;"><b>Precio final:
+                                            </b>{{ number_format($producto->qty * $producto->price) }}</span>
                                     </div>
                                     <form class="d-flex w-25 justify-content-center"
                                         action="{{ route('carrito.delete.item', $producto->rowId) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="rowId" value="{{ $producto->rowId }}">
                                         <div class="d-flex flex-column justify-content-center p-1 gap-1">
-                                            <a href="incrementar/{{ $producto->rowId }}" class="btn btn-danger"><i
-                                                    class="fa fa-plus" aria-hidden="true"></i></a>
-                                            <button type="button" class="btn">{{ $producto->qty }}</button>
-                                            <a href="restar/{{ $producto->rowId }}" class="btn btn-danger"><i
-                                                    class="fa fa-minus" aria-hidden="true"></i></a>
+
+                                            <button id="sumar-btn" type="button"
+                                                style="background: var(--color-principal); color:white;"
+                                                class="btn sumar-item">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+
+                                            <span id="cantidad-{{ $producto->rowId }}"
+                                                style="text-align: center">{{ $producto->qty }}</span>
+
+                                            <button id="restar-btn" type="button"
+                                                style="background: var(--color-principal); color:white;"
+                                                class="btn restar-item">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </button>
+
                                         </div>
-                                        <button type="submit" name="btn" class="btn btn-danger text-light"><i
-                                                class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                        <button type="button" name="btn"
+                                            style="background: var(--color-principal); color: white;"
+                                            class="btn eliminar-item">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -60,14 +75,15 @@
                 </div>
                 <div class="card-body m-auto">
                     <a href="{{ route('carrito.clear') }}" class="btn btn-dark">Vaciar carrito</a>
-                    <a href="{{ route('menu') }}" class="btn btn-danger">Volver al menú</a>
+                    <a href="{{ route('menu') }}" class="btn"
+                        style="background: var(--color-principal); color: white;">Volver al menú</a>
                 </div>
             </div>
             <div
                 class="checkout-ticket card d-flex align-items-center justify-content-center shadow-lg p-3 bg-white rounded">
-                <h4 class="text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Dellates de la compra</h4>
-                <form onsubmit="return validarFormulario()" class="d-flex flex-column gap-2 mt-5 mb-5 align-items-left" style="position: relative; z-index:10;"
-                    method="POST" action="{{ route('carrito.enviar.pedido') }}">
+                <h4 class="text-center">Dellates de la compra</h4>
+                <form onsubmit="return validarFormulario()" class="d-flex flex-column gap-2 mt-5 mb-5 align-items-left"
+                    style="position: relative; z-index:10;" method="POST" action="{{ route('carrito.enviar.pedido') }}">
                     @csrf
                     <label>Cliente:
                         <input type="text" name="cliente_id" placeholder="abc" value="{{ auth()->user()->id }}"
@@ -80,10 +96,11 @@
                         <input type="text" disabled id="direccion"
                             style="width: 50%; border: none; padding: 2px 5px; border-radius: 3px" name="direccion"
                             placeholder="{{ auth()->user()->direccion }}">
-                        <div class="bg-danger shadow-lg" style="border-radius: 2px; cursor: pointer;"
+                        <button type="button" class="shadow-lg"
+                            style="background: #212529; color: white; ;border-radius: 2px; cursor: pointer; border: none;"
                             title="Editar dirección" onclick="editDireccion()">
                             <i class="p-2 fa fa-pencil" aria-hidden="true"></i>
-                        </div>
+                        </button>
                     </label>
 
                     <label for="envio"><input type="checkbox" class="checkbox" id="checkboxLocal" name="envio"
@@ -92,7 +109,9 @@
                             value="delivery a domicilio"> <i class="fa fa-motorcycle" aria-hidden="true"></i>
                         Envio a domicilio</label>
 
-                    <p>Total: <span style="font-weight: bold">${{ Cart::Total() }}</span></p>
+
+                    <p>Total: <span id="valor-total"
+                            style="font-weight: bold; user-select: none;">${{ cart::total() }}</span></p>
                     <div style="position: relative; z-index: 50; top: 0;"
                         class="w-100 mt-5 gap-2 d-flex flex-column justify-content-center">
                         {{-- <label>Forma de pago:
@@ -101,17 +120,20 @@
                                 <option value="Transferencia">Transferencia</option>
                             </select>
                         </label>
-                        <label for="envio"><input type="checkbox" id="" name="envio" value="retira en local"> <i class="fa fa-home" aria-hidden="true"></i> Retiro en local</label>
+                        
                         <label for="envio"><input type="checkbox" id="" name="envio" value="delivery a domicilio"> <i class="fa fa-motorcycle" aria-hidden="true"></i> Delivery</label>
                         @if ($errors->has('envio'))
                             <span class="text-danger">{{$errors->first("envio")}}</span>
                         @endif --}}
                         @if (Cart::total() > 0)
-                            <button class="btn btn-danger" type="submit">Enviar pedido</button>
+                            <button class="btn" style="background: var(--color-principal); color: white;"
+                                type="submit">Enviar pedido</button>
                         @else
-                            <button class="btn btn-danger" disabled type="submit">Enviar pedido</button>
+                            <button class="btn" style="background: var(--color-principal); border: none;" disabled
+                                type="submit">Enviar pedido</button>
                         @endif
                     </div>
+
                 </form>
             </div>
         </div>
@@ -119,61 +141,132 @@
 @endsection
 
 @section('js')
-<script>
-    // VALIDACION DE FORMULARIO
-    function validarFormulario() {
-        let checkboxLocal = document.getElementById('checkboxLocal');
-        let checkboxDelivery = document.getElementById('checkboxDelivery');
 
-        if (!checkboxLocal.checked && !checkboxDelivery.checked) {
-            Swal.fire({
-                icon: "question",
-                text: "¿Necesitás que llevemos tú pedido?",
-                confirmButtonColor: '#212529',
+    <script>
+        $(document).ready(function() {
+
+            $('.sumar-item').click(function() {
+                let id = $(this).closest('.item').data('id');
+                var botonIncrementar = $('#sumar-btn');
+                var botonDecrementar = $('#restar-btn');
+                $.ajax({
+                    url: 'incrementar/' + id,
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(respuesta) {
+                        $('#cantidad-' + id).text(respuesta.qty);
+                    },
+                });
             });
-            return false;
-        } else if ((checkboxLocal && !checkboxDelivery) || (!checkboxLocal && checkboxDelivery)) {
-            return true;
+
+            $('.restar-item').click(function() {
+                let id = $(this).closest('.item').data('id');
+                var botonIncrementar = $('#sumar-btn');
+                var botonDecrementar = $('#restar-btn');
+                $.ajax({
+                    url: 'restar/' + id,
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(respuesta) {
+                        $('#cantidad-' + id).text(respuesta.qty);
+                    },
+                });
+            });
+
+            $('.eliminar-item').click(function() {
+                let id = $(this).closest('.item').data('id');
+                $.ajax({
+                    url: '{{ route('carrito.delete.item') }}',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(respuesta) {
+                        $('#producto-' + id).remove();
+                    },
+                });
+            });
+
+            $('.sumar-item, .restar-item').on('click', function() {
+               
+                $.ajax({
+                    url: '{{route('carrito.total')}}',
+                    method: 'GET',
+                    success: function(response) {
+                        // Actualiza la interfaz con el nuevo total
+                        $('#valor-total').text(response.nuevoTotal);
+                    },
+                    error: function(error) {
+                        console.error('Error en la llamada AJAX:', error);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+    <script>
+        // VALIDACION DE FORMULARIO
+        function validarFormulario() {
+            let checkboxLocal = document.getElementById('checkboxLocal');
+            let checkboxDelivery = document.getElementById('checkboxDelivery');
+
+            if (!checkboxLocal.checked && !checkboxDelivery.checked) {
+                Swal.fire({
+                    icon: "question",
+                    text: "¿Necesitás que llevemos tú pedido?",
+                    confirmButtonColor: '#212529',
+                });
+                return false;
+            } else if ((checkboxLocal && !checkboxDelivery) || (!checkboxLocal && checkboxDelivery)) {
+                return true;
+            }
         }
-    }
-</script>
+    </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // EVITAR MULTIPLE SELECCION DE CHECKBOX
-        let input = document.getElementById('direccion');
+            // EVITAR MULTIPLE SELECCION DE CHECKBOX
+            let input = document.getElementById('direccion');
 
-        input.addEventListener('blur', function() {
-            // Desactivar el input cuando pierde el foco
-            input.disabled = true;
-        });
+            input.addEventListener('blur', function() {
+                // Desactivar el input cuando pierde el foco
+                input.disabled = true;
+            });
 
-        // CHECKBOX
-        let checkboxes = document.querySelectorAll('.checkbox');
+            // CHECKBOX
+            let checkboxes = document.querySelectorAll('.checkbox');
 
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    // Desactivar los otros checkboxes
-                    checkboxes.forEach(function(otherCheckbox) {
-                        if (otherCheckbox !== checkbox) {
-                            otherCheckbox.disabled = true;
-                        }
-                    });
-                } else {
-                    // Habilitar todos los checkboxes
-                    checkboxes.forEach(function(otherCheckbox) {
-                        otherCheckbox.disabled = false;
-                    });
-                }
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Desactivar los otros checkboxes
+                        checkboxes.forEach(function(otherCheckbox) {
+                            if (otherCheckbox !== checkbox) {
+                                otherCheckbox.disabled = true;
+                            }
+                        });
+                    } else {
+                        // Habilitar todos los checkboxes
+                        checkboxes.forEach(function(otherCheckbox) {
+                            otherCheckbox.disabled = false;
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
-     {{-- EDITAR DIRECCION --}}
-     <script>
+    {{-- EDITAR DIRECCION --}}
+    <script>
         function editDireccion() {
             var direccionInput = document.getElementById('direccion');
             direccionInput.disabled = false;

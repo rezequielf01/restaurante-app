@@ -231,13 +231,13 @@
                 </div>
             </div>
 
-            <div class="food-list" id="burguer">
+            <div class="food-list" id="bebidas">
 
                 <div class="food-list-title">
                     <div class="shadow-lg" style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
-                        <img class="food-list__icon" src="images/hamburguesa.png" alt="">
+                        <img class="food-list__icon" src="images/bebidas.png" alt="">
                     </div>
-                    <h2 class="food-list__h2">Hamburguesas</h2>
+                    <h2 class="food-list__h2">Bebidas +18</h2>
                 </div>
 
                 <div class="food-carousel">
@@ -245,19 +245,18 @@
                     @foreach ($bebidas as $bebida)
                         <div class="food-wrapp p-3 shadow-none item" data-id="{{ $bebida->id }}"
                             data-nombre="{{ $bebida->nombre }}" data-precio="{{ $bebida->precio }}">
-                            <div class="food-card">
-                                <div class="food-img">
-                                    <span class="food__precio">
+                            <div class="food-card food-bebidas">
+                                <div class="food-img-bebidas">
+                                    <span class="food__precio-bebidas">
                                         @php
                                             echo "$" . number_format($bebida->precio, 0, '.', ',');
                                         @endphp
                                     </span>
                                     <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}"
-                                        class="food__img">
+                                        class="food__img-bebidas">
                                 </div>
-                                <div class="food-description">
+                                <div class="food-description-bebidas">
                                     <h2 class="food-description__h2">{{ $bebida->nombre }}</h2>
-                                    <p class="food-description__p mb-0 w-100 text-left">{{ $bebida->descripcion }}</p>
                                 </div>
                                 <div class="food-btns">
                                     @auth
@@ -341,7 +340,7 @@
                 alerta.style.position = 'fixed'
                 alerta.style.top = '100px';
                 alerta.style.right = '5px';
-                alerta.style.width = '225px';
+                alerta.style.width = '250px';
                 alerta.style.height = '80px';
                 alerta.style.opacity = '1';
 
