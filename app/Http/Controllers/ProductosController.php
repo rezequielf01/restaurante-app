@@ -41,7 +41,7 @@ class ProductosController extends Controller
             'descripcion'=>'nullable',
             'precio'=>'required',
             'imagen'=>'required|mimes:jpeg,jpg,png',
-            'categoria'=>'nullable',
+            'categoria_id'=>'nullable',
             'stock'=>'nullable',
         ]);
 
@@ -55,7 +55,7 @@ class ProductosController extends Controller
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
-        $producto->categoria = $request->categoria;
+        $producto->categoria_id = $request->categoria;
         $producto->stock = $request->stock;
 
         $producto->save();

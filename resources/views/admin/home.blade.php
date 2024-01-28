@@ -68,7 +68,7 @@
                     </div>
                     <a href="{{ route('admin.pedidos.entregados') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-
+{{-- 
                 <div class="small-box" style="width: 300px; background:#343a40;">
                     <div class="d-flex align-items-center justify-content-around">
                         <div style="color: #f1f1f1" class="inner">
@@ -80,9 +80,9 @@
                         </div>
                     </div>
                     <a href="{{ route('admin.productos.comidas') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
+                </div> --}}
 
-                <div class="small-box" style="width: 300px; background:#343a40;">
+                {{-- <div class="small-box" style="width: 300px; background:#343a40;">
                     <div class="d-flex align-items-center justify-content-around">
                         <div style="color: #f1f1f1" class="inner">
                             <h3>{{ $bebidas }}</h3>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <a href="{{ route('admin.productos.bebidas') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
+                </div> --}}
 
                 <div class="small-box" style="width: 300px; background:#343a40;">
                     <div class="d-flex align-items-center justify-content-around">

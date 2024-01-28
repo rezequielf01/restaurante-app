@@ -16,14 +16,11 @@ class AdminHomeController extends Controller
         $productosRegistrados = Productos::count();
         $pedidosPendientes = Pedidos::count();
         $pedidosEntregados = PedidosEntregados::count();
-        $comidasSQL = DB::select("SELECT * FROM productos WHERE categoria = 'hamburgesa' OR categoria = 'pizza'");
-        $comidas = count($comidasSQL);
-        $bebidasSQL = DB::select("SELECT * FROM productos WHERE categoria = 'bebida'");
-        $bebidas = count($bebidasSQL);
+
 
         $ingresosMensuales = PedidosEntregados::whereMonth('create_time', now()->month)->sum('total');;
         
         return view("admin.home", compact("usuariosRegistrados","productosRegistrados",
-        "pedidosPendientes","pedidosEntregados","comidas","bebidas","ingresosMensuales"));
+        "pedidosPendientes","pedidosEntregados","ingresosMensuales"));
     }
 }

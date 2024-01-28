@@ -17,9 +17,11 @@ return new class extends Migration
             $table->text("descripcion",100)->nullable();
             $table->decimal("precio");
             $table->string("imagen")->nullable();
-            $table->string("categoria");
             $table->string("stock")->nullable();
+            $table->string("categoria_id");
+
             $table->timestamps();
+
         });
     }
 

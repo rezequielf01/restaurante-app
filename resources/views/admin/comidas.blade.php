@@ -32,7 +32,7 @@
             </div>
         @endif
 
-        <table id="example" class="table table-striped" style="width:100%">
+        {{-- <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th style="min-width: 35px; max-width: 35px;">ID</th>
@@ -58,7 +58,7 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
 
 @stop
 

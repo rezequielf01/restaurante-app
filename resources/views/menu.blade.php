@@ -130,177 +130,94 @@
 
         <div class="categories">
             @foreach ($categorias as $categoria)
-                <a href="#{{$categoria->nombre}}" class="categories-box">
+                <a href="#{{ $categoria->nombre }}" class="categories-box">
                     <img class="categories-box__img" src="productos/{{ $categoria->icono }}" alt="">
-                    <span class="categories-box__p">{{$categoria->nombre}}</span>
+                    <span class="categories-box__p">{{ $categoria->nombre }}</span>
                 </a>
             @endforeach
         </div>
 
         <section class="foods-section">
 
-            @if (session('success'))
-                <script>
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Your work has been saved",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-            @endif
-
-            <div class="food-list" id="burguer">
-
-                <div class="food-list-title">
-                    <div class="shadow-lg" style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
-                        <img class="food-list__icon" src="images/hamburguesa.png" alt="">
-                    </div>
-                    <h2 class="food-list__h2">Hamburguesas</h2>
-                </div>
-
-                <div class="food-carousel">
-
-                    @foreach ($hamburguesas as $hamburguesa)
-                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $hamburguesa->id }}"
-                            data-nombre="{{ $hamburguesa->nombre }}" data-precio="{{ $hamburguesa->precio }}">
-                            <div class="food-card">
-                                <div class="food-img">
-                                    <span class="food__precio">
-                                        @php
-                                            echo "$" . number_format($hamburguesa->precio, 0, '.', ',');
-                                        @endphp
-                                    </span>
-                                    <img src="productos/{{ $hamburguesa->imagen }}" alt="{{ $hamburguesa->nombre }}"
-                                        class="food__img">
-                                </div>
-                                <div class="food-description">
-                                    <h2 class="food-description__h2">{{ $hamburguesa->nombre }}</h2>
-                                    <p class="food-description__p mb-0 w-100 text-left">{{ $hamburguesa->descripcion }}
-                                    </p>
-                                </div>
-                                <div class="food-btns">
-                                    @auth
-                                        {{-- COMPRAR --}}
-                                        <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="id" id="idProducto"
-                                                value="{{ $hamburguesa->id }}">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: var(--color-principal)">
-                                                    <p class="food-btns__p">Comprar</p>
-                                                </button>
-                                            </div>
-                                        </form>
-
-                                        <button type="button" name="submitForm" id="submitForm"
-                                            class="agregar-carrito food-btns__btn btn" style="background: #0c0c0c;">
-                                            <i class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i>
-                                        </button>
-                                    @else
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn food-btns__btn" style="background: var(--color-principal);">
-                                                <a href="{{ route('login') }}"
-                                                    style="text-decoration:none; display:block; color:white;"
-                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                    <p class="food-btns__p">Comprar</p>
-                                                </a>
-                                            </button>
-                                        </div>
-
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn food-btns__btn" style="background: #0c0c0c">
-                                                <a href="{{ route('login') }}" style="text-decoration:none; display:block;"
-                                                    class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
-                                                        class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
-                                            </button>
-                                        </div>
-                                    @endauth
-                                </div>
-                            </div>
+            @foreach ($categorias as $categoria)
+                <div class="categoria">
+                    <div class="food-list-title">
+                        <div class="shadow-lg"
+                            style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
+                            <img class="food-list__icon" src="productos/{{ $categoria->icono }}"
+                                alt="{{ $categoria->nombre }}">
                         </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="food-list" id="bebidas">
-
-                <div class="food-list-title">
-                    <div class="shadow-lg" style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
-                        <img class="food-list__icon" src="images/bebidas.png" alt="">
+                        <h2 class="food-list__h2">{{ $categoria->nombre }}</h2>
                     </div>
-                    <h2 class="food-list__h2">Bebidas +18</h2>
-                </div>
-
-                <div class="food-carousel">
-
-                    @foreach ($bebidas as $bebida)
-                        <div class="food-wrapp p-3 shadow-none item" data-id="{{ $bebida->id }}"
-                            data-nombre="{{ $bebida->nombre }}" data-precio="{{ $bebida->precio }}">
-                            <div class="food-card food-bebidas">
-                                <div class="food-img-bebidas">
-                                    <span class="food__precio-bebidas">
-                                        @php
-                                            echo "$" . number_format($bebida->precio, 0, '.', ',');
-                                        @endphp
-                                    </span>
-                                    <img src="productos/{{ $bebida->imagen }}" alt="{{ $bebida->nombre }}"
-                                        class="food__img-bebidas">
-                                </div>
-                                <div class="food-description-bebidas">
-                                    <h2 class="food-description__h2">{{ $bebida->nombre }}</h2>
-                                </div>
-                                <div class="food-btns">
-                                    @auth
-                                        {{-- COMPRAR --}}
-                                        <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="id" id="idProducto"
-                                                value="{{ $bebida->id }}">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="submit" name="submitForm" id="submitForm"
-                                                    class="food-btns__btn btn" style="background: var(--color-principal)">
-                                                    <p class="food-btns__p">Comprar</p>
+                    <ul>
+                        <div class="food-carousel">
+                            @foreach ($categoria->productos as $producto)
+                                <div class="food-wrapp p-3 shadow-none item" data-id="{{ $producto->id }}"
+                                    data-nombre="{{ $producto->nombre }}" data-precio="{{ $producto->precio }}">
+                                    <div class="food-card">
+                                        <div class="food-img">
+                                            <span class="food__precio">
+                                                @php
+                                                    echo "$" . number_format($producto->precio, 0, '.', ',');
+                                                @endphp
+                                            </span>
+                                            <img src="productos/{{ $producto->imagen }}" alt="{{ $producto->nombre }}"
+                                            class="food__img">
+                                        </div>
+                                        <div class="food-description">
+                                            <h2 class="food-description__h2">{{ $producto->nombre }}</h2>
+                                            <p class="food-description__p mb-0 w-100 text-left">{{ $producto->descripcion }}</p>
+                                        </div>
+                                        <div class="food-btns">
+                                            @auth
+                                                {{-- COMPRAR --}}
+                                                <form action="{{ route('carrito.buy') }}" id="formAdd" method="post"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="id" id="idProducto"
+                                                        value="{{ $producto->id }}">
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit" name="submitForm" id="submitForm"
+                                                            class="food-btns__btn btn" style="background: var(--color-principal)">
+                                                            <p class="food-btns__p">Comprar</p>
+                                                        </button>
+                                                    </div>
+                                                </form>
+        
+                                                <button type="button" name="submitForm" id="submitForm"
+                                                    class="agregar-carrito food-btns__btn btn" style="background: #0c0c0c;">
+                                                    <i class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i>
                                                 </button>
-                                            </div>
-                                        </form>
-
-                                        <button type="button" name="submitForm" id="submitForm"
-                                            class="agregar-carrito food-btns__btn btn" style="background: #0c0c0c;">
-                                            <i class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i>
-                                        </button>
-                                    @else
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn food-btns__btn" style="background: var(--color-principal);">
-                                                <a href="{{ route('login') }}"
-                                                    style="text-decoration:none; display:block; color:white;"
-                                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                    <p class="food-btns__p">Comprar</p>
-                                                </a>
-                                            </button>
+                                            @else
+                                                <div class="d-flex justify-content-center">
+                                                    <button class="btn food-btns__btn" style="background: var(--color-principal);">
+                                                        <a href="{{ route('login') }}"
+                                                            style="text-decoration:none; display:block; color:white;"
+                                                            class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                            <p class="food-btns__p">Comprar</p>
+                                                        </a>
+                                                    </button>
+                                                </div>
+        
+                                                <div class="d-flex justify-content-center">
+                                                    <button class="btn food-btns__btn" style="background: #0c0c0c">
+                                                        <a href="{{ route('login') }}" style="text-decoration:none; display:block;"
+                                                            class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
+                                                                class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
+                                                    </button>
+                                                </div>
+                                            @endauth
                                         </div>
-
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn food-btns__btn" style="background: #0c0c0c">
-                                                <a href="{{ route('login') }}" style="text-decoration:none; display:block;"
-                                                    class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"><i
-                                                        class="fa fa-cart-plus food-btns__icon" aria-hidden="true"></i></a>
-                                            </button>
-                                        </div>
-                                    @endauth
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </ul>
                 </div>
-            </div>
-
+            @endforeach
 
         </section>
+
     </div>
 
     <div class="alerta" id="alerta"></div>

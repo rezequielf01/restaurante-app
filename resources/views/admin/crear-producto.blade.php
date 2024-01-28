@@ -45,7 +45,7 @@
                                 <select class="form-control" id="categoria" name="categoria" onchange="activarCampo()" required>
                                     <option value="" disabled selected>Selecciona una categoria</option>
                                     @foreach ($categorias as $categoria)
-                                        <option value="{{$categoria->nombre}}">{{$categoria->nombre}}</option>    
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>    
                                     @endforeach
                                 </select>
 
@@ -56,7 +56,7 @@
                                 
                                         // Activa el campo si la categoría seleccionada es "electronica"
                                         // Puedes ajustar esta lógica según tus necesidades
-                                        if (categoriaSeleccionada === "bebidas" || categoriaSeleccionada === "bebida") {
+                                        if (categoriaSeleccionada === "Bebidas" || categoriaSeleccionada === "Bebida") {
                                             campoCaracteristica.disabled = false;
                                         } else {
                                             // Desactiva el campo para otras categorías
