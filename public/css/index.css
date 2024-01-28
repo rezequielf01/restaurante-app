@@ -319,6 +319,16 @@
     width: 50%;
 }
 
+/* MENU HERO */
+.hero-contenedor{
+    width: 100%;
+    height: 500px;
+}
+.hero__img{
+    width: 100%;
+    height: 100%;
+}
+
 /* NAV-MOBILE */
 .nav-mobile{
     display: none;
@@ -328,6 +338,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
+}
+.header-btn-wsp{
+    display: none;
 }
 
 .float-btn-wsp{
@@ -497,9 +510,6 @@
 
 
 /* FOOD SECTION */
-#burguer, #bebidas{
-    scroll-margin-top: 18vh;
-}
 
 .foods-section{
     width: 100%;

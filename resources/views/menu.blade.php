@@ -15,25 +15,25 @@
 
     <nav class="nav-mobile text-danger">
         <a href="{{ route('carrito.checkout') }}"
-            class="cart d-flex flex-column justify-content-center align-items-center text-decoration-none text-danger">
+            class="cart d-flex flex-column justify-content-center align-items-center text-decoration-none" style="color:var(--color-principal)">
             <div class="m-0 p-0">
                 <i class="carrito__icon fa fa-shopping-cart" aria-hidden="true"></i>
-                <span id="cantidadCarrito" class="card__count" style="color:white;">{{ Cart::count() }}</span>
+                <span id="cantidadCarrito2" data-id="{{ Cart::count() }}" class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </div>
             <span class="nm-mobile__span m-0">Carrito</span>
         </a>
         <a href="{{ route('menu') }}"
-            class="d-flex text-danger text-decoration-none flex-column justify-content-center align-items-center">
+            class="nav-mobile-menu d-flex text-danger text-decoration-none flex-column justify-content-center align-items-center">
             <i class="fa fa-book nm-icons" aria-hidden="true"></i>
             <span class="nm-mobile__span">Menú</span>
         </a>
         <div class="btn-group d-flex dropup">
             <button type="button" class="d-flex bg-transparent border-0 dropdown-toggle" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <span class="d-flex text-danger text-decoration-none flex-column justify-content-center align-items-center"
-                    style="font-size: .9rem">
-                    <i class="fa fa-user text-danger nm-icons" aria-hidden="true"></i>
-                    <span class="nm-mobile__span m-0">Perfil <i class="fa fa-level-up" aria-hidden="true"></i></span>
+                <span class="d-flex  text-decoration-none flex-column justify-content-center align-items-center"
+                    style="font-size: .9rem;">
+                    <i class="fa fa-user nm-icons" style="color:var(--color-principal)" aria-hidden="true"></i>
+                    <span class="nm-mobile__span m-0">Perfil</span>
                 </span>
             </button>
             <ul class="dropdown-menu m-0 p-0 border-1">
@@ -83,54 +83,17 @@
                 </div>
             </ul>
         </div>
-        {{-- <button class="btn dropdown-toggle d-flex flex-row align-items-center" style="color: var(--color-principal);"
-            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            @auth
-                @php
-                    $userName = auth()->user()->name;
-                    $userDireccion = auth()->user()->direccion;
-                @endphp
-                <div class="container d-flex" style="flex-direction:column;">
-                    <span class="text-light" style="font-size: .9rem">
-                        <i style="color:rgb(252, 98, 60);" class="fa fa-map-marker" aria-hidden="true"></i>
-                        {{ ucfirst($userDireccion) }}
-                    </span>
-                </div>
-            @else
-                <i class="fa fa-user" aria-hidden="true"></i>
-            @endauth
-        </button> --}}
     </nav>
 
     <div class="contenedor-principal">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img style="height: 500px"
-                        src="https://www.guiarepsol.com/content/dam/repsol-guia/contenidos-imagenes/comer/nuestros-favoritos/restaurante-raices-talavera-de-la-reina/gr-cms-media-featured_images-none-5d1f48f5-d145-41d6-a151-52623884d1b4-raices_445s.jpg"
-                        class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img style="height: 500px"
-                        src="https://www.raicescocinacasera.com.ar/site/wp-content/uploads/2013/12/home-1.jpg"
-                        class="d-block w-100" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
+        <div class="hero-contenedor">
+            <img class="hero__img"
+                        src="https://www.raicescocinacasera.com.ar/site/wp-content/uploads/2013/12/home-1.jpg">
         </div>
 
         <div class="categories">
             @foreach ($categorias as $categoria)
-                <a href="#{{ $categoria->nombre }}" class="categories-box">
+                <a href="#{{ $categoria->nombre }}" style="scroll-margin-top: 100px"  class="categories-box">
                     <img class="categories-box__img" src="productos/{{ $categoria->icono }}" alt="">
                     <span class="categories-box__p">{{ $categoria->nombre }}</span>
                 </a>
@@ -140,7 +103,7 @@
         <section class="foods-section">
 
             @foreach ($categorias as $categoria)
-                <div class="categoria">
+                <div class="categoria" id="{{$categoria->nombre}}">
                     <div class="food-list-title">
                         <div class="shadow-lg"
                             style="background: var(--color-principal); padding: 7px; border-radius: 50%;">
@@ -149,7 +112,7 @@
                         </div>
                         <h2 class="food-list__h2">{{ $categoria->nombre }}</h2>
                     </div>
-                    <ul>
+                    <ul class="categoria__carousel">
                         <div class="food-carousel">
                             @foreach ($categoria->productos as $producto)
                                 <div class="food-wrapp p-3 shadow-none item" data-id="{{ $producto->id }}"
@@ -279,6 +242,8 @@
                     },
                     success: function(respuesta) {
                         document.getElementById('cantidadCarrito').innerHTML = respuesta
+                            .cantidad;
+                        document.getElementById('cantidadCarrito2').innerHTML = respuesta
                             .cantidad;
                         mostrarAlerta();
                     }

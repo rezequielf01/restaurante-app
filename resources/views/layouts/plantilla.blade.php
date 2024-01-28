@@ -45,6 +45,10 @@
                 class="header__logo-img" alt="">
         </a>
 
+        <a href="#" class="header-btn-wsp">
+            <i class="fa fa-whatsapp float-btn-wsp__icon"></i>
+        </a>
+
         <div class="header-nav dropdown">
 
             <a href="{{ route('carrito.checkout') }}" class="cart m-2" style="text-decoration: none">

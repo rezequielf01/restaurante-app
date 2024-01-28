@@ -121,10 +121,12 @@ class CarritoController extends Controller
         ]);
         
         $nuevaCantidad = Cart::get($request->id)->qty;
+
+        $cantidadCarrito = Cart::count();
  
         $precioFinal = $item->price * $nuevaCantidad;
 
-        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',',')]);
+        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',','),'cantidad' => $cantidadCarrito]);
 
         // return back()->withSuccess($item->name.' (+)');
     }
@@ -141,16 +143,19 @@ class CarritoController extends Controller
 
         $nuevaCantidad = Cart::get($request->id)->qty;
 
+        $cantidadCarrito = Cart::count();
+
         $precioFinal = $item->price * $nuevaCantidad;
 
-        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',',')]);
+        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',','),'cantidad' => $cantidadCarrito]);
     }
 
     public function deleteItem(Request $request)
     {
         Cart::remove($request->id);
+        $cantidadCarrito = Cart::count();
         $total = Cart::total();
-        return response()->json(['total' => $total]);
+        return response()->json(['total' => $total,'cantidad' => $cantidadCarrito]);
     }
 
     public function obtenerTotal()

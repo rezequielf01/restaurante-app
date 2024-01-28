@@ -14,6 +14,8 @@
                 <strong>{{ session('success') }}</strong>
             </div>
         @endif
+
+
         <div class="checkout-subcontainer d-flex flex-row flex-wrap justify-content-around">
 
             <div class="checkout-items card" style="border: none;">
@@ -31,9 +33,9 @@
                                     </div>
                                     <div class="card-info w-50" style="margin-left: 5px">
                                         <h2 style="user-select: none;" class="checkout-card__h2">{{ $producto->name }}</h2>
-                                        <span style="user-select: none;"><b>Precio unitario:
+                                        <span class="checkout-card__p" style="user-select: none;"><b>Precio unitario:
                                             </b>${{ number_format($producto->price) }}</span><br>
-                                        <b style="user-select: none;">
+                                        <b class="checkout-card__p" style="user-select: none;">
                                             Precio final:
                                             <span id="precioFinal-{{ $producto->rowId }}" style="font-weight: 200">${{ number_format($producto->qty * $producto->price) }}</span> 
                                         </b>
@@ -185,6 +187,8 @@
                 funcionesCarrito('incrementar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
                     $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
+                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta
+                    //         .cantidad;
                 });
 
             });
@@ -194,6 +198,8 @@
                 funcionesCarrito('restar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
                     $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
+                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta
+                    //         .cantidad;
                 });
             });
 
@@ -211,6 +217,8 @@
                     success: function(respuesta) {
                         $('#producto-' + id).remove();
                         $('#valor-total').text("$" + respuesta.total);
+                        // document.getElementById('cantidadCarrito2').innerHTML = respuesta
+                        //     .cantidad;
                         if(respuesta.total == 0){
                             $('#enviarPedidoBtn').attr('disabled', 'disabled');
                         }
