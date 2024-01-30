@@ -27,7 +27,7 @@
                             <img style="filter: invert(1)" class="w-100 h-100" src="images/caja-registradora.png" alt="Usuario png">
                         </div>
                     </div>
-                    <a href="#" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('admin.caja')}}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
 
                 <div class="small-box" style="width: 300px; background:#343a40;">
@@ -67,6 +67,19 @@
                         </div>
                     </div>
                     <a href="{{ route('admin.pedidos.entregados') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $productosRegistrados }}</h3>
+                            <p>Productos totales</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1);" class="w-100 h-100" src="images/productos.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.productos') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
 
                 <div class="small-box" style="width: 300px; background:#343a40;">

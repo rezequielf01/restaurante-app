@@ -32,16 +32,16 @@
                             <form class="d-flex flex-column p-3 gap-2" method="POST" action="{{ route('admin.producto.store') }}"
                             enctype="multipart/form-data">
                             @csrf
-                                <label class="m-0" for="nombreProducto">Nombre del Producto:</label>
+                                <label class="m-0" for="nombreProducto">*Nombre del Producto:</label>
                                 <input type="text" class="form-control" id="nombreProducto" name="nombre" required>
                 
                                 <label class="m-0" for="descripcion">Descripción:</label>
                                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
                 
-                                <label class="m-0" for="precio">Precio:</label>
+                                <label class="m-0" for="precio">*Precio:</label>
                                 <input type="number" class="form-control" id="precio" name="precio" step="0.01" required>
                 
-                                <label class="m-0" for="categoria">Categoría:</label>
+                                <label class="m-0" for="categoria">*Categoría:</label>
                                 <select class="form-control" id="categoria" name="categoria" onchange="activarCampo()" required>
                                     <option value="" disabled selected>Selecciona una categoria</option>
                                     @foreach ($categorias as $categoria)
@@ -49,28 +49,10 @@
                                     @endforeach
                                 </select>
 
-                                <script>
-                                    function activarCampo() {
-                                        var categoriaSeleccionada = document.getElementById("categoria").value;
-                                        var campoCaracteristica = document.getElementById("stock");
-                                
-                                        // Activa el campo si la categoría seleccionada es "electronica"
-                                        // Puedes ajustar esta lógica según tus necesidades
-                                        if (categoriaSeleccionada === "Bebidas" || categoriaSeleccionada === "Bebida") {
-                                            campoCaracteristica.disabled = false;
-                                        } else {
-                                            // Desactiva el campo para otras categorías
-                                            campoCaracteristica.disabled = true;
-                                            // También puedes limpiar el valor del campo si lo deseas
-                                            campoCaracteristica.value = "";
-                                        }
-                                    }
-                                </script>
-                
                                 <label class="m-0" for="stock">Stock:</label>
-                                <input type="number" class="form-control" id="stock" name="stock" disabled required>
+                                <input type="number" class="form-control" id="stock" name="stock">
                 
-                                <label class="m-0" for="imagen">Imagen:</label>
+                                <label class="m-0" for="imagen">*Imagen:</label>
                                 <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
                 
                                 <button type="submit" class="btn btn-success">Guardar Producto</button>

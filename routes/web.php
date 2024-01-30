@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminPedidosController;
 use App\Http\Controllers\AdminComidasController;
 use App\Http\Controllers\AdminHamburgesasController;
 use App\Http\Controllers\AdminBebidasController;
+use App\Http\Controllers\AdminCajaController;
 use App\Http\Controllers\AdminUsuariosController;
 use App\Http\Controllers\FpdfController;
 use App\Http\Controllers\FpdfDeliveredController;
@@ -45,6 +46,10 @@ Route::get('carrito/restar/{id}', [CarritoController::class, 'restarCantidad']);
 Route::post('carrito/delete-item', [CarritoController::class, 'deleteItem'])->name('carrito.delete.item');
 Route::get('carrito/obtener-total', [CarritoController::class, 'obtenerTotal'])->name('carrito.total');
 Route::post('carrito/enviar-pedido', [CarritoController::class, 'sendOrder'])->name('carrito.enviar.pedido');
+
+// PAGINAS
+Route::get('admin/caja-registradora', [AdminCajaController::class, 'show'])->name('admin.caja');
+// ACCIONES
 
 // PAGINAS
 Route::get('admin/pedidos-pendientes', [AdminPedidosController::class, 'show'])->middleware("can:admin.pedidos")->name('admin.pedidos');

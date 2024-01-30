@@ -33,6 +33,7 @@
                     <th>Nombre</th>
                     <th>Descripcion</th>
                     <th>Precio</th>
+                    <th>Stock</th>
                     <th>Imagen</th>
                     <th style="max-width: 120px;">Accion</th>
                 </tr>
@@ -44,6 +45,7 @@
                         <td>{{ $producto->nombre }}</td>
                         <td>{{ $producto->descripcion }}</td>
                         <td>${{ $producto->precio }}</td>
+                        <td>{{ $producto->stock }}</td>
                         <td><img src="/restaurante-app/public/productos/{{$producto->imagen}}" width="70px" height="50px"></td>
                         <td>
                             <a title="Editar" href="producto/{{$producto->id}}/edit" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>

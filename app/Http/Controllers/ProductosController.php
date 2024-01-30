@@ -38,7 +38,7 @@ class ProductosController extends Controller
         $request->icono->move(public_path('productos'),$icono);
 
         $categoria = new Categorias();
-        $categoria->nombre = ucfirst($request->categoria);
+        $categoria->nombre = ucfirst($request->nombre);
         $categoria->icono = $icono;
 
         $categoria->save();
