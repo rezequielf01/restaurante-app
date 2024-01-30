@@ -51,8 +51,9 @@
                     <div class="form group">
                         <label>Categoria</label>
                         <select name="categoria" id="" value="{{old("categoria",$producto->categoria)}}">
-                            <option value="hamburgesa">Hamburgesa</option>
-                            <option value="bebida">Bebida</option>
+                            @foreach ($categorias as $categoria)
+                                <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                            @endforeach
                         </select>
                         @if ($errors->has("categoria"))
                             <span class="text-danger">{{$errors->first("categoria")}}</span>

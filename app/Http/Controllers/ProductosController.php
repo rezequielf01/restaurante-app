@@ -11,10 +11,22 @@ use Nette\Utils\Html;
 
 class ProductosController extends Controller
 {
+
+    public function show(){
+        $productos = Productos::all();
+        return view("admin.productos",compact("productos"));
+    }
+
     public function crearProducto(){
         $categorias = Categorias::all();
         return view("admin.crear-producto",compact("categorias"));
     }
+
+    public function showCategorias(){
+        $categorias = Categorias::all();
+        return view("admin.categorias",compact("categorias"));
+    }
+    
     public function crearCategoria(){
         return view("admin.crear-categoria");
     }
@@ -65,20 +77,12 @@ class ProductosController extends Controller
 
     public function edit($id){
         $producto = Productos::where("id",$id)->first();
-        return view("admin.editar-producto",compact("producto"));
+        $categorias = Categorias::all();
+        return view("admin.editar-producto",compact("producto","categorias"));
         dd($id);
     }
 
     public function update(Request $request, $id){
-
-        $request->validate([
-            'nombre'=>'required',
-            'descripcion'=>'required',
-            'precio'=>'required',
-            'imagen'=>'nullable|mimes:jpeg,jpg,png',
-            'categoria'=>'required',
-            'stock'=>'nullable',
-        ]);
         
         $producto = Productos::where("id",$id)->first();
         
@@ -92,7 +96,7 @@ class ProductosController extends Controller
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
-        $producto->categoria = $request->categoria;
+        $producto->categoria_id = $request->categoria;
         $producto->stock = $request->stock;
 
         $producto->save();

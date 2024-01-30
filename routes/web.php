@@ -56,17 +56,19 @@ Route::get('admin/pedidos/{id}/cancelado', [AdminPedidosController::class, 'dest
 Route::get('admin/ticket/{orderId}', [FpdfController::class, 'index'])->name('admin.fpdf');
 Route::get('admin/ticket/nro/{orderId}', [FpdfDeliveredController::class, 'index'])->name('admin.fpdf.delivered');
 
-Route::get('admin/crear-producto', [ProductosController::class, 'crearProducto'])->middleware("can:admin.crear.producto")->name('admin.crear.producto');
-Route::post('admin/producto/store', [ProductosController::class, 'subirProducto'])->middleware("can:admin.producto.store")->name('admin.producto.store');
+Route::get('admin/categorias', [ProductosController::class, 'showCategorias'])->name('admin.categorias');
 Route::get('admin/crear-categoria', [ProductosController::class, 'crearCategoria'])->name('admin.crear.categoria');
 Route::post('admin/categoria/store', [ProductosController::class, 'subirCategoria'])->name('admin.categoria.store');
-Route::get('admin/productos/{id}/edit', [ProductosController::class, 'edit'])->middleware("can:admin.producto.edit")->name('admin.producto.edit');
-Route::put('admin/productos/{id}/update', [ProductosController::class, 'update'])->middleware("can:admin.producto.update")->name('admin.producto.update');
-Route::get('admin/productos/{id}/delete', [ProductosController::class, 'destroy'])->middleware("can:admin.producto.delete")->name('admin.producto.delete');
+Route::get('admin/categoria/{id}/delete', [ProductosController::class, 'destroyCategoria'])->name('admin.categoria.delete');
 
-Route::get('admin/productos/hamburgesas', [AdminHamburgesasController::class, 'show'])->middleware("can:admin.productos.hamburgesas")->name('admin.productos.hamburgesas');
-Route::get('admin/productos/comidas', [AdminHamburgesasController::class, 'foods'])->name('admin.productos.comidas');
-Route::get('admin/productos/bebidas', [AdminBebidasController::class, 'show'])->middleware("can:admin.productos.bebidas")->name('admin.productos.bebidas');
+Route::get('admin/productos', [ProductosController::class, 'show'])->name('admin.productos');
+Route::get('admin/crear-producto', [ProductosController::class, 'crearProducto'])->middleware("can:admin.crear.producto")->name('admin.crear.producto');
+Route::post('admin/producto/store', [ProductosController::class, 'subirProducto'])->middleware("can:admin.producto.store")->name('admin.producto.store');
+Route::get('admin/producto/{id}/edit', [ProductosController::class, 'edit'])->middleware("can:admin.producto.edit")->name('admin.producto.edit');
+Route::put('admin/producto/{id}/update', [ProductosController::class, 'update'])->middleware("can:admin.producto.update")->name('admin.producto.update');
+Route::get('admin/producto/{id}/delete', [ProductosController::class, 'destroy'])->middleware("can:admin.producto.delete")->name('admin.producto.delete');
+
+
 Route::get('admin/usuarios-registrados', [AdminUsuariosController::class, 'show'])->middleware("can:admin.usuarios")->name('admin.usuarios');
 
 Route::middleware([

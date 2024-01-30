@@ -312,39 +312,25 @@ return [
         [
             'text'        => 'Pedidos',
             'route'         => 'admin.pedidos',
-            'icon'        => 'fa fa-calendar-minus-o',
+            'icon'        => 'fa fa-bell',
         ],
         [
             'text'        => 'Pedidos entregados',
             'route'         => 'admin.pedidos.entregados',
-            'icon'        => 'fa fa-calendar-check-o',
-        ],
-        [
-            'text'        => 'Crear categoria',
-            'route'         => 'admin.crear.categoria',
-            'icon'        => 'fa fa-plus',
-        ],
-        [
-            'text'        => 'Crear producto',
-            'route'         => 'admin.crear.producto',
-            'icon'        => 'fa fa-plus',
+            'icon'        => 'fa fa-check',
         ],
 
         ['header' => 'Tablas'],
 
         [
-            'text'    => 'Productos',
-            'icon'    => 'fa fa-table',
-            'submenu' => [
-                [
-                    'text' => 'Hamburgesas',
-                    'route'  => 'admin.productos.hamburgesas',
-                ],
-                [
-                    'text' => 'Bebidas',
-                    'route'  => 'admin.productos.bebidas',
-                ],
-            ],
+            'text'        => 'Productos',
+            'route'         => 'admin.productos',
+            'icon'        => 'fa fa-list-alt',
+        ],
+        [
+            'text'        => 'Categorias',
+            'route'         => 'admin.categorias',
+            'icon'        => 'fa fa-tags',
         ],
         [
             'text'        => 'Clientes registrados',
@@ -352,18 +338,6 @@ return [
             'icon'        => 'fa fa-users',
         ],
 
-        ['header' => 'account_settings'],
-
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
     ],
 
     /*
