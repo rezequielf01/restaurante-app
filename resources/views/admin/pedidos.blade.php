@@ -9,7 +9,12 @@
 @stop
 
 @section('content_header')
-    <h2>Lista de pedidos pendientes</h2>
+    <div class="admin-header">
+        <span class="admin-title-header__span">
+            <img class="admin-title-header__img" src="../images/pedidos.png" alt="Pedido png">
+        </span>
+        <h2 class="admin-title-header__h2">Pedidos pendientes</h2>
+    </div>
 @stop
 
 @section('content')
@@ -20,49 +25,43 @@
             </div>
         @endif
 
-            <table id="example" class="table bd-danger table-striped" style="width:100%">
+            <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Telefono</th>
-                        <th>Direccion</th>
-                        <th class="text-center">Pedido</th>
-                        <th>Forma de pago</th>
-                        <th>Envio</th>
-                        <th>Total</th>
-                        <th>Fecha y hora</th>
-                        <th>Accion</th>
+                        <th id="th-table">Pedido Nro</th>
+                        <th id="th-table">Cliente</th>
+                        <th id="th-table">Telefono</th>
+                        <th id="th-table">Direccion</th>
+                        {{-- <th >Envio</th> --}}
+                        <th id="th-table">Envio</th>
+                        <th id="th-table">Total</th>
+                        <th id="th-table">Fecha y hora</th>
+                        <th id="th-table">Accion</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pedidos as $pedido)
+                    @foreach ($pedidos_clientes as $pedido)
                         <tr>
-                            <td style="width: 120px">{{ $pedido->cliente }}</td>
-                            <td>{{ $pedido->telefono }}</td>
-                            <td>{{ $pedido->direccion }}</td>
-                            <td class="d-flex align-items-center justify-content-center"><button type="btn" class="btn btn-dark" onclick="asd();"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
-                            <td>{{ $pedido->metodo_de_pago }}</td>
-                            <td><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td>
-                            <td>{{ $pedido->total }}</td>
-                            <td>{{ $pedido->create_time }}</td>
-                            <td>
-                                <a href="pedidos/{{ $pedido->id }}/delete" class="btn btn-success">Entregado</a>
+                            <td style="width: 5%">{{ $pedido->id }}</td>
+                            <td style="width: 15%">{{ $pedido->name }}</td>
+                            <td style="width: 15%"><a href="https://wa.me/{{$pedido->telefono}}" target="_blank" title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px" class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i> {{ $pedido->telefono }}</a></td>
+                            <td style="width: 15%">{{ $pedido->direccion }}</td>
+                            {{-- <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td> --}}
+                            <td style="width: 15%">{{ $pedido->envio }}</td>
+                            <td style="width: 15%">{{ $pedido->total }}</td>
+                            <td style="width: 15%">{{ $pedido->create_time }}</td>
+                            <td id="td-acciones" style="width: 15%">
+                                <a href="pedidos/{{ $pedido->id }}/entregado" title="Entregado" style="color: white; background: rgb(86, 218, 86); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </a>
+                                <a href="pedidos/{{ $pedido->id }}/cancelado" title="Cancelado" style="color: white; background: rgb(253, 63, 63); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn">
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                </a>
+                                <a href="ticket/{{$pedido->id}}" target="_blank" title="Imprimir factura" style="color: white; background: rgb(33, 118, 255); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
-                        <script>
-                            function asd() {
-                                return Swal.fire({
-                                title: 'Detalles del pedido' ,
-                                html: `
-                                    <b>Direccion de envio: </b>{{$pedido->direccion}}<br></br>
-                                    <b>Metodo de pago: </b> {{$pedido->metodo_de_pago}}<br></br>
-                                    <b>Envío: </b> {{$pedido->envio}}<br></br>
-                                    <b>Total a pagar: </b> {{$pedido->total}}<br></br>
-                                    <b>Pedido: </b> {{$pedido->pedido}}
-                                `,
-                                });
-                            }
-                        </script>
                     @endforeach
                 </tbody>
             </table>
@@ -71,7 +70,7 @@
 
 @section('js')
 
-
+    <script src="https://kit.fontawesome.com/18e24e909e.js" crossorigin="anonymous"></script>       
     <script>
         $('#example').dataTable({
             responsive: true,

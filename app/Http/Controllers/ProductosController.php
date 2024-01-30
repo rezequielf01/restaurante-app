@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Productos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,18 +11,38 @@ use Nette\Utils\Html;
 
 class ProductosController extends Controller
 {
-    public function create(){
-        return view("admin.crear-producto");
+    public function crearProducto(){
+        $categorias = Categorias::all();
+        return view("admin.crear-producto",compact("categorias"));
+    }
+    public function crearCategoria(){
+        return view("admin.crear-categoria");
     }
 
-    public function store(request $request){
+    public function subirCategoria(Request $request){
+
+        //UPLOAD PRODUCT
+        $icono = time().'.'.$request->icono->extension();
+        $request->icono->move(public_path('productos'),$icono);
+
+        $categoria = new Categorias();
+        $categoria->nombre = ucfirst($request->categoria);
+        $categoria->icono = $icono;
+
+        $categoria->save();
+        return back()->withSuccess('CATEGORIA AGREGADO EXITOSAMENTE!');
+        
+    }
+
+    public function subirProducto(request $request){
 
         $request->validate([
-            'nombre'=>'nullable',
+            'nombre'=>'required',
             'descripcion'=>'nullable',
-            'precio'=>'nullable',
-            'imagen'=>'nullable|mimes:jpeg,jpg,png',
-            'categoria'=>'nullable',
+            'precio'=>'required',
+            'imagen'=>'required|mimes:jpeg,jpg,png',
+            'categoria_id'=>'nullable',
+            'stock'=>'nullable',
         ]);
 
 
@@ -34,7 +55,8 @@ class ProductosController extends Controller
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
-        $producto->categoria = $request->categoria;
+        $producto->categoria_id = $request->categoria;
+        $producto->stock = $request->stock;
 
         $producto->save();
         return back()->withSuccess('PRODUCTO AGREGADO EXITOSAMENTE!');
@@ -55,6 +77,7 @@ class ProductosController extends Controller
             'precio'=>'required',
             'imagen'=>'nullable|mimes:jpeg,jpg,png',
             'categoria'=>'required',
+            'stock'=>'nullable',
         ]);
         
         $producto = Productos::where("id",$id)->first();
@@ -70,6 +93,7 @@ class ProductosController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
         $producto->categoria = $request->categoria;
+        $producto->stock = $request->stock;
 
         $producto->save();
         return back()->withSuccess('PRODUCTO ACTUALIZADO EXITOSAMENTE!');

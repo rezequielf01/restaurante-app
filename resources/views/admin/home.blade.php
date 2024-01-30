@@ -13,129 +13,105 @@
         <p style="opacity: 0">.</p>
 
         <div class="shadow-lg">
-            <h2 class="d-flex flex-column bg-dark text-light p-2 mt-3 mb-0 text-center">Panel de administracion</h2>
-            
+            <h2 style="background: #343a40" class="d-flex flex-column text-light p-2 mt-3 mb-0 text-center">Panel de administracion</h2>
+
             <div class="d-flex flex-wrap gap-3 p-3 align-items-center justify-content-center">
 
-                <a href="{{ route('admin.usuarios') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/usuarios.png" alt="">
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3 style="opacity: 0">0</h3>
+                            <p>Caja registradora</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1)" class="w-100 h-100" src="images/caja-registradora.png" alt="Usuario png">
+                        </div>
                     </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $usuariosRegistrados }}
-                        </span>
-                        <p>Clientes registrados</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.pedidos') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/pedidos.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $pedidosPendientes }}
-                        </span>
-                        <p>Pedidos pendientes</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.usuarios') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/productos.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $productosRegistrados }}
-                        </span>
-                        <p>Producto totales</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.usuarios') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/usuarios.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $usuariosRegistrados }}
-                        </span>
-                        <p>Usuarios registrados</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.usuarios') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/usuarios.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $usuariosRegistrados }}
-                        </span>
-                        <p>Usuarios registrados</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.usuarios') }}" class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/usuarios.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        <span>
-                            {{ $usuariosRegistrados }}
-                        </span>
-                        <p>Usuarios registrados</p>
-                    </div>
-                </a>
-
-                {{-- <a href="{{ route('admin.pedidos') }}"
-                    class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/pedidos.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        {{ $pedidosPendientes }}
-                        <p>Pedidos pendies</p>
-                    </div>
-
-                </a>
-
-                <div
-                    class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/cancelado.png" alt="">
-                    </div>
-
-                    <div class="card-body">
-                        {{ $productosRegistrados }}
-                        <p>Pedidos cancelados</p>
-                    </div>
-
+                    <a href="#" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
 
-                <div
-                    class="card-home-admin card d-flex flex-row btn align-items-center m-0 border-0 text-dark fw-bold bg-light text-light">
-
-                    <div style="width:70px; height: 65px" class="card-title">
-                        <img class="w-100 h-100" src="images/productos.png" alt="">
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $usuariosRegistrados }}</h3>
+                            <p>Clientes registrados</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1)" class="w-100 h-100" src="images/usuarios.png" alt="Usuario png">
+                        </div>
                     </div>
+                    <a href="{{ route('admin.usuarios') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
 
-                    <div class="card-body">
-                        {{ $productosRegistrados }}
-                        <p>Productos totales</p>
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $pedidosPendientes }}</h3>
+                            <p>Pedidos pendientes</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1)" class="w-100 h-100" src="images/pedidos.png" alt="">
+                        </div>
                     </div>
+                    <a href="{{ route('admin.pedidos') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
 
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $pedidosEntregados }}</h3>
+                            <p>Pedidos entregados</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1);" class="w-100 h-100" src="images/pedidos.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.pedidos.entregados') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+{{-- 
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $comidas }}</h3>
+                            <p>Comidas</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1);" class="w-100 h-100" src="images/comidas.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.productos.comidas') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div> --}}
+
+                {{-- <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>{{ $bebidas }}</h3>
+                            <p>Bebidas</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1);" class="w-100 h-100" src="images/Bebidas.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.productos.bebidas') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div> --}}
+
+                <div class="small-box" style="width: 300px; background:#343a40;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: #f1f1f1" class="inner">
+                            <h3>
+                            
+                                {{$ingresosMensuales}}                            
+
+                            </h3>
+                            <p>Ingresos mensuales</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title">
+                            <img style="filter: invert(1);" class="w-100 h-100" src="images/moneda.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.productos.bebidas') }}" class="small-box-footer">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+
             </div>
         </div>
 

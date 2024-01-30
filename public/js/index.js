@@ -27,14 +27,51 @@ function wifiAlert() {
       });
 }
 
+// CATEGORIES NAV FIX
+$(window).scroll(function() {
+  let categoriesNav = $(".categories");
+  let foodContainer = $(".foods-section");
+  let wspBtn = $(".float-btn-wsp");
+  var scrollTop = $(window).scrollTop();
+  if ( scrollTop > 500 && screen.width >= 1920) { 
+    $(categoriesNav).css({ "background-color": "#0c0c0c",
+    "position": "fixed", "top": "10vh", "left": "0", "transition": "var(--trans-02)", "z-index": "100"});
+    $(foodContainer).css({ "margin-top": "60px",});
+    $(wspBtn).css({ "opacity": 1,});
+  }
+  else {
+    $(categoriesNav).css({ "background-color": "white",
+    "position": "static", "top": "10vh", "left": "0",});
+    $(foodContainer).css({ "margin-top": "25px",});
+  }
+});
+
 // CAROUSEL SLICK SLIDER
 $('.food-carousel').slick({
     dots: true,
     infinite: false,
     speed: 300,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 6,
+    slidesToScroll: 6,
     responsive: [
+      {
+        breakpoint: 1921,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: false,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 1441,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: false,
+          dots: true
+        }
+      },
       {
         breakpoint: 1025,
         settings: {

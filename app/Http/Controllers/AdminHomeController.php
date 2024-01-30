@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedidos;
+use App\Models\PedidosEntregados;
 use App\Models\User;
 use App\Models\Productos;
 use Illuminate\Http\Request;
@@ -14,6 +15,12 @@ class AdminHomeController extends Controller
         $usuariosRegistrados = User::count();
         $productosRegistrados = Productos::count();
         $pedidosPendientes = Pedidos::count();
-        return view("admin.home", compact("usuariosRegistrados","productosRegistrados","pedidosPendientes"));
+        $pedidosEntregados = PedidosEntregados::count();
+
+
+        $ingresosMensuales = PedidosEntregados::whereMonth('create_time', now()->month)->sum('total');;
+        
+        return view("admin.home", compact("usuariosRegistrados","productosRegistrados",
+        "pedidosPendientes","pedidosEntregados","ingresosMensuales"));
     }
 }

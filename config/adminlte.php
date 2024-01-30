@@ -312,7 +312,17 @@ return [
         [
             'text'        => 'Pedidos',
             'route'         => 'admin.pedidos',
-            'icon'        => 'fa fa-book',
+            'icon'        => 'fa fa-calendar-minus-o',
+        ],
+        [
+            'text'        => 'Pedidos entregados',
+            'route'         => 'admin.pedidos.entregados',
+            'icon'        => 'fa fa-calendar-check-o',
+        ],
+        [
+            'text'        => 'Crear categoria',
+            'route'         => 'admin.crear.categoria',
+            'icon'        => 'fa fa-plus',
         ],
         [
             'text'        => 'Crear producto',

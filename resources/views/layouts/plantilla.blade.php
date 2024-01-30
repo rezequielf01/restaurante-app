@@ -45,11 +45,15 @@
                 class="header__logo-img" alt="">
         </a>
 
+        <a href="#" class="header-btn-wsp">
+            <i class="fa fa-whatsapp float-btn-wsp__icon"></i>
+        </a>
+
         <div class="header-nav dropdown">
 
             <a href="{{ route('carrito.checkout') }}" class="cart m-2" style="text-decoration: none">
-                <i class="carrito__icon fa fa-shopping-cart text-danger" aria-hidden="true"></i>
-                <span class="card__count" style="color:white;">{{ Cart::count() }}</span>
+                <i class="carrito__icon fa fa-shopping-cart" style="color: var(--color-principal)" aria-hidden="true"></i>
+                <span id="cantidadCarrito" data-id="{{ Cart::count() }}" class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </a>
 
             <button class="btn dropdown-toggle d-flex flex-row align-items-center"
@@ -62,12 +66,12 @@
                     @endphp
                     <div class="container d-flex" style="flex-direction:column;">
                         <span class="text-light" style="font-size: .9rem">
-                            <i class="fa fa-map-marker text-danger" aria-hidden="true"></i>
+                            <i class="fa fa-map-marker" style="color: var(--color-principal)" aria-hidden="true"></i>
                             {{ ucfirst($userDireccion) }}
                         </span>
                     </div>
                 @else
-                    <i class="fa fa-user text-danger" aria-hidden="true"></i>
+                    <i class="fa fa-user" style="color: var(--color-principal)" aria-hidden="true"></i>
                 @endauth
             </button>
             <ul class="dropdown-menu mt-2 pe-2 text-center" style="background: #0c0c0c;"
@@ -93,7 +97,7 @@
 
                                 <a class="text-light" style="text-decoration: none;" href="javascript:void"
                                     onclick="$('#logout-form').submit();">
-                                    <i class="fa fa-sign-out text-danger" aria-hidden="true"></i>
+                                    <i class="fa fa-sign-out" style="color: var(--color-principal)" aria-hidden="true"></i>
                                     Cerrar sesion
                                 </a>
                             </div>
@@ -102,7 +106,7 @@
                                 @csrf
                             </form>
                         @else
-                            <li class="mb-2 py-2 bg-danger">
+                            <li class="mb-2 py-2" style="background: var(--color-principal)">
 
                                 <a href="{{ route('login') }}" style="text-decoration:none; display:block; color:black;"
                                     class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Loguearse</a>

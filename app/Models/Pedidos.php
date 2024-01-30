@@ -10,12 +10,12 @@ class Pedidos extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cliente',
-        'telefono',
+        'cliente_id',
+        // 'telefono',
         'direccion',
-        'pedido',
-        'metodo_de_pago',
-        'retiro',
+        // 'pedido',
+        // 'metodo_de_pago',
+        'envio',
         'total',
         ];
 

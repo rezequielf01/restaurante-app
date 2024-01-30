@@ -50,17 +50,24 @@
                     </div>
                     <div class="form group">
                         <label>Categoria</label>
-                        <select name="categoria" id="">
+                        <select name="categoria" id="" value="{{old("categoria",$producto->categoria)}}">
                             <option value="hamburgesa">Hamburgesa</option>
                             <option value="bebida">Bebida</option>
                         </select>
-                        {{-- @if ($errors->has("categoria"))
+                        @if ($errors->has("categoria"))
                             <span class="text-danger">{{$errors->first("categoria")}}</span>
-                        @endif --}}
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" name="stock" class="form-control shadow-lg" value="{{old("stock",$producto->stock)}}">
+                        @if ($errors->has("stock"))
+                            <span class="text-danger">{{$errors->first("stock")}}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Imagen</label>
-                        <input type="file" name="imagen" value="{{old("imagen",$producto->imagen)}}" required class="form-control shadow-lg">
+                        <input type="file" name="imagen" value="{{old("imagen",$producto->imagen)}} required class="form-control shadow-lg">
                         @if ($errors->has("imagen"))
                         <span class="text-danger">{{$errors->first("imagen")}}</span>
                         @endif

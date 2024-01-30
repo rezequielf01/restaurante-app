@@ -11,4 +11,9 @@ class AdminHamburgesasController extends Controller
         $hamburgesas = db::select('SELECT * FROM productos WHERE categoria = "hamburgesa"');
         return view("admin.productos-hamburgesas", compact("hamburgesas"));
     }
+
+    public function foods(){
+        $comidas = db::select('SELECT * FROM productos WHERE categoria = "pizza" OR categoria = "hamburgesa"');
+        return view("admin.comidas", compact("comidas"));
+    }
 }
