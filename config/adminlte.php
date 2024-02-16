@@ -303,9 +303,9 @@ return [
         //     'can'  => 'manage-blog',
         // ],
         [
-            'text'        => 'Inicio',
+            'text'        => 'Panel principal',
             'route'         => 'admin.home',
-            'icon'        => 'fa fa-home',
+            'icon'        => 'fa fa-tachometer',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -315,9 +315,9 @@ return [
             'icon'        => 'fa fa-bell',
         ],
         [
-            'text'        => 'Pedidos entregados',
-            'route'         => 'admin.pedidos.entregados',
-            'icon'        => 'fa fa-check',
+            'text'        => 'Ventas en local',
+            'route'         => 'admin.ventas.local',
+            'icon'        => 'fa fa-home',
         ],
 
         ['header' => 'Tablas'],

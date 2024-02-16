@@ -34,10 +34,10 @@
                                     <div class="card-info w-50" style="margin-left: 5px">
                                         <h2 style="user-select: none;" class="checkout-card__h2">{{ $producto->name }}</h2>
                                         <span class="checkout-card__p" style="user-select: none;"><b>Precio unitario:
-                                            </b>${{ number_format($producto->price) }}</span><br>
+                                            </b>{{ number_format($producto->price,3,'.',',') }}</span><br>
                                         <b class="checkout-card__p" style="user-select: none;">
                                             Precio final:
-                                            <span id="precioFinal-{{ $producto->rowId }}" style="font-weight: 200">${{ number_format($producto->qty * $producto->price) }}</span> 
+                                            <span id="precioFinal-{{ $producto->rowId }}" style="font-weight: 200">{{ number_format($producto->qty * $producto->price,3,'.',',') }}</span> 
                                         </b>
                                     </div>
                                     <form class="d-flex w-25 justify-content-center"
@@ -90,7 +90,7 @@
                     style="position: relative; z-index:10;" method="POST" action="{{ route('carrito.enviar.pedido') }}">
                     @csrf
                     <label>Cliente:
-                        <input type="text" name="cliente_id" placeholder="abc" value="{{ auth()->user()->id }}"
+                        <input type="text" name="cliente_id" placeholder="Cliente" value="{{ auth()->user()->id }}"
                             style="border:none; display: none">@php
                                 echo ucfirst(auth()->user()->name);
                             @endphp
@@ -115,20 +115,10 @@
 
 
                     <p>Total: <span id="valor-total"
-                            style="font-weight: bold; user-select: none;">${{ cart::total() }}</span></p>
+                            style="font-weight: bold; user-select: none;">{{number_format(cart::total(),3,'.',',')}}</span></p>
                     <div style="position: relative; z-index: 50; top: 0;"
                         class="w-100 mt-5 gap-2 d-flex flex-column justify-content-center">
-                        {{-- <label>Forma de pago:
-                            <select name="metodo_de_pago" style="border: solid px #f1f1f1;" id="">
-                                <option value="Efectivo">Efectivo</option>
-                                <option value="Transferencia">Transferencia</option>
-                            </select>
-                        </label>
-                        
-                        <label for="envio"><input type="checkbox" id="" name="envio" value="delivery a domicilio"> <i class="fa fa-motorcycle" aria-hidden="true"></i> Delivery</label>
-                        @if ($errors->has('envio'))
-                            <span class="text-danger">{{$errors->first("envio")}}</span>
-                        @endif --}}
+                
                         @if (Cart::total() > 0)
                             <button class="btn" id="enviarPedidoBtn" style="background: var(--color-principal); color: white;"
                                 type="submit">Enviar pedido</button>
@@ -150,6 +140,22 @@
         $(document).ready(function() {
 
             function funcionesCarrito(url, type , id, successCallback) {
+                // Función para obtener y actualizar el total del carrito
+                function obtenerNuevoTotal() {
+                    $.ajax({
+                        url: '{{ route('carrito.total') }}',
+                        type: 'GET',
+                        success: function(respuesta) {
+                            // Actualiza la interfaz con el nuevo total
+                            $('#valor-total').text(respuesta.total);
+                            console.log(respuesta.total);
+                        },
+                        error: function(error) {
+                            console.error('Error al obtener el total del carrito:', error);
+                        }
+                    });
+                }
+                
                 $.ajax({
                     url: url + id,
                     type: type,
@@ -166,29 +172,15 @@
                 });
             }
 
-            // Función para obtener y actualizar el total del carrito
-            function obtenerNuevoTotal() {
-                $.ajax({
-                    url: '{{ route('carrito.total') }}',
-                    type: 'GET',
-                    success: function(response) {
-                        // Actualiza la interfaz con el nuevo total
-                        $('#valor-total').text("$" + response.total);
-                    },
-                    error: function(error) {
-                        console.error('Error al obtener el total del carrito:', error);
-                    }
-                });
-            }
 
             $('.sumar-item').click(function() {
                 let id = $(this).closest('.item').data('id');
           
                 funcionesCarrito('incrementar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
-                    $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
-                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta
-                    //         .cantidad;
+                    $('#precioFinal-' + id).text(respuesta.precioFinal);
+                    document.getElementById('cantidadCarrito').innerHTML = respuesta.cantidad;
+                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta.cantidad2;
                 });
 
             });
@@ -197,9 +189,9 @@
                 let id = $(this).closest('.item').data('id');
                 funcionesCarrito('restar/', "GET" , id, function(respuesta) {
                     $('#cantidad-' + id).text(respuesta.qty);
-                    $('#precioFinal-' + id).text("$"+respuesta.precioFinal);
-                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta
-                    //         .cantidad;
+                    $('#precioFinal-' + id).text(respuesta.precioFinal);
+                    document.getElementById('cantidadCarrito').innerHTML = respuesta.cantidad;
+                    // document.getElementById('cantidadCarrito2').innerHTML = respuesta.cantidad2;
                 });
             });
 
@@ -216,7 +208,7 @@
                     },
                     success: function(respuesta) {
                         $('#producto-' + id).remove();
-                        $('#valor-total').text("$" + respuesta.total);
+                        $('#valor-total').text(respuesta.total);
                         // document.getElementById('cantidadCarrito2').innerHTML = respuesta
                         //     .cantidad;
                         if(respuesta.total == 0){
@@ -225,21 +217,6 @@
                     },
                 });
             });
-
-            // $('.sumar-item, .restar-item').on('click', function() {
-
-            //     $.ajax({
-            //         url: '{{ route('carrito.total') }}',
-            //         method: 'GET',
-            //         success: function(response) {
-            //             // Actualiza la interfaz con el nuevo total
-            //             $('#valor-total').text(response.nuevoTotal);
-            //         },
-            //         error: function(error) {
-            //             console.error('Error en la llamada AJAX:', error);
-            //         }
-            //     });
-            // });
 
         });
     </script>

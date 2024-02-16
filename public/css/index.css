@@ -269,8 +269,70 @@
     justify-content: center;
     gap: 3;
 }
-/* CREAR PRODUCTO */
 
+/* MESAS */
+.mesas-container{
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    gap: 20px;
+}
+.mesa-box{
+    border-radius: 5px;
+    height: 200px;
+    padding: 10px;
+    position: relative;
+    width: 25% !important;
+}
+.mesa__img{
+    width: 40%;
+    height: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.mesa__estado{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    font-size: .9rem;
+    color: #25D366;
+}
+.mesa__p{
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: white;  
+}
+
+/* ADMINISTRAR MESA */
+.mesa-card-form{
+    width: 20%;
+    height: 250px;
+    max-height: 225px;
+}
+.mesa-card__img{
+    width: 100%;
+    height: 100px;
+}
+.mesa-lista-consumido{
+    min-height: 300px;
+    overflow-y: scroll;
+}
+.card-mesa-consumido{
+    width: 100%;
+    height: 100%;
+}
+
+/* PRELOADER */
+#preloader{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
 
 
 /* FOOTER */

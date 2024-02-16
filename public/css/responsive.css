@@ -177,6 +177,11 @@
     .footer p{
         margin: 0;
     }
+
+    /* ADMIN PANEL */
+    .admin-container{
+        width: 100%;
+    }
     
 }
 
@@ -222,6 +227,12 @@
     }
     .categoria__carousel{
         width: 95%;
+        margin: 0 auto;
+    }
+
+    /* ADMIN PANEL */
+    .admin-container{
+        width: 100%;
     }
     
 }

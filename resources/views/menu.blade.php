@@ -120,9 +120,7 @@
                                     <div class="food-card">
                                         <div class="food-img">
                                             <span class="food__precio">
-                                                @php
-                                                    echo "$" . number_format($producto->precio, 0, '.', ',');
-                                                @endphp
+                                                ${{$producto->precio}}
                                             </span>
                                             <img src="productos/{{ $producto->imagen }}" alt="{{ $producto->nombre }}"
                                             class="food__img">

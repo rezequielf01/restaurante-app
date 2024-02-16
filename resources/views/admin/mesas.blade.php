@@ -11,9 +11,9 @@
 @section('content_header')
     <div class="admin-header">
         <span class="admin-title-header__span">
-            <img class="admin-title-header__img" src="../images/categoria.png" alt="Pedido png">
+            <img class="admin-title-header__img" src="/restaurante-app/public/images/mesa.png" alt="Mesa icono png">
         </span>
-        <h2 class="admin-title-header__h2">Lista de categorias</h2>
+        <h2 class="admin-title-header__h2">Administracion de mesas</h2>
     </div>
 @stop
 
@@ -24,46 +24,22 @@
             <strong>{{ session('success') }}</strong>
         </div>
     @endif
-    <form class="d-flex p-3 gap-2 mb-3" method="POST" action="{{ route('admin.categoria.store') }}"
-        enctype="multipart/form-data"" enctype="multipart/form-data">
-        @csrf
-        <label class="m-0" for="nombreProducto">*Nombre de la categoria:
-            <input type="text" class="form-control" id="nombreCategoria" name="nombre" required>
-        </label>
+    <a href="{{route('admin.crear.producto')}}" class="crear-producto-btn btn-danger btn mb-3" type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar mesa</a>
+    
+    <div class="mesas-container">
 
-        <label class="m-0" for="imagen">*Icono:
-            <input type="file" class="form-control" id="imagen" name="icono" accept="image/*" required>
-        </label>
-
-        <div class="d-flex" style="align-items: flex-end">
-            <button type="submit" class="btn ms-2 btn-danger"><i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar
-                categoria</button>
+        @foreach ($mesas as $mesa)    
+        <div class="mesa-box">
+            <img class="mesa__img" src="/restaurante-app/public/images/mesa.png" alt="Mesa icono">
+            <span class="mesa__estado d-flex flex-column">
+                <p class="mesa__p">Mesa #{{$mesa->nro_mesa}}</p>
+                <i class="fa fa-check-circle-o" aria-hidden="true"> Disponible</i>
+            </span>
+            <a href="mesas/{{$mesa->nro_mesa}}">Ir a mesa</a>
         </div>
-    </form>
+        @endforeach
 
-    <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th style="min-width: 35px; max-width: 35px;">ID</th>
-                <th>Nombre</th>
-                <th>Icono</th>
-                <th style="max-width: 120px;">Accion</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($categorias as $categoria)
-                <tr>
-                    <td>{{ $categoria->id }}</td>
-                    <td>{{ $categoria->nombre }}</td>
-                    <td><img src="../productos/{{ $categoria->icono }}" width="50px" height="50px"></td>
-                    <td>
-                        <a href="categoria/{{ $categoria->id }}/delete" class="btn btn-danger"><i class="fa fa-trash"
-                                aria-hidden="true"></i></a></div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    </div>
 
 @stop
 

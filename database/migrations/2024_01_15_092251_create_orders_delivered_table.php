@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->string("direccion");
             $table->string("envio");
-            $table->string("total");
+            $table->decimal("total",10,3);
             $table->timestamp('create_time')->nullable();
             $table->timestamp('update_time')->nullable();
         });

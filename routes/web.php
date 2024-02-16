@@ -7,13 +7,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminPedidosController;
-use App\Http\Controllers\AdminComidasController;
-use App\Http\Controllers\AdminHamburgesasController;
-use App\Http\Controllers\AdminBebidasController;
-use App\Http\Controllers\AdminCajaController;
+use App\Http\Controllers\AdminMesasController;
 use App\Http\Controllers\AdminUsuariosController;
+use App\Http\Controllers\AdminVentasLocalController;
 use App\Http\Controllers\FpdfController;
 use App\Http\Controllers\FpdfDeliveredController;
+use App\Http\Controllers\FpdfVentasController;
 use App\Http\Controllers\ProductosController;
 use Illuminate\Routing\RouteGroup;
 
@@ -47,12 +46,22 @@ Route::post('carrito/delete-item', [CarritoController::class, 'deleteItem'])->na
 Route::get('carrito/obtener-total', [CarritoController::class, 'obtenerTotal'])->name('carrito.total');
 Route::post('carrito/enviar-pedido', [CarritoController::class, 'sendOrder'])->name('carrito.enviar.pedido');
 
-// PAGINAS
-Route::get('admin/caja-registradora', [AdminCajaController::class, 'show'])->name('admin.caja');
-// ACCIONES
 
 // PAGINAS
-Route::get('admin/pedidos-pendientes', [AdminPedidosController::class, 'show'])->middleware("can:admin.pedidos")->name('admin.pedidos');
+Route::get('admin/mesas', [AdminHomeController::class, 'mostrarMesas'])->name('admin.mesas');
+Route::get('admin/administrar/mesas/{mesaId}', [AdminMesasController::class, 'administrar'])->name('admin.ver.mesa');
+// ACCIONES
+Route::post('admin/administrar/mesas/{mesaId}/agregar', [AdminMesasController::class, 'guardarProducto'])->name('admin.agregar.producto.mesa');
+Route::post('admin/eliminar/mesa', [AdminMesasController::class, 'eliminarMesa'])->name('admin.eliminar.mesa');
+Route::post('admin/administrar/mesas/{mesaId}/guardar-producto', [AdminMesasController::class, 'guardarProducto'])->name('admin.guardar.producto.mesa');
+Route::post('admin/enviar-formulario', [AdminMesasController::class, 'agregarMesa'])->name('admin.agregar.mesa.btn');
+Route::get('admin/administrar/mesas/{mesaId}/restar-producto', [AdminMesasController::class, 'restarCantidad'])->name('admin.restar.producto.mesa');
+Route::post('admin/administrar/mesas/{mesaId}/cerrar-mesa', [AdminMesasController::class, 'cerrarMesa'])->name('admin.cerrar.mesa');
+Route::get('admin/administrar/mesas/ticket/{ventaId}', [FpdfController::class, 'ventaLocal'])->name('admin.fpdf.venta.local');
+Route::get('admin/administrar/mesas/ticket/{ventaId}', [FpdfVentasController::class, 'ventaLocal'])->name('admin.fpdf.venta.local');
+
+// PAGINAS
+Route::get('admin/pedidos', [AdminPedidosController::class, 'show'])->middleware("can:admin.pedidos")->name('admin.pedidos');
 Route::get('admin/pedidos-entregados', [AdminPedidosController::class, 'ordersDelivered'])->middleware("can:admin.pedidos.entregados")->name('admin.pedidos.entregados');
 // ACCIONES
 Route::get('admin/pedidos/{id}/entregado', [AdminPedidosController::class, 'orderMoved'])->name('admin.pedido.entregado');
@@ -60,6 +69,8 @@ Route::get('admin/pedidos/{id}/cancelado', [AdminPedidosController::class, 'dest
 
 Route::get('admin/ticket/{orderId}', [FpdfController::class, 'index'])->name('admin.fpdf');
 Route::get('admin/ticket/nro/{orderId}', [FpdfDeliveredController::class, 'index'])->name('admin.fpdf.delivered');
+
+Route::get('admin/ventas-en-local', [AdminVentasLocalController::class, 'show'])->name('admin.ventas.local');
 
 Route::get('admin/categorias', [ProductosController::class, 'showCategorias'])->name('admin.categorias');
 Route::get('admin/crear-categoria', [ProductosController::class, 'crearCategoria'])->name('admin.crear.categoria');

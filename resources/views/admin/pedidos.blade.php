@@ -11,7 +11,7 @@
 @section('content_header')
     <div class="admin-header">
         <span class="admin-title-header__span">
-            <img class="admin-title-header__img" src="../images/pedidos.png" alt="Pedido png">
+            <img class="admin-title-header__img" src="../images/nuevo-pedido.png" alt="Pedido png">
         </span>
         <h2 class="admin-title-header__h2">Pedidos pendientes</h2>
     </div>
@@ -25,6 +25,7 @@
             </div>
         @endif
 
+        <div class="bg-light shadow-lg p-3">
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -46,9 +47,8 @@
                             <td style="width: 15%">{{ $pedido->name }}</td>
                             <td style="width: 15%"><a href="https://wa.me/{{$pedido->telefono}}" target="_blank" title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px" class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i> {{ $pedido->telefono }}</a></td>
                             <td style="width: 15%">{{ $pedido->direccion }}</td>
-                            {{-- <td style="width: 10%"><span class="bg-primary rounded p-1">{{ $pedido->envio }}</span></td> --}}
                             <td style="width: 15%">{{ $pedido->envio }}</td>
-                            <td style="width: 15%">{{ $pedido->total }}</td>
+                            <td style="width: 15%">${{ $pedido->total }}</td>
                             <td style="width: 15%">{{ $pedido->create_time }}</td>
                             <td id="td-acciones" style="width: 15%">
                                 <a href="pedidos/{{ $pedido->id }}/entregado" title="Entregado" style="color: white; background: rgb(86, 218, 86); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn">
@@ -65,6 +65,54 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        <div class="admin-header mt-5 mb-3">
+            <span class="admin-title-header__span">
+                <img class="admin-title-header__img" src="../images/pedidos-entregados.png" alt="Pedido png">
+            </span>
+            <h2 class="admin-title-header__h2">Pedidos entregados</h2>
+        </div>
+
+        <div class="bg-light shadow-lg p-3">
+            <table id="example" class="table bd-danger table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Pedido Nro</th>
+                        <th>Cliente</th>
+                        <th>Telefono</th>
+                        <th>Direccion</th>
+                        <th>Envio</th>
+                        <th>Total</th>
+                        <th>Fecha y hora</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($pedidos_clientes_entregado as $pedido)
+                        <tr style="background: none; max-height: 50px">
+                            <td style="width: 5%">{{ $pedido->id }}</td>
+                            <td style="width: 15%">{{ $pedido->name }}</td>
+                            <td style="width: 15%"><a href="https://wa.me/{{ $pedido->telefono }}" target="_blank"
+                                    title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"
+                                    class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                    {{ $pedido->telefono }}</a></td>
+                            <td style="width: 15%">{{ $pedido->direccion }}</td>
+                            <td style="width: 15%">{{ $pedido->envio }}</td>
+                            <td style="width: 15%">${{ $pedido->total }}</td>
+                            <td style="width: 15%">{{ $pedido->create_time }}</td>
+                            <td style="width: 15%">
+                                <a href="ticket/nro/{{ $pedido->id }}" target="_blank" title="Imprimir factura"
+                                    style="color: white; background: rgb(33, 118, 255); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);"
+                                    class="btn">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
 @stop
 

@@ -51,7 +51,7 @@ class ProductosController extends Controller
         $request->validate([
             'nombre'=>'required',
             'descripcion'=>'nullable',
-            'precio'=>'required',
+            'precio'=>'required|numeric',
             'imagen'=>'required|mimes:jpeg,jpg,png',
             'categoria_id'=>'nullable',
             'stock'=>'nullable',
@@ -66,7 +66,7 @@ class ProductosController extends Controller
         $producto->imagen = $imageName;
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
-        $producto->precio = $request->precio;
+        $producto->precio = number_format($request->precio,0,',','.');
         $producto->categoria_id = $request->categoria;
         $producto->stock = $request->stock;
 
@@ -107,6 +107,14 @@ class ProductosController extends Controller
 
         $producto = Productos::where("id",$id)->first();
         $producto->delete();
+        return back()->withSuccess('PRODUCTO ELIMINADO CORRECTAMENTE!');
+
+    }
+
+    public function destroyCategoria($id){
+
+        $categoria = Categorias::where("id",$id)->first();
+        $categoria->delete();
 
         return back()->withSuccess('PRODUCTO ELIMINADO CORRECTAMENTE!');
 

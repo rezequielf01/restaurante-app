@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->string('direccion');
             $table->string('envio');
-            $table->string('total');
+            $table->decimal('total',10,3);
             
             $table->foreign('cliente_id')
                 ->references('id')->on('users')

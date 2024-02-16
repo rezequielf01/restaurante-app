@@ -28,8 +28,9 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form class="d-flex flex-column p-3 gap-2" method="POST" action="{{ route('admin.producto.store') }}"
+                        <form class="d-flex flex-column p-3 gap-2" method="POST" action="update"
                         enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                             <label class="m-0" for="nombreProducto">*Nombre del Producto:</label>
                             <input type="text" class="form-control" id="nombreProducto" name="nombre"  value="{{old("nombre",$producto->nombre)}}" required>

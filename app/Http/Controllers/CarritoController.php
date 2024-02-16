@@ -80,15 +80,14 @@ class CarritoController extends Controller
 
         //UPLOAD PRODUCT
 
-        $clienteID = $request->cliente_id;
-        // $totalPrice = Cart::Total();
-
         $pedido = new Pedidos();
+        
         if ($request->direccion != "") {
             $pedido->direccion = $request->direccion;
         } else {
             $pedido->direccion = auth()->user()->direccion;
         }
+
         $pedido->cliente_id = $request->cliente_id;
         $pedido->envio = $request->envio;
         $totalCarrito = Cart::total();
@@ -126,7 +125,7 @@ class CarritoController extends Controller
  
         $precioFinal = $item->price * $nuevaCantidad;
 
-        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',','),'cantidad' => $cantidadCarrito]);
+        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,3,'.',','),'cantidad' => $cantidadCarrito]);
 
         // return back()->withSuccess($item->name.' (+)');
     }
@@ -147,7 +146,7 @@ class CarritoController extends Controller
 
         $precioFinal = $item->price * $nuevaCantidad;
 
-        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,0,'.',','),'cantidad' => $cantidadCarrito]);
+        return response()->json(['qty' => $nuevaCantidad, 'precioFinal' => number_format($precioFinal,3,'.',','),'cantidad' => $cantidadCarrito]);
     }
 
     public function deleteItem(Request $request)
@@ -160,7 +159,8 @@ class CarritoController extends Controller
 
     public function obtenerTotal()
     {
-        $total = Cart::total();
+
+        $total = number_format(Cart::total(),3,'.',',');
 
         return response()->json(['total' => $total]);
     }
