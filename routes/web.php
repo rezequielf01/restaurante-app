@@ -77,6 +77,9 @@ Route::get('admin/crear-categoria', [ProductosController::class, 'crearCategoria
 Route::post('admin/categoria/store', [ProductosController::class, 'subirCategoria'])->name('admin.categoria.store');
 Route::get('admin/categoria/{id}/delete', [ProductosController::class, 'destroyCategoria'])->name('admin.categoria.delete');
 
+Route::get('filtrar-productos/{categoria_id}', [ProductosController::class, 'filtrarPorCategoria'])->name('admin.filtrar.producto');
+Route::get('todos-los-productos', [ProductosController::class, 'filtrarTodosLosProductos'])->name('admin.todos.los.producto');
+
 Route::get('admin/productos', [ProductosController::class, 'show'])->name('admin.productos');
 Route::get('admin/crear-producto', [ProductosController::class, 'crearProducto'])->middleware("can:admin.crear.producto")->name('admin.crear.producto');
 Route::post('admin/producto/store', [ProductosController::class, 'subirProducto'])->middleware("can:admin.producto.store")->name('admin.producto.store');

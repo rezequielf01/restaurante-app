@@ -187,44 +187,34 @@
 
 @section('scripts')
 
+ 
+
 
     <script>
         $(document).ready(function() {
 
-            // MOSTRAR ALERTAS
-            function mostrarAlerta() {
-                // Obtener el elemento de la alerta
-                var alerta = document.getElementById('alerta');
-
-                // Configurar el contenido de la alerta
-                alerta.innerHTML =
-                    '<div id="alertAddItem"><i class="fa fa-check-circle-o" aria-hidden="true"></i>' +
-                    '<p>Producto agregado</p>'
-                '</div>';
-
-                // Mostrar la alerta
-                $("#alerta").css({
-                    "border-radius": "5px",
-                    "z-index": "1000",
-                    "transition": "all 0.3s easy",
-                });
-                alerta.style.display = "flex";
-                alerta.style.background = "var(--color-principal)";
-                alerta.style.position = 'fixed'
-                alerta.style.top = '100px';
-                alerta.style.right = '5px';
-                alerta.style.width = '250px';
-                alerta.style.height = '80px';
-                alerta.style.opacity = '1';
-
-                // Configurar un temporizador para ocultar la alerta después de 3000 milisegundos (3 segundos)
-                setTimeout(function() {
-                    alerta.style.right = '-250px';
-                    alerta.style.opacity = '0';
-                }, 2000);
-            }
-
+            
             $('.agregar-carrito').click(function() {
+                // MOSTRAR ALERTAS
+                function mostrarAlerta() {
+                    Toastify({
+                    text: nombre,
+                    duration: 3000,
+                    destination: "carrito/checkout",
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "#fc623c",
+                    },
+                    offset: {
+                        x: 0, // Distancia desde el borde derecho de la ventana del navegador
+                        y: 100 // Distancia desde la parte superior de la ventana del navegador
+                    },
+                    }).showToast();
+                }
                 var id = $(this).closest('.item').data('id');
                 var nombre = $(this).closest('.item').data('nombre');
                 var precio = $(this).closest('.item').data('precio');

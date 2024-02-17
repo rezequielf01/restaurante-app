@@ -2,20 +2,7 @@
 @section('title', 'Mi carrito')
 @section('contenido')
     <div class="checkout-container shadow-lg mb-5 bg-white rounded">
-        @if (session('danger'))
-            <div
-                class="alert-carrito-restar alert alert-danger mb-2 text-center m-auto d-flex justify-content-center alert-block">
-                <strong>{{ session('danger') }}</strong>
-            </div>
-        @endif
-        @if (session('success'))
-            <div
-                class="alert-carrito-restar alert alert-success mb-2 text-center m-auto d-flex justify-content-center alert-block">
-                <strong>{{ session('success') }}</strong>
-            </div>
-        @endif
-
-
+        
         <div class="checkout-subcontainer d-flex flex-row flex-wrap justify-content-around">
 
             <div class="checkout-items card" style="border: none;">
@@ -135,6 +122,26 @@
 @endsection
 
 @section('js')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('success'))
+                Toastify({
+                    text: '{{ session('success') }}',
+                    duration: 4000, // Duración de la notificación en milisegundos
+                    close: true, // Habilitar botón de cierre
+                    gravity: 'top', // Posición de la notificación (top, bottom)
+                    position: 'center', // Posición de la notificación (left, center, right)
+                    offset: {
+                            x: 0, // Distancia desde el borde derecho de la ventana del navegador
+                            y: 100 // Distancia desde la parte superior de la ventana del navegador
+                        },
+                    backgroundColor: "#29d167", // Color de fondo de la notificación
+                    stopOnFocus: true // Detener la duración al enfocar
+                }).showToast();
+            @endif
+        });
+    </script>
 
     <script>
         $(document).ready(function() {

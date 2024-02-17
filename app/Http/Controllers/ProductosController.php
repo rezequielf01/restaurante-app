@@ -46,6 +46,19 @@ class ProductosController extends Controller
         
     }
 
+    public function filtrarTodosLosProductos(){
+        $productos = Productos::all();
+        return response()->json($productos);
+    }
+
+    public function filtrarPorCategoria($categoria_id)
+    {
+        $productos = Productos::where('categoria_id', $categoria_id)->get();
+     
+        return response()->json($productos);
+    }
+
+
     public function subirProducto(request $request){
 
         $request->validate([

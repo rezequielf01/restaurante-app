@@ -138,29 +138,6 @@
     <div id="mesas-container"
         class="mesas-container bg-white rounded shadow-lg p-3 d-flex flex-wrap justify-content-center"
         style="height: auto">
-
-        {{-- @foreach ($mesas as $mesa)
-            <div class="mesa-box w-50 bg-white shadow-lg p-3 rounded" id="mesa-box">
-                <img class="mesa__img" style="filter: invert(0)" src="/restaurante-app/public/images/mesa.png"
-                    alt="Mesa icono">
-                <span class="mesa__estado d-flex flex-column align-items-center justify-content-center">
-                    <p class="mesa__p text-black">Mesa N°{{ $mesa->nro_mesa }}</p>
-                    <i title="Capacidad" class="fa fa-users text-black mb-2" aria-hidden="true">
-                        {{ $mesa->capacidad }}</i>
-                    @if ($mesa->productos()->exists())
-                        <i class="fa fa-times-circle-o bg-danger p-2 rounded" style="box-shadow: 0 0 5px rgb(255, 45, 45)"
-                            aria-hidden="true"> Ocupado</i>
-                    @else
-                        <i class="fa fa-check-circle-o bg-success p-2 rounded" style="box-shadow: 0 0 5px rgb(0, 206, 0)"
-                            aria-hidden="true"> Disponible</i>
-                    @endif
-                </span>
-                <a class="bg-dark d-flex justify-content-center align-items-center rounded w-100 p-1"
-                    href="{{ route('admin.ver.mesa', $mesa->id) }}"
-                    style="text-decoration: none; color: white !important">Ir a mesa</a>
-            </div>
-        @endforeach --}}
-
     </div>
 
 @stop
@@ -272,8 +249,8 @@
                     '<button title="Eliminar mesa" class="eliminar-mesa btn p-0 m-0" data-id="' + mesa.id +
                     '"><i class="fa fa-times-circle shadow-lg text-dark" style="position: absolute; top: 15px; left: 15px; font-size: 20px" aria-hidden="true"></i></button>'; // Agrega el botón de eliminar
                 html +=
-                    '<a class="bg-dark d-flex justify-content-center align-items-center rounded w-100 p-1" href="admin/administrar/mesas/' +
-                    mesa.id + '" style="text-decoration: none; color: white !important">Ir a mesa</a>';
+                    '<a class="bg-dark d-flex gap-1 justify-content-center align-items-center rounded w-100 p-1" href="admin/administrar/mesas/' +
+                    mesa.id + '" style="text-decoration: none; color: white !important"><p class="m-0 p-0">Ir a mesa</p><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>';
                 html += '</div>';
                 $('#mesas-container').append(html);
             }

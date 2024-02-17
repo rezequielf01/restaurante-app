@@ -78,7 +78,7 @@ class AdminMesasController extends Controller
         $mesa = Mesas::find($mesaId);
         $productos = DB::select('SELECT * FROM productos');
         $cantidadVentas = VentasLocal::all();
-        $categorias = DB::select('SELECT nombre FROM categorias');
+        $categorias = DB::select('SELECT * FROM categorias');
         $total = $this->calcularTotalMesa($mesaId);
 
         // Obtener la última venta asociada a la mesa
@@ -153,14 +153,14 @@ class AdminMesasController extends Controller
 
             if ($producto_mesa->producto_cantidad <= 0) {
                 MesasProductos::where('productos_id', $producto_id)->where('mesas_id',$mesaId)->delete();
-                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Producto eliminado');
+                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoEliminado', 'Producto eliminado');
             } else {
-                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Producto restado');
+                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoRestado', 'Producto restado');
             }
         } else {
             // Si la cantidad es igual o menor a cero, eliminamos el producto y terminamos la función.
             MesasProductos::where('productos_id', $producto_id)->where('mesas_id',$mesaId)->delete();
-            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Producto eliminado');
+            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoEliminado', 'Producto eliminado');
         }
     }
 
@@ -195,7 +195,7 @@ class AdminMesasController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Mesa cerrada');
+            return back()->with('mesaLiberada','¡Mesa liberada!');
         } else {
             echo "ERROR AL CERRAR MESA";
             db::rollBack();
