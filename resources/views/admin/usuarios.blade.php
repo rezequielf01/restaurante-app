@@ -25,38 +25,41 @@
         </div>
     @endif
 
-    <table id="example" class="table bd-danger table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Email</th>
-                <th>Direccion</th>
-                <th>Telefono</th>
-                {{-- <th >Envio</th> --}}
-                <th>Contraseña</th>
-                <th>Fecha_registro</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($usuarios as $usuario)
-                <tr style="background: none; max-height: 50px">
-                    <td style="width: 5%">{{ $usuario->id }}</td>
-                    <td style="width: 15%">{{ $usuario->name }}</td>
-                    <td style="width: 15%">{{ $usuario->email }}</td>
-                    
-                    <td style="width: 15%">{{ $usuario->direccion }}</td>
-                    <td style="width: 15%"><a href="https://wa.me/{{ $usuario->telefono }}" target="_blank"
-                        title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"
-                        class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
-                        {{ $usuario->telefono }}</a></td>
-                    <td style="width: 15%">{{ $usuario->password }}</td>
-                    <td style="width: 15%">{{ $usuario->created_at }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="bg-light shadow-lg p-3">
 
+        <table id="example" class="table bd-danger table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Email</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    {{-- <th >Envio</th> --}}
+                    <th style="width: 5%">Contraseña</th>
+                    <th>Fecha_registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($usuarios as $usuario)
+                    <tr style="background: none; max-height: 50px">
+                        <td style="width: 5%">{{ $usuario->id }}</td>
+                        <td style="width: 15%">{{ $usuario->name }}</td>
+                        <td style="width: 15%">{{ $usuario->email }}</td>
+                        
+                        <td style="width: 15%">{{ $usuario->direccion }}</td>
+                        <td style="width: 15%"><a href="https://wa.me/{{ $usuario->telefono }}" target="_blank"
+                            title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"
+                            class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                            {{ $usuario->telefono }}</a></td>
+                        <td style="width: 5%">{{ $usuario->password }}</td>
+                        <td style="width: 15%">{{ $usuario->created_at }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
 
 @stop
 

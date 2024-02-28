@@ -23,10 +23,9 @@ class DetalleVentaLocal extends Model
         // 'metodo_de_pago',
         // 'retiro',
         ];
-
-        public function venta()
-    {
-        return $this->belongsTo(VentasLocal::class, 'venta_id', 'id');
-    }
+        public function ventaLocal()
+        {
+            return $this->belongsTo(VentasLocal::class, 'venta_id', 'id');
+        }
 
 }

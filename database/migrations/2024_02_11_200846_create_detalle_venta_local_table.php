@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('mesa_nro');
             $table->unsignedBigInteger('venta_id');
-            $table->unsignedBigInteger('producto_id');
+            $table->unsignedBigInteger('producto_id')->nullable();
             $table->string('nombre');
             $table->integer('cantidad');
             $table->decimal('precio',10,3);
@@ -28,7 +28,7 @@ return new class extends Migration
 
             $table->foreign('producto_id')
             ->references('id')->on('productos')
-            ->onDelete('cascade')
+            ->onDelete('set null')
             ->onUpdate('no action');
         });
     }

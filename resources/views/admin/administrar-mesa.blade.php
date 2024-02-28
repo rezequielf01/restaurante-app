@@ -41,19 +41,20 @@
                 }).showToast();
             });
         </script>
+    @elseif(session('productoAgregado'))
+        <script></script>
     @endif
 
     <div class="mesas-container d-flex gap-3">
 
         <div class="mesa-categoria w-25 bg-light shadow-lg p-3 rounded">
-            <h3 class="w-100 d-flex align-items-center justify-content-center bg-dark p-1 rounded text-center">Lista de
-                categorias</h3>
+            <h3 class="w-100 d-flex align-items-center justify-content-center bg-dark p-1 rounded text-center">Categorias
+            </h3>
             <ol style="list-style-type: none"
                 class="w-100 d-flex flex-column gap-3 align-items-center justify-content-center data-categoria-id">
                 <li>
                     <button data-categoria-id="todos" class="btn p-1 btn-categoria"
-                        style="min-width: 120px; background: var(--color-principal)"
-                        type="button">Mostrar todo</button>
+                        style="min-width: 120px; background: var(--color-principal)" type="button">Mostrar todo</button>
                 </li>
                 @foreach ($categorias as $categoria)
                     <li>
@@ -67,30 +68,9 @@
 
         <div class="mesa-productos bg-light shadow-lg p-3 w-75">
             <h3 class="m-0 w-100 bg-dark p-1 rounded text-center">Lista de productos</h3>
-            <div class="container mesa-lista-productos d-flex flex-wrap gap-3 pt-3" style="max-height: 90%; overflow-y: auto;">
-                @foreach ($productos as $producto)
-                    <form class="mesa-card-form"
-                        action="{{ route('admin.agregar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="post">
-                        @csrf
-                        <div class="card bg-white shadow-lg m-0">
-                            <div class="card-body p-2">
-                                <img class="mesa-card__img" src="/restaurante-app/public/productos/{{ $producto->imagen }}"
-                                    alt="">
-                                <span class="food__precio">${{ $producto->precio }}</span>
-                                <p class="m-0">{{ $producto->nombre }}</p>
-                                <input type="hidden" name="productoId" value="{{ $producto->id }}">
-                                <div class="d-flex align-items-center w-100">
-                                    <p class="p-0 m-0">Cantidad: </p>
-                                    <input class="mesa-card__cantidad w-50" placeholder="1" type="number" name="cantidad">
-                                </div>
-                            </div>
-                            <div class="card-footer w-100 d-flex align-items-center justify-content-center">
-                                <button title="Agregar" class="btn" style="background: var(--color-principal)"
-                                    type="submit">Agregar</button>
-                            </div>
-                        </div>
-                    </form>
-                @endforeach
+            <div class="container mesa-lista-productos d-flex flex-wrap gap-3 pt-3"
+                style="max-height: 90%; overflow-y: auto;">
+
             </div>
         </div>
 
@@ -107,28 +87,8 @@
 
                 <h3 class="m-0 w-100 bg-dark p-1 rounded text-center">Productos en mesa</h3>
 
-                <div class="mesa-lista-consumido d-flex w-100 p-2 ps-0 gap-3">
-                    @foreach ($mesa->productos as $producto)
-                        <form action="{{ route('admin.restar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="get"
-                            style="width: 15%; height: 200px">
-                            <div class="card-mesa-consumido card w-100 h-100 shadow-lg bg-white m-0">
-                                <div class="card-body p-0">
-                                    <img class="mesa-card__img"
-                                        src="/restaurante-app/public/productos/{{ $producto->imagen }}" alt="">
-                                    <span class="food__precio">x{{ $producto->pivot->producto_cantidad }}</span>
-                                    <p class="m-0 p-1 text-center">{{ $producto->nombre }}</p>
-                                    <div class="w-100 d-flex gap-2 align-items-center justify-content-center">
-                                        <input class="w-25" type="number" placeholder="1" name="cantidad2">
-                                        <button style="background: var(--color-principal);" title="Restar" class="btn"
-                                            type="submit">Restar
-                                        </button>
-                                    </div>
-                                    <input type="hidden" name="productoId" value="{{ $producto->id }}">
-                                    {{-- <input type="number" name="cantidad" --}}
-                                </div>
-                            </div>
-                        </form>
-                    @endforeach
+                <div id="mesa-lista-consumido" class="mesa-lista-consumido d-flex w-100 p-2 ps-0 gap-3">
+                    
                 </div>
 
             </div>
@@ -161,7 +121,7 @@
                     </label>
 
                     <label for="total">Total:
-                        <span>${{ number_format($total, 3, '.', ',') }}</span>
+                        <span id="precio-total">${{ number_format($total, 3, '.', ',') }}</span>
                         <input type="hidden" id="total" name="total"
                             value="{{ number_format($total, 3, '.', ',') }}">
                     </label>
@@ -197,10 +157,65 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 @section('js')
 
+
     <script>
+        var productoAgregadoMsg = {{ json_encode(session('productoAgregado')) }};
         $(document).ready(function() {
 
+            $.ajax({
+                        url: '{{ route('admin.todos.los.producto') }}',
+                        type: 'GET',
+                        success: function(respuesta) {
+                            // Manejar la respuesta y mostrar los productos filtrados
+                            actualizarListaProductos(respuesta);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+            });
+
+            actualizarListaProductosEnMesa();
+
+            // ACTUALIZAR LA LISTA DE PRODUCTOS CON AJAX
+            function actualizarListaProductos(productos) {
+                // Limpiar la lista de productos
+                $('.mesa-lista-productos').empty();
+
+                    // Iterar sobre los productos recibidos y agregarlos al contenedor
+                    productos.forEach(function(producto) {
+                        // Construir el HTML para cada producto
+                        var html = `
+                        <form class="mesa-card-form" id="form-producto-${producto.id}"
+                            data-producto-id="${producto.id}"
+                            action="{{ route('admin.guardar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="card bg-white shadow-lg m-0">
+                                <div class="card-body p-2">
+                                    <img class="mesa-card__img" src="/restaurante-app/public/productos/${producto.imagen}" alt="">
+                                    <span class="food__precio">$${producto.precio}</span>
+                                    <p class="m-0">${producto.nombre}</p>
+                                    <input type="hidden" name="productoId" value="${producto.id}">
+                                    <div class="d-flex align-items-center w-100">
+                                        <p class="p-0 m-0">Cantidad: </p>
+                                        <input class="mesa-card__cantidad w-50" placeholder="1" type="number" name="cantidad">
+                                    </div>
+                                </div>
+                                <div class="card-footer w-100 d-flex align-items-center justify-content-center">
+                                    <button title="Agregar" class="btn btn-agregar-producto"
+                                        style="background: var(--color-principal)" type="submit">Agregar</button>
+                                </div>
+                            </div>
+                        </form>
+                        `;
+
+                        // Agregar el producto al contenedor de productos
+                        $('.mesa-lista-productos').append(html);
+                    });
+            }
+
+            // FILTRAR POR CATEGORIAS CON AJAX
             $('.btn-categoria').click(function() {
+
                 var categoriaId = $(this).data('categoria-id');
 
                 if (categoriaId >= 1) {
@@ -211,18 +226,18 @@
                         success: function(respuesta) {
                             // Manejar la respuesta y mostrar los productos filtrados
                             actualizarListaProductos(respuesta);
+
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
                 } else {
-                    // No se ha seleccionado ninguna categoría, obtener todos los productos
                     $.ajax({
                         url: '{{ route('admin.todos.los.producto') }}',
                         type: 'GET',
                         success: function(respuesta) {
-                            // Manejar la respuesta y mostrar todos los productos
+                            // Manejar la respuesta y mostrar los productos filtrados
                             actualizarListaProductos(respuesta);
                         },
                         error: function(xhr, status, error) {
@@ -230,61 +245,162 @@
                         }
                     });
                 }
+
             });
 
-            function actualizarListaProductos(productos) {
-            // Limpiar la lista de productos
-            $('.mesa-lista-productos').empty();
+           // Utilizar delegación de eventos para manejar clics en botones de agregar producto
+            $(document).on('click', '.btn-agregar-producto', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del botón
 
-            // Iterar sobre los productos recibidos y agregarlos al contenedor
-            productos.forEach(function(producto) {
-                // Construir el HTML para cada producto
-                var html = '<form class="mesa-card-form" action="{{ route('admin.agregar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="post">';
-                                html += '@csrf';
-                                html += '<div class="card bg-white shadow-lg m-0">';
-                                html += '<div class="card-body p-2">';
-                                html += ' <img class="mesa-card__img" src="/restaurante-app/public/productos/'+producto.imagen+'" alt="">';
-                                html += '<span class="food__precio">$'+producto.precio+'</span>';
-                                html += '<p class="m-0">'+producto.nombre+'</p>';
-                                html += '<input type="hidden" name="productoId" value="'+producto.id+'">';
-                                html += '<div class="d-flex align-items-center w-100">';
-                                html += '<p class="p-0 m-0">Cantidad: </p>';
-                                html += '<input class="mesa-card__cantidad w-50" placeholder="1" type="number" name="cantidad">';
-                                html += '</div>';
-                                html += '</div>';
-                                html += '<div class="card-footer w-100 d-flex align-items-center justify-content-center">';
-                                html += '<button title="Agregar" class="btn" style="background: var(--color-principal)" type="submit">Agregar</button>';
-                                html += '</div>';
-                                html += '</div>';
-                                html += '</form>';
+                var form = $(this).closest('form'); // Encuentra el formulario más cercano
+                var formData = form.serialize(); // Serializa los datos del formulario
 
-                // Agregar el producto al contenedor de productos
-                $('.mesa-lista-productos').append(html);
+                $.ajax({
+                    url: form.attr('action'), // Obtiene la URL del formulario
+                    type: form.attr('method'), // Obtiene el método del formulario (POST en este caso)
+                    data: formData, // Envía los datos del formulario
+                    success: function(response) {
+                        // Maneja la respuesta del servidor (si es necesario)
+                        if (response.mensaje == "Ingrese un número mayor a 0") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                confirmButtonColor: '#0c0c0c'
+                            });
+                        } else {
+                            Toastify({
+                                text: response.mensaje,
+                                duration: 3000, // Duración de la notificación en milisegundos
+                                close: true, // Habilitar botón de cierre
+                                gravity: 'top', // Posición de la notificación (top, bottom)
+                                position: 'right', // Posición de la notificación (left, center, right)
+                                offset: {
+                                    x: 0, // Distancia desde el borde derecho de la ventana del navegador
+                                    y: 50 // Distancia desde la parte superior de la ventana del navegador
+                                },
+                                backgroundColor: "#29d167", // Color de fondo de la notificación
+                                stopOnFocus: true // Detener la duración al enfocar
+                            }).showToast();
+                        }
+
+                        // Actualiza la lista de productos en la interfaz de usuario
+                        actualizarListaProductosEnMesa(); // Cambiado el nombre de la función
+                        // Actualizar el precio total en la interfaz de usuario
+                        $('#precio-total').text("$"+response.total);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al agregar producto a la mesa:', error);
+                    }
+                });
             });
-        }
+        
+            // Función para mostrar los productos de la mesa cuando la página se carga
+            function actualizarListaProductosEnMesa() {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('admin.productos.en.mesa', ['mesaId' => $mesa->id]) }}',
+                    success: function(response) {
 
+                        // Limpiar la lista de productos de la mesa
+                        $('#mesa-lista-consumido').empty();
+
+                        // Recorrer los productos recibidos y agregarlos a la lista
+                        response.productos.forEach(producto => {
+                            var productoHtml = '<form id="restar-form" action="{{ route('admin.restar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="get" style="width: 20%; height: 250px;">';
+                            productoHtml += '<div class="card-mesa-consumido card w-100 h-100 shadow-lg bg-white m-0">';
+                            productoHtml += '<div class="card-body p-0">';
+                            productoHtml += '<img class="mesa-card__img" src="/restaurante-app/public/productos/'+producto.imagen+'" alt="">';
+                            productoHtml += '<span class="food__precio">x'+producto.cantidad+'</span>';
+                            productoHtml += '<p class="m-0 p-1 text-center">'+producto.nombre+'</p>';
+                            productoHtml += '<div class="w-100 d-flex gap-2 align-items-center justify-content-center">';
+                            productoHtml += '<input class="w-25" type="number" placeholder="1" name="cantidad2">';
+                            productoHtml += '<button style="background: var(--color-principal);" title="Restar" class="btn btn-restar-producto" type="submit">Restar</button>';
+                            productoHtml += '</div>';
+                            productoHtml += '<input type="hidden" name="productoId" value="'+producto.id+'">';
+                            productoHtml += '</div>';
+                            productoHtml += '</div>';
+                            productoHtml += '</form>';
+                            $('#mesa-lista-consumido').append(productoHtml);
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }    
+
+            $(document).on('click', '.btn-restar-producto', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del botón
+
+                var form = $('#restar-form');
+                var formData = form.serialize(); // Serializa los datos del formulario
+
+                $.ajax({
+                    url: form.attr('action'), // Obtiene la URL del formulario
+                    type: form.attr('method'), // Obtiene el método del formulario (POST en este caso)
+                    data: formData, // Envía los datos del formulario
+                    success: function(response) {
+                        // Maneja la respuesta del servidor (si es necesario)
+                        if (response.mensaje == "Ingrese un número mayor a 0") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                confirmButtonColor: '#0c0c0c'
+                            });
+                        } else {
+                            Toastify({
+                                text: response.mensaje,
+                                duration: 3000, // Duración de la notificación en milisegundos
+                                close: true, // Habilitar botón de cierre
+                                gravity: 'top', // Posición de la notificación (top, bottom)
+                                position: 'right', // Posición de la notificación (left, center, right)
+                                offset: {
+                                    x: 0, // Distancia desde el borde derecho de la ventana del navegador
+                                    y: 50 // Distancia desde la parte superior de la ventana del navegador
+                                },
+                                backgroundColor: "#29d167", // Color de fondo de la notificación
+                                stopOnFocus: true // Detener la duración al enfocar
+                            }).showToast();
+                        }
+
+                        // Actualiza la lista de productos en la interfaz de usuario
+                        actualizarListaProductosEnMesa(); // Cambiado el nombre de la función
+                        // Actualizar el precio total en la interfaz de usuario
+                        $('#precio-total').text("$" + response.total);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al agregar producto a la mesa:', error);
+                    }
+                });
+            });
+          
+            // VALIDAR FORMULARIO ANTES DE CERRAR MESA
             $('#formulario-ticket').submit(function(event) {
                 // Evitar que se envíe el formulario automáticamente
                 event.preventDefault();
 
-                // Obtener valores de los campos
-                var total = $('#total').val();
+                // Obtener la cantidad de productos en la mesa
+                var cantidadProductos = $('#mesa-lista-consumido .card-mesa-consumido').length;
 
-                // Validar campos
-                if (total > 0) {
-
+                // Validar si hay productos en la mesa
+                if (cantidadProductos > 0) {
+                    // Si hay productos, enviar el formulario
                     this.submit();
                 } else {
+                    // Si no hay productos, mostrar un mensaje de error
                     Swal.fire({
                         title: "Error",
-                        text: "No se encontraron prodúctos en la mesa!",
+                        text: "No se encontraron productos en la mesa!",
                         icon: "error",
                         confirmButtonColor: '#343a40',
                     });
                 }
 
-
             });
+            
         });
     </script>
 

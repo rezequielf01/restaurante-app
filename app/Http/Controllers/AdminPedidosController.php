@@ -39,9 +39,7 @@ class AdminPedidosController extends Controller
             db::rollBack();
         }
         
-
-
-        return back()->withSuccess('!Pedido entregado!');
+        return response()->json(['message' => '¡Producto entregado correctamente!']);
     }
 
     // public function ordersDelivered(){

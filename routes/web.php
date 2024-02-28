@@ -50,8 +50,10 @@ Route::post('carrito/enviar-pedido', [CarritoController::class, 'sendOrder'])->n
 // PAGINAS
 Route::get('admin/mesas', [AdminHomeController::class, 'mostrarMesas'])->name('admin.mesas');
 Route::get('admin/administrar/mesas/{mesaId}', [AdminMesasController::class, 'administrar'])->name('admin.ver.mesa');
+Route::get('admin/administrar/obtener-productos-mesa/{mesaId}', [AdminMesasController::class, 'obtenerProductosEnMesa'])->name('admin.productos.en.mesa');
+// Route::get('admin/administrar/mesas/{mesaId}/agregar-producto', [AdminMesasController::class, 'guardarProducto'])->name('admin.guardar.producto.mesa');
 // ACCIONES
-Route::post('admin/administrar/mesas/{mesaId}/agregar', [AdminMesasController::class, 'guardarProducto'])->name('admin.agregar.producto.mesa');
+Route::post('admin/administrar/mesas/{mesaId}/agregar', [AdminMesasController::class, 'agregarProducto'])->name('admin.agregar.producto.mesa');
 Route::post('admin/eliminar/mesa', [AdminMesasController::class, 'eliminarMesa'])->name('admin.eliminar.mesa');
 Route::post('admin/administrar/mesas/{mesaId}/guardar-producto', [AdminMesasController::class, 'guardarProducto'])->name('admin.guardar.producto.mesa');
 Route::post('admin/enviar-formulario', [AdminMesasController::class, 'agregarMesa'])->name('admin.agregar.mesa.btn');
@@ -64,28 +66,31 @@ Route::get('admin/administrar/mesas/ticket/{ventaId}', [FpdfVentasController::cl
 Route::get('admin/pedidos', [AdminPedidosController::class, 'show'])->middleware("can:admin.pedidos")->name('admin.pedidos');
 Route::get('admin/pedidos-entregados', [AdminPedidosController::class, 'ordersDelivered'])->middleware("can:admin.pedidos.entregados")->name('admin.pedidos.entregados');
 // ACCIONES
-Route::get('admin/pedidos/{id}/entregado', [AdminPedidosController::class, 'orderMoved'])->name('admin.pedido.entregado');
+Route::post('admin/pedidos/{id}/entregado', [AdminPedidosController::class, 'orderMoved'])->name('admin.pedido.entregado');
 Route::get('admin/pedidos/{id}/cancelado', [AdminPedidosController::class, 'destroy'])->name('admin.pedido.cancelado');
 
 Route::get('admin/ticket/{orderId}', [FpdfController::class, 'index'])->name('admin.fpdf');
 Route::get('admin/ticket/nro/{orderId}', [FpdfDeliveredController::class, 'index'])->name('admin.fpdf.delivered');
 
 Route::get('admin/ventas-en-local', [AdminVentasLocalController::class, 'show'])->name('admin.ventas.local');
+// Route::get('admin/ventas-en-local/{id}', [AdminVentasLocalController::class, 'showw'])->name('admin.ventas.local');
 
 Route::get('admin/categorias', [ProductosController::class, 'showCategorias'])->name('admin.categorias');
-Route::get('admin/crear-categoria', [ProductosController::class, 'crearCategoria'])->name('admin.crear.categoria');
+Route::get('admin/agregar-categoria', [ProductosController::class, 'agregarATablaCategoria'])->name('admin.tabla.categoria');
 Route::post('admin/categoria/store', [ProductosController::class, 'subirCategoria'])->name('admin.categoria.store');
-Route::get('admin/categoria/{id}/delete', [ProductosController::class, 'destroyCategoria'])->name('admin.categoria.delete');
+Route::get('admin/categoria/{id}/delete', [ProductosController::class, 'eliminarCategoria'])->name('admin.categoria.delete');
 
 Route::get('filtrar-productos/{categoria_id}', [ProductosController::class, 'filtrarPorCategoria'])->name('admin.filtrar.producto');
 Route::get('todos-los-productos', [ProductosController::class, 'filtrarTodosLosProductos'])->name('admin.todos.los.producto');
 
 Route::get('admin/productos', [ProductosController::class, 'show'])->name('admin.productos');
+
+Route::post('admin/verificar-nombre-producto', [ProductosController::class, 'verificarNombreProducto'])->name('admin.verificar.nombre.producto');
 Route::get('admin/crear-producto', [ProductosController::class, 'crearProducto'])->middleware("can:admin.crear.producto")->name('admin.crear.producto');
 Route::post('admin/producto/store', [ProductosController::class, 'subirProducto'])->middleware("can:admin.producto.store")->name('admin.producto.store');
 Route::get('admin/producto/{id}/edit', [ProductosController::class, 'edit'])->middleware("can:admin.producto.edit")->name('admin.producto.edit');
 Route::put('admin/producto/{id}/update', [ProductosController::class, 'update'])->middleware("can:admin.producto.update")->name('admin.producto.update');
-Route::get('admin/producto/{id}/delete', [ProductosController::class, 'destroy'])->middleware("can:admin.producto.delete")->name('admin.producto.delete');
+Route::get('admin/producto/{id}/delete', [ProductosController::class, 'eliminarProducto'])->middleware("can:admin.producto.delete")->name('admin.producto.delete');
 
 
 Route::get('admin/usuarios-registrados', [AdminUsuariosController::class, 'show'])->middleware("can:admin.usuarios")->name('admin.usuarios');

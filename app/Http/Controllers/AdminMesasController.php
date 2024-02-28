@@ -72,6 +72,20 @@ class AdminMesasController extends Controller
         }
     }
 
+    public function obtenerProductosEnMesa($mesaId){
+        $mesa = Mesas::findOrFail($mesaId);
+        $productos = $mesa->productos; // Suponiendo que tienes una relación entre Mesa y Producto
+    
+        // Obtener la cantidad de cada producto en la mesa
+        foreach ($productos as $producto) {
+            $producto->cantidad = $producto->pivot->producto_cantidad;
+        }
+
+        $totalMesa = $this->calcularTotalMesa($mesaId);
+
+        return response()->json(['productos' => $productos, 'total' => number_format($totalMesa,3,'.',',')]);
+    }
+
     public function administrar($mesaId)
     {
 
@@ -115,53 +129,80 @@ class AdminMesasController extends Controller
 
         if (!$producto_mesa && $cantidad >= 1) {
 
+             // Crear el nuevo registro en la tabla MesasProductos
             MesasProductos::create([
                 'mesas_id' => $mesaId,
                 'productos_id' => $producto_id,
                 'producto_cantidad' => $cantidad,
             ]);
 
-            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Producto agregado');
+            $mensaje = 'El producto se agregó a la mesa';
+
+            $totalMesa = $this->calcularTotalMesa($mesaId); // Sumar el precio de todos los productos en la mesa
+
+            return response()->json(['mensaje' => $mensaje, 'total' => number_format($totalMesa,3,'.',',')]);
+
         } elseif (!$producto_mesa && $cantidad <= 0) {
-            echo "Pruebe con un numero mayor a 0";
+
+            $mensaje = 'Ingrese un número mayor a 0';
+
+            $totalMesa = $this->calcularTotalMesa($mesaId);
+
+            return response()->json(['mensaje' => $mensaje, 'total' => number_format($totalMesa,3,'.',',')]);
+
         } elseif ($producto_mesa && $producto_mesa->producto_cantidad > 0 && $cantidad >= 1) {
 
             MesasProductos::where('productos_id', $producto_id)->increment('producto_cantidad', $cantidad);
-            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('success', 'Producto agregado');
+
+            $mensaje = 'El producto se sumó a la mesa';
+
+            $totalMesa = $this->calcularTotalMesa($mesaId); // Sumar el precio de todos los productos en la mesa
+
+            return response()->json(['mensaje' => $mensaje, 'total' => number_format($totalMesa,3,'.',',')]);
+
         } elseif ($producto_mesa && $producto_mesa->producto_cantidad > 0 && $cantidad <= 0) {
-            echo "Pruebe con un numero mayor a 0";
+
+            $mensaje = 'Ingrese un número mayor a 0';
+
+            $totalMesa = $this->calcularTotalMesa($mesaId);
+
+            return response()->json(['mensaje' => $mensaje, 'total' => number_format($totalMesa,3,'.',',')]);
+            
         }
+    
     }
 
     public function restarCantidad(Request $request, $mesaId)
     {
-        $mesa = Mesas::findOrFail($mesaId);
+
+        // Validar datos de entrada
+        $request->validate([
+            'productoId' => 'required|numeric',
+            'cantidad2' => 'nullable|numeric',
+        ]);
+
         $producto_id = $request->productoId;
-        $cantidad2 = $request->cantidad2;
-        $producto_mesa = MesasProductos::select('producto_cantidad')->where('mesas_id', $mesaId)->where('productos_id', $producto_id)->first();
+        $cantidad2 = $request->cantidad2 ?? 1; //SI EL REQUEST ESTA VACIO EL VALOR ES 1
 
-        if ($cantidad2 == "") {
-            $cantidad2 = 1;
+        // Obtener y actualizar la cantidad del producto en la mesa
+        $mesaProducto = MesasProductos::where('mesas_id', $mesaId)
+                                        ->where('productos_id', $producto_id)
+                                        ->firstOrFail();
+
+        $nuevaCantidad = max(0, $mesaProducto->producto_cantidad - $cantidad2);
+        $mesaProducto->update(['producto_cantidad' => $nuevaCantidad]);
+
+        $totalMesa = $this->calcularTotalMesa($mesaId);
+
+        // Eliminar el producto si la cantidad llega a cero
+        if ($nuevaCantidad <= 0) {
+            $mesaProducto->delete();
+            return response()->json(['mensaje' => '¡Producto eliminado!', 'total' => number_format($totalMesa,3,'.',',')]);
         }
 
-        if ($producto_mesa->producto_cantidad > 0) {
-            // Si la cantidad es mayor que cero, decrementamos la cantidad.
-            MesasProductos::where('productos_id', $producto_id)->where('mesas_id',$mesaId)->decrement('producto_cantidad', $cantidad2);
+        // Redireccionar con un mensaje de éxito
+        return response()->json(['mensaje' => '¡Producto restado!', 'total' => number_format($totalMesa,3,'.',',')]);
 
-            // Verificamos si la cantidad ha llegado a cero y eliminamos el producto si es el caso.
-            $producto_mesa = MesasProductos::select('producto_cantidad')->where('mesas_id', $mesaId)->where('productos_id', $producto_id)->first();
-
-            if ($producto_mesa->producto_cantidad <= 0) {
-                MesasProductos::where('productos_id', $producto_id)->where('mesas_id',$mesaId)->delete();
-                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoEliminado', 'Producto eliminado');
-            } else {
-                return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoRestado', 'Producto restado');
-            }
-        } else {
-            // Si la cantidad es igual o menor a cero, eliminamos el producto y terminamos la función.
-            MesasProductos::where('productos_id', $producto_id)->where('mesas_id',$mesaId)->delete();
-            return redirect()->route('admin.ver.mesa', ['mesaId' => $mesa->id])->with('productoEliminado', 'Producto eliminado');
-        }
     }
 
     public function cerrarMesa(Request $request, $mesaId)
@@ -169,17 +210,28 @@ class AdminMesasController extends Controller
 
         $mesa = Mesas::findOrFail($mesaId);
 
-        $venta = new VentasLocal();
-
-        $venta->cajero = $request->cajero;
-        $venta->cliente = $request->cliente;
-        $venta->forma_de_pago = $request->medioDePago;
-        $venta->total = $request->total;
-
-        if ($venta->total > 0) {
+        // Inicializar el total de la venta en cero
+        $totalVenta = 0;
+    
+        foreach ($mesa->productos as $item) {
+            // Calcular el total de la venta sumando el precio de cada producto
+            $totalVenta += $item->precio * $item->pivot->producto_cantidad;
+        }
+    
+        // Verificar si el total de la venta es mayor que cero
+        if ($totalVenta > 0) {
+            // Crear una nueva instancia de VentasLocal solo si hay productos en la mesa
+            $venta = new VentasLocal();
+    
+            $venta->cajero = $request->cajero;
+            $venta->cliente = $request->cliente;
+            $venta->forma_de_pago = $request->medioDePago;
+            $venta->total = $totalVenta; // Asignar el total de la venta calculado
+    
+            // Guardar la venta en la base de datos
             $venta->save();
             $ventaId = $venta->id;
-
+    
             foreach ($mesa->productos as $item) {
                 DetalleVentaLocal::create([
                     'mesa_nro' => $mesa->nro_mesa,
@@ -190,15 +242,17 @@ class AdminMesasController extends Controller
                     'precio' => $item->precio,
                 ]);
             }
-
+    
+            // Eliminar los productos de la mesa
             MesasProductos::where('mesas_id', $mesaId)->delete();
-
+    
+            // Realizar un commit de la transacción
             DB::commit();
-
-            return back()->with('mesaLiberada','¡Mesa liberada!');
+    
+            return back()->with('mesaLiberada', '¡Mesa liberada!');
         } else {
-            echo "ERROR AL CERRAR MESA";
-            db::rollBack();
+            // Si no hay productos en la mesa, mostrar un mensaje de error
+            return back()->withErrors(['mensaje' => 'No se encontraron productos en la mesa.']);
         }
     }
 }

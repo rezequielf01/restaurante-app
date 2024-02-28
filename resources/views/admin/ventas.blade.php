@@ -29,7 +29,7 @@
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>Venta Nro</th>
+                    <th style="width: 5%">Venta Nro</th>
                     <th>Cajero</th>
                     <th>Cliente</th>
                     <th>Mesa Nro</th>
@@ -41,28 +41,34 @@
             </thead>
             <tbody>
           
-                    @foreach ($detalle_ventas as $detalleVenta)
-                        <tr style="background: none; max-height: 50px">
-                            <td style="width: 5%">@if ($detalleVenta->id < 10)
-                                00{{$detalleVenta->id}}
-                            @else
-                            0{{$detalleVenta->id}}
-                            @endif</td>
-                            <td style="width: 15%">{{ $detalleVenta->cajero }}</td>
-                            <td style="width: 15%">{{ $detalleVenta->cliente }}</td>
-                            <td style="width: 15%">{{ $detalleVenta->mesa_nro }}</td>
-                            <td style="width: 15%">{{ $detalleVenta->forma_de_pago }}</td>
-                            <td style="width: 15%">${{ $detalleVenta->total }}</td>
-                            <td style="width: 15%">{{ $detalleVenta->created_at }}</td>
-                            <td style="width: 15%">
-                                <a href="{{route('admin.fpdf.venta.local',$detalleVenta->id)}}" target="_blank" title="Imprimir factura"
-                                    style="color: white; background: rgb(33, 118, 255); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);"
-                                    class="btn">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
+                @foreach($ventas as $venta)
+                    <tr>
+                        <td>
+                        @if ($venta->id < 10)
+                        00{{ $venta->id }}
+                        @else
+                        0{{ $venta->id }}
+                        @endif</td>
+                        <td>{{ $venta->cajero }}</td>
+                        <td>{{ $venta->cliente }}</td>
+                        <td>
+                            @foreach($venta->DetallesVenta as $detalle)
+                                {{ $detalle->mesa_nro }}
+                                @break
+                            @endforeach
+                        </td>
+                        <td>{{ $venta->forma_de_pago }}</td>
+                        <td>${{ $venta->total }}</td>
+                        <td>{{ $venta->created_at }}</td>
+                        <td style="width: 5%">
+                            <a href="{{route('admin.fpdf.venta.local',$venta->id)}}" target="_blank" title="Imprimir factura"
+                                style="color: white; background: rgb(33, 118, 255); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);"
+                                class="btn">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
               
             </tbody>
         </table>

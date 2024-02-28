@@ -17,9 +17,8 @@ class VentasLocal extends Model
         'total',
     ];
 
-    public function detallesVentas()
+    public function detallesVenta()
     {
-        
         return $this->hasMany(DetalleVentaLocal::class, 'venta_id', 'id');
     }
 

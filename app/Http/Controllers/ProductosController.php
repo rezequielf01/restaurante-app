@@ -14,12 +14,9 @@ class ProductosController extends Controller
 
     public function show(){
         $productos = Productos::all();
-        return view("admin.productos",compact("productos"));
-    }
-
-    public function crearProducto(){
         $categorias = Categorias::all();
-        return view("admin.crear-producto",compact("categorias"));
+        
+        return view("admin.productos",compact("productos","categorias"));
     }
 
     public function showCategorias(){
@@ -27,8 +24,20 @@ class ProductosController extends Controller
         return view("admin.categorias",compact("categorias"));
     }
     
-    public function crearCategoria(){
-        return view("admin.crear-categoria");
+    public function agregarATablaCategoria(){
+        $categorias = Categorias::all();
+        return response()->json($categorias);
+    }
+
+    public function verificarNombreProducto(Request $request)
+    {
+        $nombre = $request->input('nombre');
+        
+        // Busca un producto con el mismo nombre en la base de datos
+        $productoExistente = Productos::where('nombre', $nombre)->exists();
+        
+        // Devuelve una respuesta JSON indicando si el nombre existe o no
+        return response()->json(['existe' => $productoExistente]);
     }
 
     public function subirCategoria(Request $request){
@@ -42,7 +51,8 @@ class ProductosController extends Controller
         $categoria->icono = $icono;
 
         $categoria->save();
-        return back()->withSuccess('CATEGORIA AGREGADO EXITOSAMENTE!');
+        
+        return response()->json(['success' => '¡Categoria agregada correctamente!']);
         
     }
 
@@ -84,52 +94,65 @@ class ProductosController extends Controller
         $producto->stock = $request->stock;
 
         $producto->save();
-        return back()->withSuccess('PRODUCTO AGREGADO EXITOSAMENTE!');
+        return response()->json(['message' => '¡Producto agregado correctamente!']);
         
     }
 
     public function edit($id){
-        $producto = Productos::where("id",$id)->first();
-        $categorias = Categorias::all();
-        return view("admin.editar-producto",compact("producto","categorias"));
-        dd($id);
+        
+        $producto = Productos::findOrFail($id);
+        
+        return response()->json($producto);
     }
 
-    public function update(Request $request, $id){
-        
-        $producto = Productos::where("id",$id)->first();
-        
-        if(isset($producto->imagen)){
-            //UPLOAD PRODUCT
+    public function update(Request $request, $id) {
+        $producto = Productos::findOrFail($id);
+    
+        $request->validate([
+            'nombre'=>'nullable',
+            'descripcion'=>'nullable',
+            'precio'=>'nullable|numeric',
+            'imagen'=>'nullable|mimes:jpeg,jpg,png',
+            'categoria_id'=>'nullable',
+            'stock'=>'nullable',
+        ]);
+
+        if (!$producto) {
+            return response()->json(['message' => 'El producto no fue encontrado'], 404);
+        }
+    
+        if ($request->hasFile('imagen')) {
             $imageName = time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('productos'),$imageName);
+            $request->imagen->move(public_path('productos'), $imageName);
             $producto->imagen = $imageName;
         }
-
+    
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
         $producto->categoria_id = $request->categoria;
         $producto->stock = $request->stock;
-
+    
         $producto->save();
-        return back()->withSuccess('PRODUCTO ACTUALIZADO EXITOSAMENTE!');
+    
+        return response()->json(['message' => '¡Producto actualizado correctamente!']);
     }
 
-    public function destroy($id){
+    public function eliminarProducto($id){
 
         $producto = Productos::where("id",$id)->first();
         $producto->delete();
-        return back()->withSuccess('PRODUCTO ELIMINADO CORRECTAMENTE!');
+        return response()->json(['message' => '¡Producto eliminado correctamente!']);
 
     }
 
-    public function destroyCategoria($id){
+    public function eliminarCategoria($id){
 
         $categoria = Categorias::where("id",$id)->first();
         $categoria->delete();
 
-        return back()->withSuccess('PRODUCTO ELIMINADO CORRECTAMENTE!');
+        return response()->json(['message' => '¡Categoria eliminada correctamente!']);
+
 
     }
 }
