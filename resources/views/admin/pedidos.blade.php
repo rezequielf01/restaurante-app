@@ -47,15 +47,16 @@
                         <td style="width: 5%">{{ $pedido->id }}</td>
                         <td style="width: 15%">{{ $pedido->name }}</td>
                         <td style="width: 15%"><a href="https://wa.me/{{ $pedido->telefono }}" target="_blank"
-                                title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"
-                                class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                title="Abrir chat" style="background:rgb(86, 218, 86); color: white; width: fit-content"
+                                class="p-1 rounded d-flex flex-nowrap align-items-center gap-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
                                 {{ $pedido->telefono }}</a></td>
                         <td style="width: 15%">{{ $pedido->direccion }}</td>
                         <td style="width: 15%">{{ $pedido->envio }}</td>
                         <td style="width: 15%">${{ $pedido->total }}</td>
                         <td style="width: 15%">{{ $pedido->create_time }}</td>
                         <td id="td-acciones" style="width: 15%">
-                            <a href="pedidos/{{ $pedido->id }}/entregado" title="Entregado" data-id="{{ $pedido->id }}"
+                            <a href="pedidos/{{ $pedido->id }}/entregado" title="Entregado"
+                                data-id="{{ $pedido->id }}"
                                 style="color: white; background: rgb(86, 218, 86); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);"
                                 class="btn pedido-entregado-btn">
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -104,12 +105,12 @@
                         <td style="width: 5%">{{ $pedido->id }}</td>
                         <td style="width: 15%">{{ $pedido->name }}</td>
                         <td style="width: 15%"><a href="https://wa.me/{{ $pedido->telefono }}" target="_blank"
-                                title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"
-                                class="p-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                title="Abrir chat" style="background:rgb(86, 218, 86); color: white; width: fit-content;"
+                                class="p-1 rounded d-flex flex-nowrap align-items-center gap-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>
                                 {{ $pedido->telefono }}</a></td>
                         <td style="width: 15%">{{ $pedido->direccion }}</td>
                         <td style="width: 15%">{{ $pedido->envio }}</td>
-                        <td style="width: 15%">${{ $pedido->total }}</td>
+                        <td style="width: 10%">${{ $pedido->total }}</td>
                         <td style="width: 15%">{{ $pedido->create_time }}</td>
                         <td style="width: 15%">
                             <a href="ticket/nro/{{ $pedido->id }}" target="_blank" title="Imprimir factura"
@@ -132,6 +133,8 @@
 
     <script>
         $(document).ready(function() {
+
+            $('#tabla-pedidos-pendientes thead').css('background-color', 'red');
 
             var tablaPedidosPendientes = $('#tabla-pedidos-pendientes').DataTable({
                 responsive: true,
@@ -159,10 +162,37 @@
                 }
             });
 
+            var tablaPedidosEntregados = $('#tabla-pedidos-entregados').DataTable({
+                responsive: true,
+                language: {
+                    processing: "Traitement en cours...",
+                    search: "Buscar",
+                    lengthMenu: "Mostrar _MENU_ entradas",
+                    info: "Pagina _START_ de _END_ de _TOTAL_ entradas",
+                    infoEmpty: "Mostrando 0 de 0 de 0 entradas",
+                    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix: "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "No se encontraron resultados.",
+                    emptyTable: "No se registraron pedidos hasta el momento",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Dernier"
+                    },
+                    aria: {
+                        sortAscending: ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+
             // Función para cargar los datos de la tabla
-            function recargarTabla() {
+            function recargarTablas() {
+
                 $.ajax({
-                    url: "{{ route('admin.pedidos') }}",
+                    url: "{{ route('admin.todos.los.pedidos.pendientes') }}",
                     type: "GET",
                     success: function(response) {
                         tablaPedidosPendientes.clear().draw(); // Limpiar y dibujar la tabla
@@ -172,17 +202,23 @@
                                 tablaPedidosPendientes.row.add([
                                     pedido.id,
                                     pedido.name,
-                                    pedido.telefono,
+                                    '<a href="https://wa.me/"' + pedido.telefono +
+                                    '" target="_blank"' +
+                                    'title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"' +
+                                    'class="p-1 rounded d-flex flex-nowrap align-items-center gap-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>' +
+                                    pedido.telefono+'</a>',
                                     pedido.direccion,
                                     pedido.envio,
                                     '$' + pedido.total,
-                                ]).draw(false); // Agregar fila y dibujarla
+                                    pedido.create_time,
+                                    '<a href="pedidos/' + pedido.id +
+                                    '/entregado" title="Entregado" data-id="' + pedido
+                                    .id +
+                                    '" style="color: white; background: rgb(86, 218, 86); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn pedido-entregado-btn"> <i class="fa fa-check" aria-hidden="true"></i></a>'
+                                ]).draw(false);
                             });
                         } else {
-
-                            tablaPedidosPendientes.clear().draw();
-                            tablaPedidosPendientes.draw();
-
+                            tablaPedidosPendientes.clear().draw(); // Si no hay datos, limpiar la tabla
                         }
                     },
                     error: function(xhr, status, error) {
@@ -190,18 +226,54 @@
                         // Manejar el error aquí
                     }
                 });
+
+                $.ajax({
+                    url: "{{ route('admin.todos.los.pedidos.entregados') }}",
+                    type: "GET",
+                    success: function(response) {
+                        tablaPedidosEntregados.clear().draw(); // Limpiar y dibujar la tabla
+
+                        if (response.length > 0) {
+                            response.forEach(function(pedido) {
+                                tablaPedidosEntregados.row.add([
+                                    pedido.id,
+                                    pedido.name,
+                                    '<a href="https://wa.me/"' + pedido.telefono +
+                                    '" target="_blank"' +
+                                    'title="Abrir chat" style="background:rgb(86, 218, 86); color: white; border-radius: 3px"' +
+                                    'class="p-1 rounded d-flex flex-nowrap align-items-center gap-1 text-decoration-none"><i class="fa fa-whatsapp" aria-hidden="true"></i>' +
+                                    pedido.telefono+'</a>',
+                                    pedido.direccion,
+                                    pedido.envio,
+                                    '$' + pedido.total,
+                                    pedido.create_time,
+                                    '<a href="ticket/nro/' + pedido.id +
+                                    '" target="_blank" title="Imprimir factura" style="color: white; background: rgb(33, 118, 255); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);" class="btn"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+                                ]).draw(false);
+                            });
+                        } else {
+                            tablaPedidosEntregados.clear().draw(); // Si no hay datos, limpiar la tabla
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        // Manejar el error aquí
+                    }
+                });
+
             }
 
             $(document).on('click', '.pedido-entregado-btn', function(event) {
                 event.preventDefault(); // Evitar la acción predeterminada del enlace
-                
+
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 var pedidoId = $(this).data('id');
                 var fila = $(this).closest('tr'); // Obtener la fila actual del producto
 
                 // Realizar la petición AJAX para marcar el pedido como entregado
                 $.ajax({
-                    url: '{{ route('admin.pedido.entregado', ['id' => ':pedidoId']) }}'.replace(':pedidoId', pedidoId),
+                    url: '{{ route('admin.pedido.entregado', ['id' => ':pedidoId']) }}'.replace(
+                        ':pedidoId', pedidoId),
                     method: 'POST', // Cambiar a POST
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -209,7 +281,8 @@
                     success: function(response) {
                         // Si la solicitud es exitosa, mostrar el mensaje de éxito y actualizar la tabla si es necesario
                         Swal.fire('Éxito', response.message, 'success');
-                        recargarTabla(); // Esto debería ser una función definida previamente que actualiza la tabla
+                        recargarTablas
+                    (); // Esto debería ser una función definida previamente que actualiza la tabla
                     },
                     error: function(xhr, status, error) {
                         // Manejar los errores

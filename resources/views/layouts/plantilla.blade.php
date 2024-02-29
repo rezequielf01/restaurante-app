@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{-- STYLE SHEETS --}}
     <link href="{{ asset('/css/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/responsive.css') }}" rel="stylesheet">
     {{-- SLICK SLIDER --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/slick.css') }}" />

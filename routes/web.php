@@ -64,6 +64,8 @@ Route::get('admin/administrar/mesas/ticket/{ventaId}', [FpdfVentasController::cl
 
 // PAGINAS
 Route::get('admin/pedidos', [AdminPedidosController::class, 'show'])->middleware("can:admin.pedidos")->name('admin.pedidos');
+Route::get('admin/todos/los/pedidos', [AdminPedidosController::class, 'filtrarTodosLosPedidos'])->name('admin.todos.los.pedidos.pendientes');
+Route::get('admin/todos/los/pedidos/entregados', [AdminPedidosController::class, 'filtrarTodosLosPedidosEntregados'])->name('admin.todos.los.pedidos.entregados');
 Route::get('admin/pedidos-entregados', [AdminPedidosController::class, 'ordersDelivered'])->middleware("can:admin.pedidos.entregados")->name('admin.pedidos.entregados');
 // ACCIONES
 Route::post('admin/pedidos/{id}/entregado', [AdminPedidosController::class, 'orderMoved'])->name('admin.pedido.entregado');

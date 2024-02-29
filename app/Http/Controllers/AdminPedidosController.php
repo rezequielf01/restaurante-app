@@ -25,6 +25,24 @@ class AdminPedidosController extends Controller
         return view("admin.pedidos", compact("pedidos","pedidos_clientes","pedidos_clientes_entregado"));
     }
 
+    public function filtrarTodosLosPedidos(){
+        $pedidos = DB::table('users')
+        ->join('pedidos', 'pedidos.cliente_id', '=', 'users.id')
+        ->select('users.name', 'pedidos.direccion', 'users.telefono','pedidos.id','pedidos.envio','pedidos.total','pedidos.create_time')
+        ->get();
+        return response()->json($pedidos);
+    }
+
+    public function filtrarTodosLosPedidosEntregados(){
+
+        $pedidos = DB::table('users')
+        ->join('pedidos_entregados', 'pedidos_entregados.cliente_id', '=', 'users.id')
+        ->select('users.name', 'pedidos_entregados.direccion', 'users.telefono','pedidos_entregados.id','pedidos_entregados.envio','pedidos_entregados.total','pedidos_entregados.create_time')
+        ->get();
+
+        return response()->json($pedidos);
+    }
+
     public function orderMoved($id){
 
         $moverPedido = DB::insert('INSERT INTO pedidos_entregados SELECT * FROM pedidos WHERE id = ?', [$id]);
@@ -39,7 +57,7 @@ class AdminPedidosController extends Controller
             db::rollBack();
         }
         
-        return response()->json(['message' => '¡Producto entregado correctamente!']);
+        return response()->json(['message' => '¡Pedido entregado correctamente!']);
     }
 
     // public function ordersDelivered(){

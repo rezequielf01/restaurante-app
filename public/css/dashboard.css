@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Domine&family=Raleway:ital,wght@0,100..900;1,100..900&family=Satisfy&display=swap');
+
+
+#admin-dashboard-container{
+    font-family: "Satisfy", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.cards-container{
+    width: 100%;
+    height: auto;
+    padding: 20px;
+}
+.card-dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 25%;
+    height: 250px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+.card-bx__p{
+    margin-bottom: 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+.card-bx__a{
+    margin: 0;
+}

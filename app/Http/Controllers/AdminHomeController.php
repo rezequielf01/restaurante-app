@@ -36,7 +36,7 @@ class AdminHomeController extends Controller
             ->sum('total');
 
         // Sumar los ingresos mensuales obtenidos
-        $ingresoMensualTotal = $ingresoPedidosEntregados + $ingresoVentasLocales;
+        $ingresoMensualTotalSuma = $ingresoPedidosEntregados + $ingresoVentasLocales;
 
         // Buscar el registro de ingreso mensual para el año y mes actual
         $ingresoMensualExistente = IngresoMensual::where('año', date('Y'))
@@ -46,18 +46,20 @@ class AdminHomeController extends Controller
         // Si existe el registro, actualiza el ingreso total
         if ($ingresoMensualExistente) {
             $ingresoMensualExistente->update([
-                'ingreso_total' => $ingresoMensualTotal,
+                'ingreso_total' => $ingresoMensualTotalSuma,
             ]);
         } else {
         // Si no existe el registro, crea uno nuevo
         IngresoMensual::create([
             'año' => date('Y'),
             'mes' => date('m'),
-            'ingreso_total' => $ingresoMensualTotal,
+            'ingreso_total' => $ingresoMensualTotalSuma,
         ]);
         }
 
         $mesas = Mesas::all();
+
+        $ingresoMensualTotal = number_format($ingresoMensualTotalSuma,3,".",",");
         
         return view("admin.home", compact("usuariosRegistrados","productosRegistrados",
         "pedidosPendientes","pedidosEntregados","ingresoMensualTotal","mesas","ventasEnLocal"));
