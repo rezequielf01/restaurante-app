@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.pedidos') }}" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
             <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.usuarios') }}" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.usuarios') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
             <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.pedidos') }}" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
             <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.ventas.local') }}" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.ventas.local') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
             
             <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.productos') }}" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.productos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
             
             <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="small-box-footer" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
         </div>
@@ -215,21 +215,6 @@
                 });
             }
 
-            // html +=
-            //         '<img class="mesa__img" style="filter: invert(0)" src="/restaurante-app/public/images/mesa.png" alt="Mesa icono">';
-            //     html += '<span class="mesa__estado d-flex flex-column gap-1 align-items-center justify-content-center">';
-            //     html += '<p class="mesa__p text-black">Mesa N°' + mesa.nro_mesa + '</p>';
-            //     html += '<i class="fa fa-users bg-blue p-2 rounded" aria-hidden="true"> Max: ' + mesa
-            //         .capacidad + '</i>';
-            //     html += estadoHtml;
-            //     html += '</span>';
-            //     html +=
-            //         '<button title="Eliminar mesa" class="eliminar-mesa btn p-0 m-0" data-id="' + mesa.id +
-            //         '"><i class="fa fa-times-circle shadow-lg text-dark" style="position: absolute; top: 15px; left: 15px; font-size: 20px" aria-hidden="true"></i></button>'; // Agrega el botón de eliminar
-            //     html +=
-            //         '<a class="bg-dark d-flex gap-1 justify-content-center align-items-center rounded w-100 p-1" href="admin/administrar/mesas/' +
-            //         mesa.id + '" style="text-decoration: none; color: white !important"><p class="m-0 p-0">Ir a mesa</p><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>';
-
             // Función para agregar una mesa al contenedor
             function agregarMesa(mesa) {
                 var estadoHtml = mesa.productos.length > 0 ?
@@ -247,7 +232,7 @@
                         </div>
                     </div>
                     <a class="btn adm-mesa-btn" href="admin/administrar/mesas/${mesa.id}"><p class="m-0 p-0">Ir a mesa</p></a>
-                    <button title="Eliminar mesa" class="eliminar-mesa btn p-0 m-0" data-id="${mesa.id}"><i class="fa fa-times-circle shadow-lg text-dark" style="position: absolute; top: 15px; left: 15px; font-size: 20px" aria-hidden="true"></i></button>
+                    <button title="Eliminar mesa" style="position: absolute; top: 15px; left: 15px; font-size: 20px" class="eliminar-mesa btn p-0 m-0" data-id="${mesa.id}"><i class="fa fa-times-circle shadow-lg text-dark" aria-hidden="true"></i></button>
                 </div>
                 `;
                

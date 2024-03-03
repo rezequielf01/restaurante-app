@@ -13,6 +13,12 @@
     .checkout-card__h2{
         font-size: 20px;
     }
+    .food-description__h2{
+        font-size: .9rem;
+    }
+    .food-description__h2{
+        font-size: .9rem;
+    }
 }
 
 /* Estilos para pantallas más pequeñas que 600 pixels de ancho */
