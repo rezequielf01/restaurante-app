@@ -1,33 +1,43 @@
 /* Estilos para pantallas más pequeñas que 380 pixels de ancho */
 
-@media screen and (max-width: 380px) {
-    .food-card{
-        width: 230px;
-    }
-    .food-img{
-        height: 50%;
-    }
-    .hero-contenedor{
-        height: 350px;
-    }
-    .checkout-card__h2{
-        font-size: 20px;
-    }
-    .food-description__h2{
-        font-size: .9rem;
-    }
-    .food-description__h2{
-        font-size: .9rem;
-    }
-}
+
 
 /* Estilos para pantallas más pequeñas que 600 pixels de ancho */
 @media screen and (max-width: 600px) {
+    /* LOGIN */
+    .login-container {
+        width: 90%;
+        height: auto;
+        margin: 150px auto 50px;
+    }
+    .login-wrapp{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+    }
+    .login-card{
+        width: 100%;
+        padding: 15px;
+    }
+    .login-card__p {
+        font-size: 1.2rem;
+        width: 80%;
+    }
+    .register-img {
+        display: none;
+    }
+
+    /* MENU */
     .contenedor-principal{
         width: 100%;
     }
     .header{
         z-index: 600;
+    }
+    .header__logo{
+        width: 150px;
     }
     .header-btn-wsp{
         width: 40px;
@@ -47,6 +57,9 @@
     .float-btn-wsp__icon{
         font-size: 1.5rem;
     }
+    .hero-contenedor{
+        height: 300px;
+    }
     .categoria__carousel{
         width: 90%;
     }
@@ -54,11 +67,75 @@
         display: none;
     }
     .categories{
+        width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0 0;
+        overflow-x: auto;
+        gap: 0;
+    }
+    .categoria-actual{
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    .categoria-actual h2{
+        font-size: 1.2rem;
+    }
+    .lista-categorias{
+        width: 100%;
+        display: flex;
+        align-items: center;
         justify-content: flex-start;
-        padding: 10px;
+        overflow-x: auto;
+        padding: 0px 10px 10px 10px;
     }
     .categories-box{
+        font-size: 1rem;
         scroll-margin-top: 500px;
+    }
+    .producto-card{
+        max-width: 45%;
+        min-width: 45%;
+        height: 220px;
+    }
+    .producto-card-img {
+        height: 50%;
+    }
+    .producto-card-info{
+        height: 50%;
+    }
+    .producto-info-titulo{
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: start;
+    }
+    .producto-info-titulo h3 {
+        font-size: .8rem;
+    }
+    .producto-titulo__precio {
+        font-size: .8rem;
+        font-weight: bold;
+    }
+    .food-btns__btn{
+        padding: 0px;
+    }
+    #foodBtnPlus{
+        color: black;
+        display: flex;
+    }
+    #foodBtnsCart{
+        display: none;
+    }
+    .food-btns__p{
+        font-size: .8rem;
+    }
+    .foods-section{
+        justify-content: start;
+        gap: 15px;
+        padding: 10px 0 0 23px;
     }
     .food-card{
         height: 250px;
@@ -74,21 +151,117 @@
     .food-description__p{
         display: none;
     }
+
+    /* ADMIN */
+    .admin-container {
+        width: 100%;
+        padding: 0;
+    }
+    .admin-header{
+        width: 94%;
+        margin: 0 auto;
+    }
+    .admin-dash-card{
+        width: 175px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .adm-card-btn{
+        padding: 5px 10px!important;
+    }
+    .admin-header-mesas{
+        width: 93%;
+        margin: 0 auto;
+    }
+    .mesas-container{
+        max-height: 500px;
+        overflow-y: auto;
+        flex-direction: column;
+    }
+    .mesa__p {
+        font-size: 1rem;
+    }
+    .mesa_estado{
+        font-size: .9rem;
+    }
+    .agregar-mesa-btn {
+        padding: 5px 10px!important;
+    }
+    /* ADMINISTRACION DE MESA */
+    .mesa-categoria{
+        width: 100%;
+        padding-bottom: 0;
+    }
+    .mesa-categoria ol{
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    .mesa-productos{
+        width: 100%;
+    }
+    .mesa-lista-productos{
+        justify-content: flex-start;
+    }
+    .prod-mesa-contenedor{
+        width: 100%;
+    }
+    .prod-ticket-contendor{
+        width: 100%;
+    }
+    #restar-form {
+        width: 45%;
+        height: 200px;
+    }
+    .mesa-card-form {
+        width: 45%;
+        height: 400px;
+    }
+    .adm-prod-mesa{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .admin-title-header__h2 {
+        font-size: 1.2rem;
+    }
+    .admin-title-header__span {
+        width: 40px;
+        height: 40px;
+    }
+    .admin-title-header__img {
+        width: 30px;
+    }
+    .content-wrapper>.content {
+        padding: 0;
+    }
+    .container-fluid {
+        padding-right: calc(var(--bs-gutter-x) * .4);
+        padding-left: calc(var(--bs-gutter-x) * .4);
+    }
+    .small-box h3 {
+        font-size: 1.5rem;
+    }
+    .mesa-box {
+        width: 100% !important;
+    }
+
     /* NAV-MOBILE */
     .nav-mobile{
-        width: 80%;
+        width: 100%;
         height: 75px;
         display: flex;
         align-items: center;
         justify-content: space-around;
         position: fixed;
-        margin: 10px 10%;
-        bottom: 0;
+        margin: 0;
+        bottom: -2px;
         left: 0;
-        background-color: black;
+        background-color: white;
         z-index: 1000;
-        border-radius: 25px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-top: solid 1px #d1d1d1;
     }
     .nm-icons{
         font-size: 1.2rem;
@@ -97,12 +270,11 @@
     .nm-mobile__span{
         font-size: .9rem;
         margin-top: 5px;
-        color: #f1f1f1;
+        color: black;
     }
     .nav-mobile-menu{
         background: black;
         position: relative;
-        border-radius: 50%;
     }
 
     /* CHECKOUT */
@@ -110,6 +282,8 @@
         width: 100%;
         margin-top: 80px;
         padding: 5px;
+        margin-bottom: 20px;
+        box-shadow: none;
     }
     .checkout-subcontainer{
         min-height: auto;
@@ -148,10 +322,38 @@
     }
 
     .footer{
-        height: 90px;
+        height: 50px;
     }
     .footer p{
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .food-card{
+        width: 230px;
+    }
+    .food-img{
+        height: 50%;
+    }
+    .hero-contenedor{
+        height: 350px;
+    }
+    .checkout-card__h2{
+        font-size: 20px;
+    }
+    .food-description__h2{
+        font-size: .9rem;
+    }
+    .food-description__h2{
+        font-size: .9rem;
+    }
+
+    .admin-title-header__h2 {
+        font-size: 1rem;
+    }
+    .admin-dash-card {
+        width: 300px;
     }
 }
 
@@ -214,7 +416,7 @@
 
 @media screen and (min-width: 1439px){
     .contenedor-principal{
-        width: 100%;
+        width: 90%;
     }
     .checkout-container{
         margin-top: 120px;

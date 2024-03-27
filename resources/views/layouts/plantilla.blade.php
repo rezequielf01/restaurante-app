@@ -30,8 +30,7 @@
     {{-- GOOGLE FONTS --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Domine&family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
 
     {{-- TITLE --}}
     <title>@yield('title')</title>
@@ -59,79 +58,78 @@
 
         <div class="header-nav dropdown">
 
+            <div class="darkmode-container">
+                <i class="fa fa-moon-o darkmode-i__moon" aria-hidden="true"></i>
+                <i class="fa fa-sun-o darkmode-i__sun" aria-hidden="true"></i>
+            </div>
+
+            <button id="dark-mode-toggle">Modo Oscuro</button>
+
             <a href="{{ route('carrito.checkout') }}" class="cart m-2" style="text-decoration: none">
                 <i class="carrito__icon fa fa-shopping-cart" style="color: var(--color-principal)" aria-hidden="true"></i>
                 <span id="cantidadCarrito" data-id="{{ Cart::count() }}" class="card__count" style="color:white;">{{ Cart::count() }}</span>
             </a>
 
-            <button class="btn dropdown-toggle d-flex flex-row align-items-center"
-                style="color: var(--color-principal);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                aria-expanded="false">
+            <div class="user-container d-flex">
+
                 @auth
                     @php
                         $userName = auth()->user()->name;
                         $userDireccion = auth()->user()->direccion;
                     @endphp
-                    <div class="container d-flex" style="flex-direction:column;">
-                        <span class="text-light" style="font-size: .9rem">
-                            <i class="fa fa-map-marker" style="color: var(--color-principal)" aria-hidden="true"></i>
-                            {{ ucfirst($userDireccion) }}
-                        </span>
-                    </div>
-                @else
-                    <i class="fa fa-user" style="color: var(--color-principal)" aria-hidden="true"></i>
-                @endauth
-            </button>
-            <ul class="dropdown-menu mt-2 pe-2 text-center" style="background: #0c0c0c;"
-                aria-labelledby="dropdownMenuButton1">
-                @if (Route::has('login'))
-                    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10 ">
-                        @auth
-                            <div class="d-flex flex-column text-start ms-2" style="gap: 10px">
-                                <span style="font-size: .9rem" class="text-light text-center">
-                                    {{ ucfirst($userName) }}
-                                </span>
 
-                                {{-- <a href="{{ route('usuario.perfil') }}" class="text-light" style="text-decoration: none">
-                                    <i style="color:rgb(252, 98, 60);" class="fa fa-cog" aria-hidden="true"></i>
-                                    Ajustes de cuenta
-                                </a> --}}
+                    <div>
 
-                                {{-- MIS PEDIDOS --}}
-                                {{-- <a href="{{route("usuario.pedidos")}}" class="text-light" style="text-decoration: none">
-                                    <i style="color:rgb(252, 98, 60);" class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                    Mis pedidos
-                                </a> --}}
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle d-flex align-items-center justify-content-center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                <a class="text-light" style="text-decoration: none;" href="javascript:void"
+                                <div class="container d-flex" style="flex-direction:column;">
+                                    <span class="text-light d-flex align-items-center justify-content-center" style="font-size: .9rem">
+                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                            <p class="m-0"><i class="fa fa-map-marker" style="color: var(--color-principal)" aria-hidden="true"></i> Enviar a</p>
+                                            <span class="m-0" id="direccionActual">{{ ucfirst($userDireccion) }}</span>
+                                        </div>
+                                    </span>
+                                </div>
+
+                            </button>
+
+                            <ul class="dropdown-menu p-0" style="min-width: 180px; background: linear-gradient(to right, black, #0c0c0c);" aria-labelledby="dropdownMenuButton1">
+
+                                <li class="dropdown-menu__link">
+                                    <a href="#" id="cambiar-direccion" class="d-block p-2" style="text-decoration: none; font-size: 1rem">
+                                        <i class="fa fa-map-marker" style="color: var(--color-principal)" aria-hidden="true"></i>
+                                        Cambiar dirección
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-menu__link">
+                                    <a class="d-block p-2" style="text-decoration: none;" href="javascript:void"
                                     onclick="$('#logout-form').submit();">
                                     <i class="fa fa-sign-out" style="color: var(--color-principal)" aria-hidden="true"></i>
-                                    Cerrar sesion
-                                </a>
-                            </div>
+                                    Salir
+                                    </a>
+                                </li>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        @else
-                            <li class="mb-2 py-2" style="background: var(--color-principal)">
+                            </ul>
+                        </div>
 
-                                <a href="{{ route('login') }}" style="text-decoration:none; display:block; color:black;"
-                                    class="font-semibold text-dark-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Loguearse</a>
-
-                            </li>
-                            <li>
-
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}"
-                                        style="color: #f1f1f1; display:block; text-decoration:none"
-                                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Registrarse</a>
-                                @endif
-                            </li>
-                        @endauth
                     </div>
-                @endif
-            </ul>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+                @else
+                    <div class="d-flex gap-2" style="color: #5c5c5c">
+                        <a href="login" class="user-p">Ingresar </a>
+                        /
+                        <a href="register" class="user-p"> Registrarse</a>
+                    </div>
+                @endauth
+                
+            </div>
+
         </div>
 
 
@@ -146,6 +144,32 @@
     </footer>
 
     {{-- SCRIPTS --}}
+    <script>
+        document.getElementById('dark-mode-toggle').addEventListener('click', function() {   
+            document.body.classList.toggle("dark-mode");
+    
+            // Definir la variable cards dentro de la función de clic del botón
+            let cards = document.querySelectorAll(".producto-card");
+    
+            cards.forEach(function(card) {
+                card.classList.toggle("dark-mode");
+    
+                // Agregar estilos específicos a la tarjeta actual
+                if (document.body.classList.contains("dark-mode")) {
+                    // Si está en modo oscuro, agregar estilos para modo oscuro a la tarjeta de producto
+                    card.style.backgroundColor = "#0c0c0c"; 
+                    card.style.color = "#9c9c9c"; 
+                    card.style.border = "solid 1px #1c1c1c"; 
+                } else {
+                    // Si está en modo claro, agregar estilos para modo claro a la tarjeta de producto
+                    card.style.backgroundColor = "white"; // Cambiar el color de fondo a blanco
+                    card.style.color = "black"; // Cambiar el color del texto a un tono oscuro
+                    card.style.border = "solid 1px transparent"; 
+                }
+            });
+    
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
         integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

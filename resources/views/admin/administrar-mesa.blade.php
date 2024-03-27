@@ -45,33 +45,35 @@
         <script></script>
     @endif
 
-    <div class="mesas-container d-flex gap-3">
+    <div class="mesas-container d-flex gap-3"> 
 
-        <div class="mesa-categoria w-25 bg-light shadow-lg p-3 rounded">
-            <h3 class="w-100 d-flex align-items-center justify-content-center bg-dark p-1 rounded text-center">Categorias
-            </h3>
-            <ol style="list-style-type: none"
-                class="w-100 d-flex flex-column gap-3 align-items-center justify-content-center data-categoria-id">
-                <li>
-                    <button data-categoria-id="todos" class="btn p-1 btn-categoria"
-                        style="min-width: 120px; background: var(--color-principal)" type="button">Mostrar todo</button>
-                </li>
-                @foreach ($categorias as $categoria)
-                    <li>
-                        <button data-categoria-id="{{ $categoria->id }}" class="btn p-1 btn-categoria"
-                            style="min-width: 120px; background: var(--color-principal)"
-                            type="button">{{ $categoria->nombre }}</button>
-                    </li>
-                @endforeach
-            </ol>
-        </div>
+        <div class="mesa-productos shadow-sm p-1">
 
-        <div class="mesa-productos bg-light shadow-lg p-3 w-75">
             <h3 class="m-0 w-100 bg-dark p-1 rounded text-center">Lista de productos</h3>
-            <div class="container mesa-lista-productos d-flex flex-wrap gap-3 pt-3"
-                style="max-height: 90%; overflow-y: auto;">
+
+            <div class="mesa-categoria shadow-sm rounded">
+
+                <ol style="list-style-type: none"
+                    class="gap-3 data-categoria-id">
+                    <li>
+                        <button data-categoria-id="todos" class="btn p-1 btn-categoria"
+                            style="min-width: 120px; background: var(--color-principal)" type="button">Mostrar todo</button>
+                    </li>
+                    @foreach ($categorias as $categoria)
+                        <li>
+                            <button data-categoria-id="{{ $categoria->id }}" class="btn p-1 btn-categoria"
+                                style="min-width: 120px; background: var(--color-principal)"
+                                type="button">{{ $categoria->nombre }}</button>
+                        </li>
+                    @endforeach
+                </ol>
+            </div>
+
+            <div class="mesa-lista-productos d-flex flex-wrap gap-3 pt-3"
+                style="max-height: 90%;">
 
             </div>
+
         </div>
 
     </div>
@@ -81,9 +83,9 @@
 
     <div class="d-flex flex-column mt-3 w-100">
 
-        <div class="w-100 gap-3 d-flex">
+        <div class="adm-prod-mesa gap-3">
 
-            <div class="d-flex flex-column shadow-lg gap-2 w-75 p-3 bg-light">
+            <div class="prod-mesa-contenedor d-flex flex-column shadow-lg gap-2 p-3">
 
                 <h3 class="m-0 w-100 bg-dark p-1 rounded text-center">Productos en mesa</h3>
 
@@ -93,7 +95,7 @@
 
             </div>
 
-            <div class="d-flex flex-column w-25 bg-light shadow-lg text-center p-3">
+            <div class="prod-ticket-contendor d-flex flex-column shadow-sm text-center p-3">
 
                 <h3 class="w-100 bg-dark p-1 rounded text-center">Ticket</h3>
 
@@ -307,12 +309,12 @@
 
                         // Recorrer los productos recibidos y agregarlos a la lista
                         response.productos.forEach(producto => {
-                            var productoHtml = '<form id="restar-form" action="{{ route('admin.restar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="get" style="width: 20%; height: 250px;">';
+                            var productoHtml = '<form id="restar-form" action="{{ route('admin.restar.producto.mesa', ['mesaId' => $mesa->id]) }}" method="get">';
                             productoHtml += '<div class="card-mesa-consumido card w-100 h-100 shadow-lg bg-white m-0">';
                             productoHtml += '<div class="card-body p-0">';
                             productoHtml += '<img class="mesa-card__img" src="/restaurante-app/public/productos/'+producto.imagen+'" alt="">';
                             productoHtml += '<span class="food__precio">x'+producto.cantidad+'</span>';
-                            productoHtml += '<p class="m-0 p-1 text-center">'+producto.nombre+'</p>';
+                            productoHtml += '<p class="m-0 p-1 ml-1 text-left">'+producto.nombre+'</p>';
                             productoHtml += '<div class="w-100 d-flex gap-2 align-items-center justify-content-center">';
                             productoHtml += '<input class="w-25" type="number" placeholder="1" name="cantidad2">';
                             productoHtml += '<button style="background: var(--color-principal);" title="Restar" class="btn btn-restar-producto" type="submit">Restar</button>';
@@ -334,7 +336,7 @@
             $(document).on('click', '.btn-restar-producto', function(event) {
                 event.preventDefault(); // Evitar el comportamiento predeterminado del botón
 
-                var form = $('#restar-form');
+                var form = $(this).closest('form'); // Encuentra el formulario más cercano al botón clickeado
                 var formData = form.serialize(); // Serializa los datos del formulario
 
                 $.ajax({

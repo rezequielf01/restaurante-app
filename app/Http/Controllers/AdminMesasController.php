@@ -233,6 +233,7 @@ class AdminMesasController extends Controller
             $ventaId = $venta->id;
     
             foreach ($mesa->productos as $item) {
+                
                 DetalleVentaLocal::create([
                     'mesa_nro' => $mesa->nro_mesa,
                     'venta_id' => $ventaId,
@@ -241,6 +242,8 @@ class AdminMesasController extends Controller
                     'cantidad' => $item->pivot->producto_cantidad,
                     'precio' => $item->precio,
                 ]);
+
+                DB::table('productos')->where('id', $item->id)->decrement('stock', $item->pivot->producto_cantidad);
             }
     
             // Eliminar los productos de la mesa

@@ -27,96 +27,120 @@
 
         <div class="d-flex flex-wrap gap-4 align-items-center justify-content-center">
 
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>{{ $usuariosRegistrados }}</h3>
-                        <p>Clientes registrados</p>
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>{{ $usuariosRegistrados }}</h3>
+                            <p>Clientes registrados</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <img src="images/clientes-registrados.png" style="width: 35px" alt="Clientes icono">
+                        </div>
                     </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" fill="none" class="text-gs-gray-500 shrink-0 hidden md:inline-flex"><path stroke="currentColor" d="M1 21 14.5 1"></path></svg>
-                    </div>
+    
+                    <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-
-                <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>{{ $pedidosPendientes }}</h3>
-                        <p>Pedidos pendientes</p>
-                    </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="16"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                    </div>
-                </div>
-
-                <a href="{{ route('admin.usuarios') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>{{ $pedidosEntregados }}</h3>
-                        <p>Pedidos entregados</p>
-                    </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="23"><circle cx="18.5" cy="17.5" r="3.5"></circle><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="15" cy="5" r="1"></circle><path d="M12 17.5V14l-3-3 4-3 2 3h2"></path></svg>
-                    </div>
-                </div>
-
-                <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>{{ $ventasEnLocal }}</h3>
-                        <p>Ventas en el local</p>
-                    </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="30"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path></svg>
-                    </div>
-                </div>
-
-                <a href="{{ route('admin.ventas.local') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
             </div>
             
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>{{ $productosRegistrados }}</h3>
-                        <p>Productos totales</p>
-                    </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="30"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path></svg>
-                    </div>
-                </div>
 
-                <a href="{{ route('admin.productos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>{{ $pedidosPendientes }}</h3>
+                            <p>Pedidos pendientes</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="16"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                        </div>
+                    </div>
+    
+                    <a href="{{ route('admin.usuarios') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
             
-            <div class="small-box shadow-lg" style="width: 300px; background:white; padding: 15px">
-                <div class="d-flex align-items-center justify-content-around">
-                    <div style="color: black" class="inner">
-                        <h3>${{ $ingresoMensualTotal }}</h3>
-                        <p>Ingresos mensuales</p>
-                    </div>
-                    <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="30"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path></svg>
-                    </div>
-                </div>
 
-                <a href="#" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>{{ $pedidosEntregados }}</h3>
+                            <p>Pedidos entregados</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="23"><circle cx="18.5" cy="17.5" r="3.5"></circle><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="15" cy="5" r="1"></circle><path d="M12 17.5V14l-3-3 4-3 2 3h2"></path></svg>
+                        </div>
+                    </div>
+    
+                    <a href="{{ route('admin.pedidos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
+            
+
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>{{ $ventasEnLocal }}</h3>
+                            <p>Ventas en el local</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#bd1e59]" data-id="30"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path></svg>
+                        </div>
+                    </div>
+    
+                    <a href="{{ route('admin.ventas.local') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            
+            
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>{{ $productosRegistrados }}</h3>
+                            <p>Productos totales</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <img src="images/productos.png" style="width: 40px" alt="Productos icono">
+                        </div>
+                    </div>
+    
+                    <a href="{{ route('admin.productos') }}" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            
+            
+            <div class="d-flex align-items-center jusitify-content-around flex-column">
+
+                <div class="admin-dash-card small-box shadow rounded" style="height: 164px ;background:white; padding: 10px; margin: 0;">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div style="color: black" class="inner">
+                            <h3>${{ $ingresoMensualTotal }}</h3>
+                            <p>Ingresos mensuales</p>
+                        </div>
+                        <div style="width:70px; height: 65px" class="card-title d-flex align-items-center justify-content-center">
+                            <img src="images/ingresos.png" style="width: 35px" alt="">
+                        </div>
+                    </div>
+    
+                    <a href="#" class="small-box-footer adm-card-btn" style="color: white; background-color: var(--color-principal)">Más informacion <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            
 
         </div>
 
     </div>
 
 
-    <div class="admin-header-mesas d-flex align-items-start justify-content-between mt-4 mb-3">
+    <div class="admin-header-mesas d-flex align-items-center justify-content-between mt-4 mb-3">
         <h2 class="admin-title-header__h2" style="color: black">Listado de mesas</h2>
         <button id="mostrar-formulario" type="button" class="btn agregar-mesa-btn">Agregar mesa</button>
     </div>
@@ -222,13 +246,13 @@
                     '<span style="background: #22C55E; border-radius: 15px" class="pl-2 pr-2 pt-1 pb-1">Disponible</span>';
 
                 var html = `
-                <div class="mesa-box bg-white shadow-lg pl-3 pr-3 rounded d-flex align-items-center justify-content-between" id="mesa-box' + mesa.id +'">
+                <div class="mesa-box bg-white shadow pl-3 pr-3 rounded d-flex align-items-center justify-content-between" id="mesa-box' + mesa.id +'">
                     <div class="d-flex align-items-center jusitify-content-center gap-2">
                         <img class="mesa__img" style="filter: invert(0)" src="/restaurante-app/public/images/mesa.png" alt="Mesa icono">
                         <div>
                             <p class="mesa__p text-black">Mesa N°${mesa.nro_mesa}</p>
                             <p class="text-black mb-1">Max: ${mesa.capacidad}</p>
-                            <span>${estadoHtml}</span>
+                            <span class="mesa_estado">${estadoHtml}</span>
                         </div>
                     </div>
                     <a class="btn adm-mesa-btn" href="admin/administrar/mesas/${mesa.id}"><p class="m-0 p-0">Ir a mesa</p></a>

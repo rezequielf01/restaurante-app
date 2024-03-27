@@ -1,7 +1,7 @@
 @extends('layouts.plantilla')
 @section('title', 'Mi carrito')
 @section('contenido')
-    <div class="checkout-container shadow-lg mb-5 bg-white rounded">
+    <div class="checkout-container">
         
         <div class="checkout-subcontainer d-flex flex-row flex-wrap justify-content-around">
 
@@ -70,8 +70,9 @@
                         style="background: var(--color-principal); color: white;">Volver al menú</a>
                 </div>
             </div>
+
             <div
-                class="checkout-ticket card d-flex align-items-center justify-content-center shadow-lg p-3 bg-white rounded">
+                class="checkout-ticket card d-flex align-items-center border-0 justify-content-center shadow-lg p-3 bg-white rounded">
                 <h4 class="text-center">Dellates de la compra</h4>
                 <form onsubmit="return validarFormulario()" class="d-flex flex-column gap-2 mt-5 mb-5 align-items-left"
                     style="position: relative; z-index:10;" method="POST" action="{{ route('carrito.enviar.pedido') }}">

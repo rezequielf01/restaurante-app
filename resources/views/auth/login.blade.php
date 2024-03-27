@@ -10,9 +10,10 @@
 
     <div class="login-container">
 
-        <div class="login-wrapp container d-flex shadow-lg bg-light rounded p-0">
+        <div class="login-wrapp container">
 
-            <div class="login-card card border-0 d-flex align-items-center justify-content-center h-100">
+            {{-- BOX1 --}}
+            <div class="login-card card border-0 w-100 d-flex align-items-center justify-content-center h-100">
                 <x-guest-layout>
             
                     <x-validation-errors class="mb-4" />
@@ -26,13 +27,19 @@
                     <form method="POST" class="login-form" action="{{ route('login') }}">
                         @csrf
             
-                        <div>
-                            <x-label for="email" value="{{ __('Email') }}" />
+                        <div class="input-field">
+                            <div class="d-flex align-items-center gap-1">
+                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                <x-label for="email" id="label-email" value=" {{ __('Email') }}" />
+                            </div>
                             <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
                         </div>
             
                         <div class="mt-4">
-                            <x-label for="password" value="{{ __('Contraseña') }}" />
+                            <div class="d-flex align-items-center gap-1">
+                                <i class="fa fa-key" aria-hidden="true"></i>
+                                <x-label for="password" value="{{ __('Contraseña') }}" />
+                            </div>
                             <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
                         </div>
             
@@ -54,9 +61,10 @@
             </x-guest-layout>
             </div>
  
-            <div class="login-card login-card-img">
+            {{-- BOX2 --}}
+            <div class="login-card login-card-img w-100">
                 <div class="login-img rounded">
-                    Regístrate hoy para descubrir la magia de tener tus productos favoritos a solo un paso de distancia.
+                    <p class="login-card__p">Regístrate hoy para descubrir la magia de tener tus comidas favoritas a solo unos clics de distancia</p>
                 </div>
             </div>
            

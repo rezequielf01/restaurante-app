@@ -38,7 +38,7 @@ Route::get('usuario/perfil', [UserController::class, 'index'])->name('usuario.pe
 Route::get('carrito/checkout', [CarritoController::class, 'checkout'])->name('carrito.checkout');
 // ACCIONES
 Route::post('carrito/buy', [CarritoController::class, 'buy'])->name('carrito.buy');
-Route::post('carrito/add', [CarritoController::class, 'add'])->name('carrito.add');
+Route::post('carrito/add', [MenuController::class, 'add'])->name('carrito.add');
 Route::get('carrito/clear', [CarritoController::class, 'clear'])->name('carrito.clear');
 Route::get('carrito/incrementar/{id}', [CarritoController::class, 'incrementarCantidad']);
 Route::get('carrito/restar/{id}', [CarritoController::class, 'restarCantidad']);
@@ -48,6 +48,7 @@ Route::post('carrito/enviar-pedido', [CarritoController::class, 'sendOrder'])->n
 
 
 // PAGINAS
+Route::get('admin', [AdminHomeController::class, 'show'])->middleware("can:admin.home")->name('admin.home');
 Route::get('admin/mesas', [AdminHomeController::class, 'mostrarMesas'])->name('admin.mesas');
 Route::get('admin/administrar/mesas/{mesaId}', [AdminMesasController::class, 'administrar'])->name('admin.ver.mesa');
 Route::get('admin/administrar/obtener-productos-mesa/{mesaId}', [AdminMesasController::class, 'obtenerProductosEnMesa'])->name('admin.productos.en.mesa');
@@ -84,6 +85,11 @@ Route::get('admin/categoria/{id}/delete', [ProductosController::class, 'eliminar
 
 Route::get('filtrar-productos/{categoria_id}', [ProductosController::class, 'filtrarPorCategoria'])->name('admin.filtrar.producto');
 Route::get('todos-los-productos', [ProductosController::class, 'filtrarTodosLosProductos'])->name('admin.todos.los.producto');
+
+Route::get('todos', [MenuController::class, 'all'])->name('menu.todos');
+Route::get('{categoria}', [MenuController::class, 'categories'])->name('menu.categorias');
+Route::get('productos/categoria/{id}', [MenuController::class, 'categories'])->name('menu.categorias');
+Route::post('user/cambiar-direccion', [MenuController::class, 'cambiarDireccion'])->name('cliente.actualizar.direccion');
 
 Route::get('admin/productos', [ProductosController::class, 'show'])->name('admin.productos');
 
